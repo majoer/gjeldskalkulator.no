@@ -23,34 +23,34 @@ export default function AppLoanComponent({ loan }: AppLoanProps) {
 
   return (
     <Paper className="m-1">
-      <div className="flex flex-col relative m-4">
-        <div className="m-2 flex">
+      <div className="flex flex-col relative p-4">
+        <div className="absolute top-0 right-0">
+          <IconButton onClick={() => setExpanded(!expanded)}>
+            <Settings />
+          </IconButton>
+        </div>
+        <div className="m-2 flex flex-row flex-wrap justify-center lg:justify-start">
           <TextField
             id="name"
-            className="px-2 basis-1/4"
+            className="m-2 shrink-0 grow-0"
             label="Name"
             variant="outlined"
             value={name}
           />
           <TextField
             id="amount"
-            className="px-2 basis-1/4"
+            className="m-2 shrink-0 grow-0"
             label="Amount"
             variant="outlined"
             value={interest}
           />
           <TextField
             id="interest"
-            className="px-2 basis-1/4"
+            className="m-2 shrink-0 grow-0"
             label="Interest (%)"
             variant="outlined"
             value={amount}
           />
-        </div>
-        <div className="absolute top-0 right-0">
-          <IconButton onClick={() => setExpanded(!expanded)}>
-            <Settings />
-          </IconButton>
         </div>
         {/* <Accordion className="w-full" expanded={expanded}>
           <AccordionSummary className="h-0"></AccordionSummary>
