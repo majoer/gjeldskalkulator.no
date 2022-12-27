@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/app-loan-component.tsx"  ],
   "exclude": [
     "node_modules"
   ]
