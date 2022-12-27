@@ -2,7 +2,8 @@ import Add from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import { Stack } from "@mui/system";
 import { useReducer, useState } from "react";
-import AppLoanComponent, { Loan } from "./app-loan-component";
+import AppDebtComponent, { Loan } from "./app-debt-component";
+import Divider from "@mui/material/Divider";
 
 interface AppAction {
   type: string;
@@ -38,14 +39,14 @@ const initialState: AppState = {
   ],
 };
 
-export default function AppLoansComponent() {
+export default function AppDebtsComponent() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { loans } = state;
 
   return (
-    <Stack spacing={0}>
+    <Stack spacing={0} divider={<Divider />}>
       {loans.map((loan, i) => (
-        <AppLoanComponent key={i} loan={loan} />
+        <AppDebtComponent key={i} loan={loan} />
       ))}
       <IconButton
         onClick={() => {
