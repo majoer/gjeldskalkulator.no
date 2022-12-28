@@ -1,33 +1,21 @@
-import Settings from "@mui/icons-material/Settings";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
+import Delete from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
-
-export interface Loan {
-  name: string;
-  amount: number;
-  interest: number;
-}
+import { DebtState, removeDebt } from "../store/debt-slice";
+import { useAppDispatch } from "../store/store";
 
 export interface AppLoanProps {
-  loan: Loan;
+  debt: DebtState;
 }
 
-export default function AppDebtComponent({ loan }: AppLoanProps) {
-  const { name, amount, interest } = loan;
+export default function AppDebtComponent({ debt }: AppLoanProps) {
+  const { id, name, amount, interest } = debt;
   const [expanded, setExpanded] = useState(false);
+  const dispatch = useAppDispatch();
 
   return (
     <div className="relative">
-      <div className="absolute top-0 right-0">
-        <IconButton onClick={() => setExpanded(!expanded)}>
-          <Settings />
-        </IconButton>
-      </div>
       <div className="m-2 flex flex-row flex-wrap justify-center lg:justify-start">
         <TextField
           id="name"
@@ -50,6 +38,12 @@ export default function AppDebtComponent({ loan }: AppLoanProps) {
           variant="standard"
           value={amount}
         />
+
+        <div className="absolute right-0 top-1/2 -translate-y-1/2">
+          <IconButton onClick={() => dispatch(removeDebt(id))}>
+            <Delete />
+          </IconButton>
+        </div>
       </div>
       {/* <Accordion className="w-full" expanded={expanded}>
           <AccordionSummary className="h-0"></AccordionSummary>

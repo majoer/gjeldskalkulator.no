@@ -1,11 +1,9 @@
-import Add from "@mui/icons-material/Add";
-import Delete from "@mui/icons-material/Delete";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import AppDebtsComponent from "./app-debts-component";
+import AppExpensesComponent from "./app-expenses-component";
+import AppIncomesComponent from "./app-incomes-component";
 
 export default function AppUserInputComponent() {
   return (
@@ -18,49 +16,7 @@ export default function AppUserInputComponent() {
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="flex">
-            <TextField
-              id="name"
-              className="m-2 shrink-0 grow-0"
-              label="Name"
-              variant="standard"
-              value={"Jobb 1"}
-            />
-            <TextField
-              id="amount"
-              className="m-2 shrink-0 grow-0"
-              label="Amount"
-              variant="standard"
-              value="30000"
-            />
-            <IconButton>
-              <Delete />
-            </IconButton>
-          </div>
-          <div className="flex">
-            <TextField
-              id="name"
-              className="m-2 shrink-0 grow-0"
-              label="Name"
-              variant="standard"
-              value={"Jobb 2"}
-            />
-            <TextField
-              id="amount"
-              className="m-2 shrink-0 grow-0"
-              label="Amount"
-              variant="standard"
-              value="5000"
-            />
-            <IconButton>
-              <Delete />
-            </IconButton>
-          </div>
-          <div className="text-right">
-            <IconButton>
-              <Add></Add>
-            </IconButton>
-          </div>
+          <AppIncomesComponent />
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={true}>
@@ -71,51 +27,7 @@ export default function AppUserInputComponent() {
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="flex flex-col">
-            <div className="flex">
-              <TextField
-                id="name"
-                className="m-2 shrink-0 grow-0"
-                label="Name"
-                variant="standard"
-                value={"Mat"}
-              />
-              <TextField
-                id="amount"
-                className="m-2 shrink-0 grow-0"
-                label="Amount"
-                variant="standard"
-                value="6000"
-              />
-              <IconButton>
-                <Delete />
-              </IconButton>
-            </div>
-            <div className="flex">
-              <TextField
-                id="name"
-                className="m-2 shrink-0 grow-0"
-                label="Name"
-                variant="standard"
-                value={"Barnehage"}
-              />
-              <TextField
-                id="amount"
-                className="m-2 shrink-0 grow-0"
-                label="Amount"
-                variant="standard"
-                value="5000"
-              />
-              <IconButton>
-                <Delete />
-              </IconButton>
-            </div>
-          </div>
-          <div className="text-right">
-            <IconButton>
-              <Add></Add>
-            </IconButton>
-          </div>
+          <AppExpensesComponent />
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={true}>

@@ -4,27 +4,26 @@ import IconButton from "@mui/material/IconButton";
 import { Stack } from "@mui/system";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { addDebt, selectAllDebts } from "../store/debt-slice";
+import { addExpense, selectAllExpenses } from "../store/expense-slice";
 import { useAppSelector } from "../store/store";
-import AppDebtComponent from "./app-debt-component";
+import AppExpenseComponent from "./app-expense-component";
 
-export default function AppDebtsComponent() {
+export default function AppExpensesComponent() {
   const dispatch = useDispatch();
-  const debts = useAppSelector(selectAllDebts);
+  const expenses = useAppSelector(selectAllExpenses);
 
   return (
     <Stack spacing={0} divider={<Divider />}>
-      {debts.map((debt, i) => (
-        <AppDebtComponent key={i} debt={debt} />
+      {expenses.map((expense, i) => (
+        <AppExpenseComponent key={i} expense={expense} />
       ))}
       <IconButton
         onClick={() => {
           dispatch(
-            addDebt({
+            addExpense({
               id: nanoid(),
-              amount: 2,
-              interest: 2,
-              name: "Kreditor 1",
+              amount: 6000,
+              name: "Mat",
             })
           );
         }}
