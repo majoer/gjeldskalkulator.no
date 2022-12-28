@@ -9,6 +9,7 @@ import { useAppSelector } from "../store/store";
 import AppDebtsComponent from "./app-debts-component";
 import AppExpensesComponent from "./app-expenses-component";
 import AppIncomesComponent from "./app-incomes-component";
+import AppResultComponent from "./app-result-component";
 
 export default function AppUserInputComponent() {
   const incomes = useAppSelector(selectAllIncomes);
@@ -27,6 +28,17 @@ export default function AppUserInputComponent() {
   const sumDebt = useMemo(
     () => debts.reduce((sum, d) => (sum += d.amount), 0),
     [debts]
+  );
+
+  const result = useMemo(() => sumIncome - sumExpense, [sumIncome, sumExpense]);
+  const resultClassName = useMemo(
+    () =>
+      result >= 2000
+        ? "bg-blue-50"
+        : result >= 0
+        ? "bg-yellow-50"
+        : "bg-red-50",
+    [result]
   );
 
   return (
@@ -51,6 +63,17 @@ export default function AppUserInputComponent() {
         </AccordionSummary>
         <AccordionDetails>
           <AppExpensesComponent />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion expanded={false} className={resultClassName}>
+        <AccordionSummary>
+          <div className="flex justify-between w-full">
+            <div>Result</div>
+            <div>{result},-</div>
+          </div>
+        </AccordionSummary>
+        <AccordionDetails>
+          <AppResultComponent />
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={true}>
