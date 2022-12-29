@@ -2,9 +2,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useMemo } from "react";
-import { selectAllDebts } from "../store/debt-slice";
-import { selectAllExpenses } from "../store/expense-slice";
-import { selectAllIncomes } from "../store/income-slice";
+import { selectSumDebt } from "../store/debt-slice";
+import { selectSumExpense } from "../store/expense-slice";
+import { selectSumIncome } from "../store/income-slice";
 import { useAppSelector } from "../store/store";
 import AppDebtsComponent from "./app-debts-component";
 import AppExpensesComponent from "./app-expenses-component";
@@ -12,23 +12,9 @@ import AppIncomesComponent from "./app-incomes-component";
 import AppResultComponent from "./app-result-component";
 
 export default function AppUserInputComponent() {
-  const incomes = useAppSelector(selectAllIncomes);
-  const expenses = useAppSelector(selectAllExpenses);
-  const debts = useAppSelector(selectAllDebts);
-
-  const sumIncome = useMemo(
-    () => incomes.reduce((sum, i) => (sum += i.amount), 0),
-    [incomes]
-  );
-  const sumExpense = useMemo(
-    () => expenses.reduce((sum, e) => (sum += e.amount), 0),
-    [expenses]
-  );
-
-  const sumDebt = useMemo(
-    () => debts.reduce((sum, d) => (sum += d.amount), 0),
-    [debts]
-  );
+  const sumIncome = useAppSelector(selectSumIncome);
+  const sumExpense = useAppSelector(selectSumExpense);
+  const sumDebt = useAppSelector(selectSumDebt);
 
   const result = useMemo(() => sumIncome - sumExpense, [sumIncome, sumExpense]);
   const resultClassName = useMemo(
@@ -65,7 +51,7 @@ export default function AppUserInputComponent() {
           <AppExpensesComponent />
         </AccordionDetails>
       </Accordion>
-      <Accordion expanded={false} className={resultClassName}>
+      <Accordion defaultExpanded={false} className={resultClassName}>
         <AccordionSummary>
           <div className="flex justify-between w-full">
             <div>Result</div>

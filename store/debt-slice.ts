@@ -1,4 +1,8 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store.js";
 
@@ -36,6 +40,10 @@ export const { addDebt, removeDebt } = debtSlice.actions;
 
 export const { selectAll: selectAllDebts } = debtAdapter.getSelectors<AppState>(
   (state) => state.debts
+);
+
+export const selectSumDebt = createSelector([selectAllDebts], (debts) =>
+  debts.reduce((sum, d) => (sum += d.amount), 0)
 );
 
 export default debtSlice.reducer;

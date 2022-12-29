@@ -1,4 +1,8 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store";
 
@@ -34,5 +38,9 @@ export const { addIncome, removeIncome } = incomeSlice.actions;
 
 export const { selectAll: selectAllIncomes } =
   incomeAdapter.getSelectors<AppState>((state) => state.incomes);
+
+export const selectSumIncome = createSelector([selectAllIncomes], (incomes) =>
+  incomes.reduce((sum, e) => (sum += e.amount), 0)
+);
 
 export default incomeSlice.reducer;
