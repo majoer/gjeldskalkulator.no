@@ -23,7 +23,7 @@ export default function AppDebtsComponent() {
             addDebt({
               id: nanoid(),
               amount: 100000,
-              interest: 2,
+              interest: 0.12,
               name: "Kreditor 1",
             })
           );

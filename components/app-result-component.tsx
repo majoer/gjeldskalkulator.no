@@ -1,13 +1,9 @@
-import TextField from "@mui/material/TextField";
-import { selectSumExpense } from "../store/expense-slice";
-import { selectSumIncome } from "../store/income-slice";
-import { useAppSelector } from "../store/store";
-import { useMemo } from "react";
+import TextField from "@mui/material/TextField"
+import { selectResult } from "../store/selectors/result-selector"
+import { useAppSelector } from "../store/store"
 
 export default function AppResultComponent() {
-  const sumIncome = useAppSelector(selectSumIncome);
-  const sumExpense = useAppSelector(selectSumExpense);
-  const result = useMemo(() => sumIncome - sumExpense, [sumIncome, sumExpense]);
+  const result = useAppSelector(selectResult);
   const resultTowardsDebt = result > 0 ? result : 0;
 
   return (

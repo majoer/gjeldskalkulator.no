@@ -29,14 +29,14 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           className="m-2 shrink-0 grow-0"
           label="Amount"
           variant="standard"
-          value={interest}
+          value={amount}
         />
         <TextField
           id="interest"
           className="m-2 shrink-0 grow-0"
           label="Interest (%)"
           variant="standard"
-          value={amount}
+          value={interest}
         />
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">

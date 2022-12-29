@@ -10,13 +10,14 @@ import AppDebtsComponent from "./app-debts-component";
 import AppExpensesComponent from "./app-expenses-component";
 import AppIncomesComponent from "./app-incomes-component";
 import AppResultComponent from "./app-result-component";
+import { selectResult } from "../store/selectors/result-selector";
 
 export default function AppUserInputComponent() {
   const sumIncome = useAppSelector(selectSumIncome);
   const sumExpense = useAppSelector(selectSumExpense);
   const sumDebt = useAppSelector(selectSumDebt);
+  const result = useAppSelector(selectResult);
 
-  const result = useMemo(() => sumIncome - sumExpense, [sumIncome, sumExpense]);
   const resultClassName = useMemo(
     () =>
       result >= 2000
