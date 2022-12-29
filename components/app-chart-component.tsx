@@ -1,9 +1,14 @@
 import { ResponsiveLine, Serie } from "@nivo/line";
 import { useAppSelector } from "../store/store";
-import { selectDebtSerie } from "../store/selectors/graph-selector";
+import {
+  selectDebtSerie,
+  selectTotalDebt,
+} from "../store/selectors/graph-selector";
 
 export default function AppChartComponent() {
   const debtSerie = useAppSelector(selectDebtSerie);
+  const totalDebt = useAppSelector(selectTotalDebt);
+
   const data: Serie[] = [
     {
       id: "debt",
@@ -13,10 +18,10 @@ export default function AppChartComponent() {
   ];
 
   return (
-    <div className="h-full">
+    <div className="h-full relative">
       <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 20, bottom: 50, left: 80 }}
+        margin={{ top: 100, right: 20, bottom: 100, left: 80 }}
         xScale={{
           type: "point",
         }}
@@ -54,6 +59,9 @@ export default function AppChartComponent() {
         useMesh={true}
         legends={[]}
       />
+      <div className="absolute bottom-1 left-1/2">
+        Total cost: {totalDebt},-
+      </div>
     </div>
   );
 }

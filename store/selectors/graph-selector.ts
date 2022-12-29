@@ -62,3 +62,20 @@ function applyMontlyDeduction(currentDebt: DebtState[], deduction: number) {
     };
   });
 }
+
+export const selectTotalDebt = createSelector(
+  [selectDebtSerie],
+  (debtSerie) => {
+    if (debtSerie.length === 0) {
+      return 0;
+    }
+
+    if (debtSerie[debtSerie.length - 1].y !== 0) {
+      return Infinity;
+    }
+
+    return Math.round(
+      debtSerie.reduce((sum, point) => (sum += point.y as number), 0)
+    );
+  }
+);
