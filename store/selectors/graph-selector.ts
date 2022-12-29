@@ -3,7 +3,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { selectAllDebts, selectSumDebt, DebtState } from "../debt-slice";
 import { selectResult } from "./result-selector";
 
-const maxMonths = 24;
+const maxMonths = 12 * 5;
 
 export const selectDebtSerie = createSelector(
   [selectResult, selectAllDebts, selectSumDebt],
@@ -54,8 +54,9 @@ function applyMontlyDeduction(currentDebt: DebtState[], deduction: number) {
   let rest = deduction;
 
   return currentDebt.map((debt) => {
-    const newDebt = Math.max(debt.amount - rest, 0);
-    rest = Math.max(rest - debt.amount, 0);
+    const deductionAfterFee = rest - debt.fee;
+    const newDebt = Math.max(debt.amount - deductionAfterFee, 0);
+    rest = Math.max(deductionAfterFee - debt.amount, 0);
 
     return {
       ...debt,

@@ -22,8 +22,9 @@ export default function AppDebtsComponent() {
           dispatch(
             addDebt({
               id: nanoid(),
+              fee: 60,
               amount: 100000,
-              interest: 0.12,
+              interest: 0.1,
               name: "Kreditor 1",
             })
           );

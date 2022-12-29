@@ -8,6 +8,7 @@ import { AppState } from "./store.js";
 
 export interface DebtState {
   id: string;
+  fee: number;
   name: string;
   amount: number;
   interest: number;

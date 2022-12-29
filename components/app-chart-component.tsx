@@ -17,7 +17,9 @@ export default function AppChartComponent() {
       <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 20, bottom: 50, left: 80 }}
-        xScale={{ type: "point" }}
+        xScale={{
+          type: "point",
+        }}
         yScale={{
           type: "linear",
           min: "auto",

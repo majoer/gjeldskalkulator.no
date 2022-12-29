@@ -10,7 +10,7 @@ export interface AppLoanProps {
 }
 
 export default function AppDebtComponent({ debt }: AppLoanProps) {
-  const { id, name, amount, interest } = debt;
+  const { id, name, amount, interest, fee } = debt;
   const [expanded, setExpanded] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -37,6 +37,13 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           label="Interest (%)"
           variant="standard"
           value={interest}
+        />
+        <TextField
+          id="fee"
+          className="m-2 shrink-0 grow-0"
+          label="Fee"
+          variant="standard"
+          value={fee}
         />
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">

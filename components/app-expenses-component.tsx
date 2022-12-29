@@ -22,7 +22,7 @@ export default function AppExpensesComponent() {
           dispatch(
             addExpense({
               id: nanoid(),
-              amount: 6000,
+              amount: 10000,
               name: "Mat",
             })
           );
