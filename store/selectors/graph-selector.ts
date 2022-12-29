@@ -43,7 +43,7 @@ function advanceDebt(currentDebt: DebtState[], deduction: number) {
     .filter((debt) => debt.amount > 0)
     .map((debt) => ({
       ...debt,
-      amount: debt.interest * debt.amount + debt.amount,
+      amount: (debt.interest * debt.amount) / 12 + debt.amount,
     }));
 
   return nextDebt;
