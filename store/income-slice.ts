@@ -23,6 +23,7 @@ export const incomeSlice = createSlice({
   initialState: incomeAdapter.addMany(initialEmptyState, initialState),
   reducers: {
     addIncome: incomeAdapter.addOne,
+    updateIncome: incomeAdapter.updateOne,
     removeIncome: incomeAdapter.removeOne,
   },
   extraReducers: {
@@ -34,7 +35,7 @@ export const incomeSlice = createSlice({
   },
 });
 
-export const { addIncome, removeIncome } = incomeSlice.actions;
+export const { addIncome, updateIncome, removeIncome } = incomeSlice.actions;
 
 export const { selectAll: selectAllIncomes } =
   incomeAdapter.getSelectors<AppState>((state) => state.incomes);

@@ -25,6 +25,7 @@ export const debtSlice = createSlice({
   initialState: debtAdapter.addMany(initialEmptyState, initialState),
   reducers: {
     addDebt: debtAdapter.addOne,
+    updateDebt: debtAdapter.updateOne,
     removeDebt: debtAdapter.removeOne,
   },
   extraReducers: {
@@ -37,7 +38,7 @@ export const debtSlice = createSlice({
   },
 });
 
-export const { addDebt, removeDebt } = debtSlice.actions;
+export const { addDebt, updateDebt, removeDebt } = debtSlice.actions;
 
 export const { selectAll: selectAllDebts } = debtAdapter.getSelectors<AppState>(
   (state) => state.debts

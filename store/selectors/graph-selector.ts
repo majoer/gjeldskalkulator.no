@@ -38,18 +38,16 @@ function advanceDebt(currentDebt: DebtState[], deduction: number) {
     return [];
   }
 
-  const debtAfterDeduction = applyMontlyDeduction(currentDebt, deduction);
-  const nextDebt = debtAfterDeduction
+  const debtAfterInterest = currentDebt
     .filter((debt) => debt.amount > 0)
     .map((debt) => ({
       ...debt,
       amount: (debt.interest * debt.amount) / 12 + debt.amount,
     }));
 
-  return nextDebt;
+  return applyMontlyDeduction(debtAfterInterest, deduction);
 }
 
-//Todo: write in non-mutating way
 function applyMontlyDeduction(currentDebt: DebtState[], deduction: number) {
   let rest = deduction;
 

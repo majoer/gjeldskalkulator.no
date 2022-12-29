@@ -1,4 +1,8 @@
-import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store";
 
@@ -19,6 +23,7 @@ export const expenseSlice = createSlice({
   initialState: expenseAdapter.addMany(initialEmptyState, initialState),
   reducers: {
     addExpense: expenseAdapter.addOne,
+    updateExpense: expenseAdapter.updateOne,
     removeExpense: expenseAdapter.removeOne,
   },
   extraReducers: {
@@ -30,13 +35,15 @@ export const expenseSlice = createSlice({
   },
 });
 
-export const { addExpense, removeExpense } = expenseSlice.actions;
+export const { addExpense, updateExpense, removeExpense } =
+  expenseSlice.actions;
 
 export const { selectAll: selectAllExpenses } =
   expenseAdapter.getSelectors<AppState>((state) => state.expenses);
 
-export const selectSumExpense = createSelector([selectAllExpenses], (expenses) =>
-  expenses.reduce((sum, e) => (sum += e.amount), 0)
+export const selectSumExpense = createSelector(
+  [selectAllExpenses],
+  (expenses) => expenses.reduce((sum, e) => (sum += e.amount), 0)
 );
 
 export default expenseSlice.reducer;
