@@ -7,7 +7,7 @@ import {
 
 export default function AppChartComponent() {
   const debtSerie = useAppSelector(selectDebtSerie);
-  const totalDebt = useAppSelector(selectTotalDebt);
+  const deductionPaid = debtSerie[debtSerie.length - 1].deductionPaid;
 
   const data: Serie[] = [
     {
@@ -56,11 +56,14 @@ export default function AppChartComponent() {
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
+        tooltip={({ point }) => (
+          <div>{JSON.stringify(debtSerie[point.data.x as number])}</div>
+        )}
         useMesh={true}
         legends={[]}
       />
       <div className="absolute bottom-1 left-1/2">
-        Total cost: {totalDebt},-
+        Total cost: {deductionPaid},-
       </div>
     </div>
   );
