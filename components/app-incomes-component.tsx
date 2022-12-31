@@ -22,7 +22,7 @@ export default function AppIncomesComponent() {
             addIncome({
               id: nanoid(),
               amount: 30000,
-              name: "Jobb 1",
+              name: `Job ${incomes.length + 1}`,
             })
           );
         }}

@@ -23,7 +23,7 @@ export default function AppExpensesComponent() {
             addExpense({
               id: nanoid(),
               amount: 10000,
-              name: "Mat",
+              name: "Food",
             })
           );
         }}

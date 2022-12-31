@@ -26,7 +26,7 @@ export default function AppDebtsComponent() {
               fee: 60,
               amount: 100000,
               interest: BigNumber(0.1),
-              name: `Kreditor ${debts.length + 1}`,
+              name: `Creditor ${debts.length + 1}`,
             })
           );
         }}
