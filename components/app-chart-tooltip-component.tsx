@@ -15,8 +15,8 @@ export default function AppChartTooltipComponent({
       <div>
         {resolution}: {x as number}
       </div>
-      <div>debt: {Math.round(y as number)}</div>
-      <div>cost: {sumPaidSoFar}</div>
+      <div>Debt: {Math.round(y as number)}</div>
+      <div>Cost: {sumPaidSoFar}</div>
     </Paper>
   );
 }
