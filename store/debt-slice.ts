@@ -5,13 +5,14 @@ import {
 } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store.js";
+import * as BigNumber from "bignumber.js";
 
 export interface DebtState {
   id: string;
   fee: number;
   name: string;
   amount: number;
-  interest: number;
+  interest: BigNumber.BigNumber;
 }
 
 export const debtAdapter = createEntityAdapter<DebtState>({

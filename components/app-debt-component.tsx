@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { DebtState, removeDebt, updateDebt } from "../store/debt-slice";
 import { useAppDispatch } from "../store/store";
+import { BigNumber } from "bignumber.js";
 
 export interface AppLoanProps {
   debt: DebtState;
@@ -58,13 +59,13 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           label="Interest (%)"
           variant="standard"
           type="number"
-          value={interest}
+          value={interest.multipliedBy(100)}
           onChange={(e) =>
             dispatch(
               updateDebt({
                 id,
                 changes: {
-                  interest: parseFloat(e.target.value),
+                  interest: BigNumber(e.target.value).dividedBy(100),
                 },
               })
             )

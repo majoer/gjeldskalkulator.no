@@ -71,7 +71,11 @@ function advanceDebt(currentDebt: Debt[], deduction: number) {
     .filter((debt) => debt.amount > 0)
     .map((debt) => ({
       ...debt,
-      amount: (debt.interest * debt.amount) / 12 + debt.amount,
+      amount: debt.interest
+        .multipliedBy(debt.amount)
+        .dividedBy(12)
+        .plus(debt.amount)
+        .toNumber(),
     }));
 
   return applyMontlyDeduction(debtAfterInterest, deduction);
