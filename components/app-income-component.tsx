@@ -28,8 +28,8 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
   }, [name, amount]);
 
   return (
-    <div>
-      <div className="flex relative">
+    <div className="relative">
+      <div className="m-2 flex flex-row flex-wrap justify-center lg:justify-start">
         <TextField
           id="name"
           className="m-2 shrink-0 grow-0"
