@@ -7,8 +7,8 @@ export default function AppChartComponent() {
   const { serie, resolution } = useAppSelector(selectDebtSeries);
   const totalCost =
     12 * (serie.length - 1) === maxMonths
-      ? `Too much. Its over ${Math.floor(maxMonths / 12)} years to complete.`
-      : `${serie[serie.length - 1].sumPaidSoFar},-`;
+      ? -1
+      : serie[serie.length - 1].sumPaidSoFar;
 
   const data: Serie[] = [
     {
@@ -61,13 +61,19 @@ export default function AppChartComponent() {
           <AppChartTooltipComponent
             datum={serie[point.data.x as number]}
             resolution={resolution}
+            totalCost={totalCost}
           />
         )}
         useMesh={true}
         legends={[]}
       />
       <div className="absolute bottom-1 left-1/2 -translate-x-1/2">
-        Total cost of debt: {totalCost}
+        Total cost of debt:{" "}
+        {totalCost === -1
+          ? `Too much. Its over ${Math.floor(
+              maxMonths / 12
+            )} years to complete.`
+          : `${totalCost},-`}
       </div>
     </div>
   );
