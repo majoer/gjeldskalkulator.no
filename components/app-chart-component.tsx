@@ -6,7 +6,7 @@ export default function AppChartComponent() {
   const { serie, resolution } = useAppSelector(selectDebtSeries);
   const totalCost =
     12 * (serie.length - 1) === maxMonths
-      ? `Too much. This takes longer than ${Math.floor(maxMonths / 12)} years`
+      ? `Too much. Its over ${Math.floor(maxMonths / 12)} years to complete.`
       : `${serie[serie.length - 1].sumPaidSoFar},-`;
 
   const data: Serie[] = [
@@ -63,7 +63,7 @@ export default function AppChartComponent() {
         legends={[]}
       />
       <div className="absolute bottom-1 left-1/2 -translate-x-1/2">
-        Total cost: {totalCost}
+        Total cost of debt: {totalCost}
       </div>
     </div>
   );
