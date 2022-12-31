@@ -1,29 +1,29 @@
 import { ResponsiveLine, Serie } from "@nivo/line";
+import { maxMonths, selectDebtSeries } from "../store/selectors/graph-selector";
 import { useAppSelector } from "../store/store";
-import {
-  selectDebtSerie,
-  selectTotalDebt,
-} from "../store/selectors/graph-selector";
 
 export default function AppChartComponent() {
-  const debtSerie = useAppSelector(selectDebtSerie);
-  const deductionPaid = debtSerie[debtSerie.length - 1].deductionPaid;
+  const { serie, resolution } = useAppSelector(selectDebtSeries);
+  const totalCost =
+    12 * (serie.length - 1) === maxMonths
+      ? `Too much. This takes longer than ${Math.floor(maxMonths / 12)} years`
+      : `${serie[serie.length - 1].sumPaidSoFar},-`;
 
   const data: Serie[] = [
     {
       id: "debt",
       color: "hsl(112, 70%, 50%)",
-      data: debtSerie,
+      data: serie,
     },
   ];
 
   return (
-    <div className="h-full relative">
+    <div className="h-full relative mr-3">
       <ResponsiveLine
         data={data}
         margin={{ top: 100, right: 20, bottom: 100, left: 80 }}
         xScale={{
-          type: "point",
+          type: "linear",
         }}
         yScale={{
           type: "linear",
@@ -39,7 +39,7 @@ export default function AppChartComponent() {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "Months",
+          legend: resolution,
           legendOffset: 36,
           legendPosition: "middle",
         }}
@@ -57,13 +57,13 @@ export default function AppChartComponent() {
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         tooltip={({ point }) => (
-          <div>{JSON.stringify(debtSerie[point.data.x as number])}</div>
+          <div>{JSON.stringify(serie[point.data.x as number])}</div>
         )}
         useMesh={true}
         legends={[]}
       />
-      <div className="absolute bottom-1 left-1/2">
-        Total cost: {deductionPaid},-
+      <div className="absolute bottom-1 left-1/2 -translate-x-1/2">
+        Total cost: {totalCost}
       </div>
     </div>
   );

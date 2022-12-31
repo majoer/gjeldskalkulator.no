@@ -3,23 +3,23 @@ import { createSelector } from "@reduxjs/toolkit";
 import { selectAllDebts, selectSumDebt, DebtState } from "../debt-slice";
 import { selectResult } from "./result-selector";
 
-const maxMonths = 12 * 5;
+export const maxMonths = 12 * 100;
 
 interface Debt extends DebtState {
   paidSoFar: number;
 }
 
-export const selectDebtSerie = createSelector(
+export const selectDebtSeries = createSelector(
   [selectResult, selectAllDebts, selectSumDebt],
   (result, allDebt, sumDebt) => {
-    const selectDebtSerie: Datum[] = [];
-
-    selectDebtSerie.push({
-      x: 0,
-      y: sumDebt,
-      interestPaid: 0,
-      deductionPaint: 0,
-    });
+    const serie: Datum[] = [
+      {
+        x: 0,
+        y: sumDebt,
+        interestPaidSoFar: 0,
+        sumPaidSoFar: 0,
+      },
+    ];
 
     let month = 1;
     let debtSoFar = allDebt.map((debt) => ({ ...debt, paidSoFar: 0 }));
@@ -27,21 +27,38 @@ export const selectDebtSerie = createSelector(
     while (sumDebtSoFar > 0 && month <= maxMonths) {
       debtSoFar = advanceDebt(debtSoFar, result > 0 ? result : 0);
       sumDebtSoFar = debtSoFar.reduce((sum, debt) => (sum += debt.amount), 0);
-      const deductionPaid = Math.round(
+      const sumPaidSoFar = Math.round(
         debtSoFar.reduce((sum, debt) => (sum += debt.paidSoFar), 0)
       );
 
-      selectDebtSerie.push({
+      serie.push({
         x: month,
         y: sumDebtSoFar,
-        interestPaid: 1,
-        deductionPaid,
+        interestPaidSoFar: 1,
+        sumPaidSoFar,
       });
 
       month++;
     }
 
-    return selectDebtSerie;
+    if (serie.length >= 12 * 5) {
+      return {
+        resolution: "Years",
+        serie: serie
+          .filter((_, i) => {
+            return i % 12 === 0;
+          })
+          .map((datum, i) => ({
+            ...datum,
+            x: i,
+          })),
+      };
+    }
+
+    return {
+      resolution: "Months",
+      serie,
+    };
   }
 );
 
