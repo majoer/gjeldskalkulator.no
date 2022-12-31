@@ -15,8 +15,8 @@ export default function AppDebtsComponent() {
 
   return (
     <Stack spacing={0} divider={<Divider />}>
-      {debts.map((debt, i) => (
-        <AppDebtComponent key={i} debt={debt} />
+      {debts.map((debt) => (
+        <AppDebtComponent key={debt.id} debt={debt} />
       ))}
       <IconButton
         onClick={() => {
@@ -26,7 +26,7 @@ export default function AppDebtsComponent() {
               fee: 60,
               amount: 100000,
               interest: BigNumber(0.1),
-              name: "Kreditor 1",
+              name: `Kreditor ${debts.length + 1}`,
             })
           );
         }}

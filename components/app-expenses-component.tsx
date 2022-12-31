@@ -14,8 +14,8 @@ export default function AppExpensesComponent() {
 
   return (
     <Stack spacing={0} divider={<Divider />}>
-      {expenses.map((expense, i) => (
-        <AppExpenseComponent key={i} expense={expense} />
+      {expenses.map((expense) => (
+        <AppExpenseComponent key={expense.id} expense={expense} />
       ))}
       <IconButton
         onClick={() => {

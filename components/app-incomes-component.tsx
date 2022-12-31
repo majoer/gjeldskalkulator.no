@@ -13,8 +13,8 @@ export default function AppIncomesComponent() {
 
   return (
     <Stack spacing={0} divider={<Divider />}>
-      {incomes.map((income, i) => (
-        <AppIncomeComponent key={i} income={income} />
+      {incomes.map((income) => (
+        <AppIncomeComponent key={income.id} income={income} />
       ))}
       <IconButton
         onClick={() => {
