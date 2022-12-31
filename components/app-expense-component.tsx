@@ -1,6 +1,7 @@
 import Delete from "@mui/icons-material/Delete";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -34,13 +35,34 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   return (
     <div className="relative">
       <div className="m-2 flex flex-row flex-wrap justify-center lg:justify-start">
-        <TextField
-          id="name"
-          className="m-2 shrink-0 grow-0"
-          label="Name"
-          variant="standard"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+        <Autocomplete
+          id="expenseName"
+          freeSolo={true}
+          sx={{ width: 200 }}
+          className="m-2 shrink-0 grow-0 inline-flex"
+          options={[
+            "Food",
+            "Transportation",
+            "Travel",
+            "Vacation",
+            "Living",
+            "Clothes",
+            "Other",
+            "Hobby",
+            "Savings",
+            "Stocks",
+            "Children",
+            "Alcohol",
+            "Medicine",
+            "Household",
+            "Internet",
+            "Electricity",
+          ]}
+          inputValue={name}
+          onInputChange={(_, newName) => setName(newName)}
+          renderInput={(params) => (
+            <TextField {...params} variant="standard" label="Expense" />
+          )}
         />
         <TextField
           id="amount"
