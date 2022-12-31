@@ -8,7 +8,7 @@ export default function AppChartComponent() {
   const totalCost =
     12 * (serie.length - 1) === maxMonths
       ? -1
-      : serie[serie.length - 1].sumPaidSoFar;
+      : Math.round(serie[serie.length - 1].sumPaidSoFar);
 
   const data: Serie[] = [
     {

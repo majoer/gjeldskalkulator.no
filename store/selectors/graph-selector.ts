@@ -35,11 +35,9 @@ export const selectDebtSeries = createSelector(
     let debtSoFar = allDebt.map((debt) => ({ ...debt, paidSoFar: 0 }));
     let sumDebtSoFar = sumDebt;
     while (sumDebtSoFar > 0 && month <= maxMonths) {
-      debtSoFar = advanceDebt(debtSoFar, result > 0 ? result : 0);
+      debtSoFar = advanceDebt(debtSoFar, Math.max(result, 0));
       sumDebtSoFar = debtSoFar.reduce((sum, debt) => (sum += debt.amount), 0);
-      const sumPaidSoFar = Math.round(
-        debtSoFar.reduce((sum, debt) => (sum += debt.paidSoFar), 0)
-      );
+      const sumPaidSoFar = debtSoFar[debtSoFar.length - 1].paidSoFar;
 
       serie.push({
         x: month,
@@ -77,16 +75,20 @@ function advanceDebt(currentDebt: Debt[], deduction: number) {
     return [];
   }
 
-  const debtAfterInterest = currentDebt
-    .filter((debt) => debt.amount > 0)
-    .map((debt) => ({
+  const debtAfterInterest = currentDebt.map((debt) => {
+    if (debt.amount === 0) {
+      return debt;
+    }
+
+    return {
       ...debt,
       amount: debt.interest
         .multipliedBy(debt.amount)
         .dividedBy(12)
         .plus(debt.amount)
         .toNumber(),
-    }));
+    };
+  });
 
   return applyMontlyDeduction(debtAfterInterest, deduction);
 }
@@ -95,14 +97,18 @@ function applyMontlyDeduction(currentDebt: Debt[], deduction: number) {
   let rest = deduction;
 
   return currentDebt.map((debt) => {
+    if (debt.amount === 0) {
+      return debt;
+    }
     const deductionAfterFee = rest - debt.fee;
     const newDebt = Math.max(debt.amount - deductionAfterFee, 0);
     rest = Math.max(deductionAfterFee - debt.amount, 0);
+    const paidSoFar = debt.paidSoFar + deduction - rest;
 
     return {
       ...debt,
       amount: newDebt,
-      paidSoFar: debt.paidSoFar + deduction - rest,
+      paidSoFar,
     };
   });
 }
