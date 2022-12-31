@@ -9,10 +9,20 @@ interface Debt extends DebtState {
   paidSoFar: number;
 }
 
+export interface DebtDatum extends Datum {
+  interestPaidSoFar: number;
+  sumPaidSoFar: number;
+}
+
+export interface DebtSerieSelectorResult {
+  resolution: "Month" | "Year";
+  serie: DebtDatum[];
+}
+
 export const selectDebtSeries = createSelector(
   [selectResult, selectAllDebts, selectSumDebt],
-  (result, allDebt, sumDebt) => {
-    const serie: Datum[] = [
+  (result, allDebt, sumDebt): DebtSerieSelectorResult => {
+    const serie: DebtDatum[] = [
       {
         x: 0,
         y: sumDebt,
@@ -43,7 +53,7 @@ export const selectDebtSeries = createSelector(
 
     if (serie.length >= 12 * 5) {
       return {
-        resolution: "Years",
+        resolution: "Year",
         serie: serie
           .filter((_, i) => {
             return i % 12 === 0;
@@ -56,7 +66,7 @@ export const selectDebtSeries = createSelector(
     }
 
     return {
-      resolution: "Months",
+      resolution: "Month",
       serie,
     };
   }

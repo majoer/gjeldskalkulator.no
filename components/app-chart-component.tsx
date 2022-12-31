@@ -1,6 +1,7 @@
 import { ResponsiveLine, Serie } from "@nivo/line";
 import { maxMonths, selectDebtSeries } from "../store/selectors/graph-selector";
 import { useAppSelector } from "../store/store";
+import AppChartTooltipComponent from "./app-chart-tooltip-component";
 
 export default function AppChartComponent() {
   const { serie, resolution } = useAppSelector(selectDebtSeries);
@@ -39,7 +40,7 @@ export default function AppChartComponent() {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: resolution,
+          legend: `${resolution}s`,
           legendOffset: 36,
           legendPosition: "middle",
         }}
@@ -57,7 +58,10 @@ export default function AppChartComponent() {
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         tooltip={({ point }) => (
-          <div>{JSON.stringify(serie[point.data.x as number])}</div>
+          <AppChartTooltipComponent
+            datum={serie[point.data.x as number]}
+            resolution={resolution}
+          />
         )}
         useMesh={true}
         legends={[]}
