@@ -9,7 +9,7 @@ export interface AppChartTooltipComponentProps {
 }
 
 export default function AppChartTooltipComponent({
-  datum: { x, y, interestPaidSoFar, sumPaidSoFar },
+  datum: { x, y, sumInterestPaidSoFar, sumPaidSoFar },
   resolution,
   totalCost,
 }: AppChartTooltipComponentProps) {
@@ -27,8 +27,10 @@ export default function AppChartTooltipComponent({
       <div>
         {resolution}: {x as number}
       </div>
-      <div>Debt: {Math.round(y as number)}</div>
-      <div>Cost: {Math.round(sumPaidSoFar)}</div>
+      <div>Deductible: {Math.round(sumPaidSoFar - sumInterestPaidSoFar)}</div>
+      <div>Interest: {Math.round(sumInterestPaidSoFar)}</div>
+      <div>Total Cost: {Math.round(sumPaidSoFar)}</div>
+      <div>Remaining Debt: {Math.round(y as number)}</div>
     </Paper>
   );
 }

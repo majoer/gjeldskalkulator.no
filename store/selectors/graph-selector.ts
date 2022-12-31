@@ -7,10 +7,11 @@ export const maxMonths = 12 * 100;
 
 interface Debt extends DebtState {
   paidSoFar: number;
+  interestPaidSoFar: number;
 }
 
 export interface DebtDatum extends Datum {
-  interestPaidSoFar: number;
+  sumInterestPaidSoFar: number;
   sumPaidSoFar: number;
 }
 
@@ -26,23 +27,29 @@ export const selectDebtSeries = createSelector(
       {
         x: 0,
         y: sumDebt,
-        interestPaidSoFar: 0,
+        sumInterestPaidSoFar: 0,
         sumPaidSoFar: 0,
       },
     ];
 
     let month = 1;
-    let debtSoFar = allDebt.map((debt) => ({ ...debt, paidSoFar: 0 }));
+    let debtSoFar: Debt[] = allDebt.map((debt) => ({
+      ...debt,
+      paidSoFar: 0,
+      interestPaidSoFar: 0,
+    }));
     let sumDebtSoFar = sumDebt;
     while (sumDebtSoFar > 0 && month <= maxMonths) {
       debtSoFar = advanceDebt(debtSoFar, Math.max(result, 0));
       sumDebtSoFar = debtSoFar.reduce((sum, debt) => (sum += debt.amount), 0);
-      const sumPaidSoFar = debtSoFar[debtSoFar.length - 1].paidSoFar;
+      const latestDebt = debtSoFar[debtSoFar.length - 1];
+      const sumInterestPaidSoFar = latestDebt.interestPaidSoFar;
+      const sumPaidSoFar = latestDebt.paidSoFar;
 
       serie.push({
         x: month,
         y: sumDebtSoFar,
-        interestPaidSoFar: 1,
+        sumInterestPaidSoFar,
         sumPaidSoFar,
       });
 
@@ -80,13 +87,13 @@ function advanceDebt(currentDebt: Debt[], deduction: number) {
       return debt;
     }
 
+    const interest = debt.interest.multipliedBy(debt.amount).dividedBy(12);
+    const newDebt = interest.plus(debt.amount).toNumber();
+
     return {
       ...debt,
-      amount: debt.interest
-        .multipliedBy(debt.amount)
-        .dividedBy(12)
-        .plus(debt.amount)
-        .toNumber(),
+      amount: newDebt,
+      interestPaidSoFar: interest.plus(debt.interestPaidSoFar).toNumber(),
     };
   });
 
