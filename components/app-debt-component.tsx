@@ -1,19 +1,35 @@
 import Delete from "@mui/icons-material/Delete";
+import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { BigNumber } from "bignumber.js";
 import { DebtState, removeDebt, updateDebt } from "../store/debt-slice";
 import { useAppDispatch } from "../store/store";
-import { BigNumber } from "bignumber.js";
+import { useCallback, useState } from "react";
+import { useEffect } from "react";
 
 export interface AppLoanProps {
   debt: DebtState;
 }
 
 export default function AppDebtComponent({ debt }: AppLoanProps) {
-  const { id, name, amount, interest, fee } = debt;
-  const [expanded, setExpanded] = useState(false);
   const dispatch = useAppDispatch();
+  const [name, setName] = useState(debt.name);
+  const [amount, setAmount] = useState(debt.amount);
+  const [interest, setInterest] = useState(debt.interest);
+  const [fee, setFee] = useState(debt.fee);
+  const { id } = debt;
+
+  const debouncedUpdate = useCallback(
+    debounce((changes: Partial<DebtState>) => {
+      dispatch(updateDebt({ id, changes }));
+    }, 600),
+    []
+  );
+
+  useEffect(() => {
+    debouncedUpdate({ name, amount, interest, fee });
+  }, [name, amount, interest, fee]);
 
   return (
     <div className="relative">
@@ -24,16 +40,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           label="Name"
           variant="standard"
           value={name}
-          onChange={(e) =>
-            dispatch(
-              updateDebt({
-                id,
-                changes: {
-                  name: e.target.value,
-                },
-              })
-            )
-          }
+          onChange={(e) => setName(e.target.value)}
         />
         <TextField
           id="amount"
@@ -42,16 +49,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           variant="standard"
           type="number"
           value={amount}
-          onChange={(e) =>
-            dispatch(
-              updateDebt({
-                id,
-                changes: {
-                  amount: parseInt(e.target.value, 10),
-                },
-              })
-            )
-          }
+          onChange={(e) => setAmount(parseInt(e.target.value, 10))}
         />
         <TextField
           id="interest"
@@ -61,14 +59,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           type="number"
           value={interest.multipliedBy(100)}
           onChange={(e) =>
-            dispatch(
-              updateDebt({
-                id,
-                changes: {
-                  interest: BigNumber(e.target.value).dividedBy(100),
-                },
-              })
-            )
+            setInterest(BigNumber(e.target.value).dividedBy(100))
           }
         />
         <TextField
@@ -78,16 +69,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           variant="standard"
           type="number"
           value={fee}
-          onChange={(e) =>
-            dispatch(
-              updateDebt({
-                id,
-                changes: {
-                  fee: parseInt(e.target.value, 10),
-                },
-              })
-            )
-          }
+          onChange={(e) => setFee(parseInt(e.target.value, 10))}
         />
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">

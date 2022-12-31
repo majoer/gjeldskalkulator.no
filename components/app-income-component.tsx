@@ -1,6 +1,8 @@
 import Delete from "@mui/icons-material/Delete";
+import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
+import { useCallback, useEffect, useState } from "react";
 import { IncomeState, removeIncome, updateIncome } from "../store/income-slice";
 import { useAppDispatch } from "../store/store";
 
@@ -9,8 +11,21 @@ export interface AppIncomeProps {
 }
 
 export default function AppIncomeComponent({ income }: AppIncomeProps) {
-  const { id, amount, name } = income;
   const dispatch = useAppDispatch();
+  const [name, setName] = useState(income.name);
+  const [amount, setAmount] = useState(income.amount);
+  const { id } = income;
+
+  const debouncedUpdate = useCallback(
+    debounce((changes: Partial<IncomeState>) => {
+      dispatch(updateIncome({ id, changes }));
+    }, 600),
+    []
+  );
+
+  useEffect(() => {
+    debouncedUpdate({ name, amount });
+  }, [name, amount]);
 
   return (
     <div>
@@ -21,16 +36,7 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
           label="Name"
           variant="standard"
           value={name}
-          onChange={(e) =>
-            dispatch(
-              updateIncome({
-                id,
-                changes: {
-                  name: e.target.value,
-                },
-              })
-            )
-          }
+          onChange={(e) => setName(e.target.value)}
         />
         <TextField
           id="amount"
@@ -39,16 +45,7 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
           variant="standard"
           type="number"
           value={amount}
-          onChange={(e) =>
-            dispatch(
-              updateIncome({
-                id,
-                changes: {
-                  amount: parseInt(e.target.value, 10),
-                },
-              })
-            )
-          }
+          onChange={(e) => setAmount(parseInt(e.target.value, 10))}
         />
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton onClick={() => dispatch(removeIncome(id))}>

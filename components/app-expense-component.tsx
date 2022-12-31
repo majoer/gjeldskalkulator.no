@@ -1,6 +1,8 @@
 import Delete from "@mui/icons-material/Delete";
+import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
+import { useCallback, useEffect, useState } from "react";
 import {
   ExpenseState,
   removeExpense,
@@ -13,8 +15,21 @@ export interface AppExpenseProps {
 }
 
 export default function AppExpenseComponent({ expense }: AppExpenseProps) {
-  const { id, amount, name } = expense;
   const dispatch = useAppDispatch();
+  const [name, setName] = useState(expense.name);
+  const [amount, setAmount] = useState(expense.amount);
+  const { id } = expense;
+
+  const debouncedUpdate = useCallback(
+    debounce((changes: Partial<ExpenseState>) => {
+      dispatch(updateExpense({ id, changes }));
+    }, 600),
+    []
+  );
+
+  useEffect(() => {
+    debouncedUpdate({ name, amount });
+  }, [name, amount]);
 
   return (
     <div>
@@ -25,16 +40,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           label="Name"
           variant="standard"
           value={name}
-          onChange={(e) =>
-            dispatch(
-              updateExpense({
-                id,
-                changes: {
-                  name: e.target.value,
-                },
-              })
-            )
-          }
+          onChange={(e) => setName(e.target.value)}
         />
         <TextField
           id="amount"
@@ -43,16 +49,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           variant="standard"
           type="number"
           value={amount}
-          onChange={(e) =>
-            dispatch(
-              updateExpense({
-                id,
-                changes: {
-                  amount: parseInt(e.target.value, 10),
-                },
-              })
-            )
-          }
+          onChange={(e) => setAmount(parseInt(e.target.value, 10))}
         />
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton onClick={() => dispatch(removeExpense(id))}>
