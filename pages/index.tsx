@@ -15,10 +15,11 @@ interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+  scrollable: boolean;
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, scrollable, ...other } = props;
 
   return (
     <div
@@ -26,7 +27,7 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      className="h-full-header w-full overflow-y-auto"
+      className={`h-full-header w-full ${scrollable ? "overflow-y-auto" : ""}`}
       {...other}
     >
       {value === index && (
@@ -64,13 +65,13 @@ export default function Home() {
                 }
               ></Tab>
             </Tabs>
-            <TabPanel value={tab} index={0}>
+            <TabPanel value={tab} index={0} scrollable={false}>
               <AppChartComponent />
             </TabPanel>
-            <TabPanel value={tab} index={1}>
+            <TabPanel value={tab} index={1} scrollable={true}>
               <AppPaymentPlanComponent />
             </TabPanel>
-            <TabPanel value={tab} index={2}>
+            <TabPanel value={tab} index={2} scrollable={false}>
               <AppTipsComponent />
             </TabPanel>
           </div>
