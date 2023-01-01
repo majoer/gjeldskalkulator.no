@@ -44,22 +44,25 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           sx={{ width: 200 }}
           className="m-2 shrink-0 grow-0 inline-flex"
           options={[
+            "Alcohol",
+            "Child Support",
+            "Children",
+            "Clothes",
+            "Electricity",
             "Food",
+            "Hobby",
+            "Household",
+            "Internet",
+            "Living",
+            "Medicine",
+            "Other",
+            "Phone",
+            "Savings",
+            "Stocks",
+            "Streaming Services",
             "Transportation",
             "Travel",
             "Vacation",
-            "Living",
-            "Clothes",
-            "Other",
-            "Hobby",
-            "Savings",
-            "Stocks",
-            "Children",
-            "Alcohol",
-            "Medicine",
-            "Household",
-            "Internet",
-            "Electricity",
           ]}
           inputValue={name}
           onInputChange={(_, newName) => setName(newName)}
