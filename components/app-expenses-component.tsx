@@ -3,18 +3,24 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import { Stack } from "@mui/system";
 import { nanoid } from "@reduxjs/toolkit";
+import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { addExpense, selectAllExpenses } from "../store/expense-slice";
 import { useAppSelector } from "../store/store";
-import AppExpenseComponent from "./app-expense-component";
+import AppExpenseComponent, { allOptions } from "./app-expense-component";
 
 export default function AppExpensesComponent() {
   const dispatch = useDispatch();
-  const expenses = useAppSelector(selectAllExpenses);
+  const allExpenses = useAppSelector(selectAllExpenses);
+
+  const options = useMemo(
+    () => allOptions.filter((o) => !allExpenses.find((e) => e.name === o.name)),
+    [allExpenses]
+  );
 
   return (
     <Stack spacing={0} divider={<Divider />}>
-      {expenses.map((expense) => (
+      {allExpenses.map((expense) => (
         <AppExpenseComponent key={expense.id} expense={expense} />
       ))}
       <IconButton
@@ -22,8 +28,8 @@ export default function AppExpensesComponent() {
           dispatch(
             addExpense({
               id: nanoid(),
-              amount: 10000,
-              name: "Food",
+              name: options[0] ? options[0].name : "",
+              amount: options[0] ? options[0].defaultAmount : 0,
             })
           );
         }}

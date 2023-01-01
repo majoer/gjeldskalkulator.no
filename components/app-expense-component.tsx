@@ -4,10 +4,11 @@ import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ExpenseState,
   removeExpense,
+  selectAllExpenses,
   updateExpense,
 } from "../store/expense-slice";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -17,18 +18,54 @@ export interface AppExpenseProps {
   expense: ExpenseState;
 }
 
+export const allOptions = [
+  { name: "Rent", defaultAmount: 10000, synonyms: [] },
+  { name: "Electricity", defaultAmount: 3000, synonyms: [] },
+  { name: "Transportation", defaultAmount: 3000, synonyms: [] },
+  { name: "Food", defaultAmount: 5000, synonyms: [] },
+  { name: "Clothes", defaultAmount: 2000, synonyms: [] },
+  { name: "Internet", defaultAmount: 1000, synonyms: [] },
+  { name: "Phone", defaultAmount: 500, synonyms: [] },
+  { name: "Streaming", defaultAmount: 400, synonyms: [] },
+  { name: "Household", defaultAmount: 1000, synonyms: ["Living"] },
+  { name: "Hobby", defaultAmount: 500, synonyms: [] },
+  { name: "Savings", defaultAmount: 1000, synonyms: ["Stocks"] },
+  { name: "Vacation", defaultAmount: 1000, synonyms: ["Travel"] },
+  { name: "Medicine", defaultAmount: 1000, synonyms: [] },
+  { name: "Living", defaultAmount: 1000, synonyms: [] },
+  { name: "Alcohol", defaultAmount: 1000, synonyms: [] },
+  { name: "Child Support", defaultAmount: 10000, synonyms: [] },
+  { name: "Children", defaultAmount: 10000, synonyms: [] },
+  { name: "Other", defaultAmount: 0, synonyms: [] },
+];
+
+const synonyms = allOptions.reduce((map, option) => {
+  option.synonyms.forEach((s) => (map[s] = option.name));
+  return map;
+}, {});
+
 export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   const dispatch = useAppDispatch();
   const [name, setName] = useState(expense.name);
   const [amount, setAmount] = useState(expense.amount);
   const { id } = expense;
   const { tipIdMap } = useAppSelector(selectTips);
+  const allExpenses = useAppSelector(selectAllExpenses);
 
   const debouncedUpdate = useCallback(
     debounce((changes: Partial<ExpenseState>) => {
       dispatch(updateExpense({ id, changes }));
     }, 600),
     []
+  );
+
+  const options = useMemo(
+    () =>
+      allOptions
+        .filter((o) => !allExpenses.find((e) => e.name === o.name))
+        .flatMap((o) => o.synonyms.concat([o.name]))
+        .sort(),
+    [allExpenses]
   );
 
   useEffect(() => {
@@ -43,29 +80,11 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           freeSolo={true}
           sx={{ width: 200 }}
           className="m-2 shrink-0 grow-0 inline-flex"
-          options={[
-            "Alcohol",
-            "Child Support",
-            "Children",
-            "Clothes",
-            "Electricity",
-            "Food",
-            "Hobby",
-            "Household",
-            "Internet",
-            "Living",
-            "Medicine",
-            "Other",
-            "Phone",
-            "Savings",
-            "Stocks",
-            "Streaming Services",
-            "Transportation",
-            "Travel",
-            "Vacation",
-          ]}
+          options={options}
           inputValue={name}
-          onInputChange={(_, newName) => setName(newName)}
+          onInputChange={(_, newName) =>
+            setName(synonyms[newName] ? synonyms[newName] : newName)
+          }
           renderInput={(params) => (
             <TextField {...params} variant="standard" label="Expense" />
           )}
