@@ -1,4 +1,5 @@
 import Delete from "@mui/icons-material/Delete";
+import Info from "@mui/icons-material/Info";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -9,7 +10,8 @@ import {
   removeExpense,
   updateExpense,
 } from "../store/expense-slice";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { selectTips } from "../store/selectors/tips-selector";
 
 export interface AppExpenseProps {
   expense: ExpenseState;
@@ -20,6 +22,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   const [name, setName] = useState(expense.name);
   const [amount, setAmount] = useState(expense.amount);
   const { id } = expense;
+  const { tipIdMap } = useAppSelector(selectTips);
 
   const debouncedUpdate = useCallback(
     debounce((changes: Partial<ExpenseState>) => {
@@ -73,6 +76,10 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           value={amount}
           onChange={(e) => setAmount(parseInt(e.target.value, 10))}
         />
+        {tipIdMap[id] ? (
+          <Info className={tipIdMap[id].condition.color} />
+        ) : null}
+
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton onClick={() => dispatch(removeExpense(id))}>
             <Delete />

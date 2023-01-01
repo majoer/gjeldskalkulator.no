@@ -40,7 +40,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export default function Home() {
-  const tips = useAppSelector(selectTips);
+  const { allRelevantTips } = useAppSelector(selectTips);
   const [tab, setTab] = useState(0);
 
   return (
@@ -62,7 +62,7 @@ export default function Home() {
               <Tab
                 label="Tips"
                 icon={
-                  <Badge badgeContent={tips.length} color="primary">
+                  <Badge badgeContent={allRelevantTips.length} color="primary">
                     <TipsAndUpdates />
                   </Badge>
                 }

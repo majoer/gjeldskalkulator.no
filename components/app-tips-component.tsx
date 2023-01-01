@@ -1,4 +1,5 @@
 import Favorite from "@mui/icons-material/Favorite";
+import Info from "@mui/icons-material/Info";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -11,17 +12,32 @@ export interface TipConditionArgs {
   incomeMap: { [key: string]: IncomeState };
   expenseMap: { [key: string]: ExpenseState };
 }
+export interface TipCondition {
+  color: string;
+  active: boolean;
+  targetId: string;
+}
 
-export interface Tip {
-  summary: String;
-  condition: (args: TipConditionArgs) => boolean;
+export interface ResolvedTip {
+  summary: string;
+  details: React.ReactNode;
+  condition: TipCondition;
+}
+
+export interface UnresolvedTip {
+  summary: string;
+  condition: (args: TipConditionArgs) => TipCondition;
   details: React.ReactNode;
 }
 
-export const allTips: Tip[] = [
+export const allTips: UnresolvedTip[] = [
   {
     summary: "Your income doesn't cover your expenses and debt",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p>
@@ -45,7 +61,11 @@ export const allTips: Tip[] = [
   },
   {
     summary: "You have many small loans with high interest",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p></p>
@@ -54,7 +74,11 @@ export const allTips: Tip[] = [
   },
   {
     summary: "You have many small loans with high interest",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p></p>
@@ -63,7 +87,11 @@ export const allTips: Tip[] = [
   },
   {
     summary: "You have no money left for savings",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p></p>
@@ -72,7 +100,11 @@ export const allTips: Tip[] = [
   },
   {
     summary: "Alimony is a big part of you expenses",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p></p>
@@ -81,7 +113,11 @@ export const allTips: Tip[] = [
   },
   {
     summary: "You spend a lot on transportation",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p></p>
@@ -90,7 +126,11 @@ export const allTips: Tip[] = [
   },
   {
     summary: "You spend a lot on vacations",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p></p>
@@ -99,7 +139,11 @@ export const allTips: Tip[] = [
   },
   {
     summary: "You spend a lot on your hobbies",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p></p>
@@ -108,7 +152,11 @@ export const allTips: Tip[] = [
   },
   {
     summary: "You spend a lot on alcohol",
-    condition: () => true,
+    condition: ({}) => ({
+      color: "",
+      active: false,
+      targetId: "",
+    }),
     details: (
       <div>
         <p></p>
@@ -117,27 +165,39 @@ export const allTips: Tip[] = [
   },
   {
     summary: "You spend a lot on food",
-    condition: () => true,
+    condition: ({ expenseMap }) => ({
+      color: "text-blue-500",
+      active: expenseMap["Food"]?.amount > 5000,
+      targetId: expenseMap["Food"]?.id,
+    }),
     details: (
       <div>
-        <p></p>
+        <a href="https://www.bunnpris.no/">https://www.bunnpris.no/</a>
       </div>
     ),
   },
   {
     summary: "You spend a lot on electricity",
-    condition: () => true,
+    condition: ({ expenseMap }) => ({
+      color: "text-yellow-500",
+      active: expenseMap["Electricity"]?.amount > 5000,
+      targetId: expenseMap["Electricity"]?.id,
+    }),
     details: (
       <div>
-        <p></p>
+        <a href="https://www.regjeringen.no/no/tema/energi/regjeringens-stromtiltak/id2900232/">
+          https://www.regjeringen.no/no/tema/energi/regjeringens-stromtiltak/id2900232/
+        </a>
       </div>
     ),
   },
   {
     summary: "You haven't classified your expenses",
-    condition: ({ expenseMap }) => {
-      return Object.keys(expenseMap).length === 0 || !!expenseMap["Other"];
-    },
+    condition: ({ expenseMap }) => ({
+      color: "text-orange-500",
+      active: !!expenseMap["Other"],
+      targetId: expenseMap["Other"]?.id,
+    }),
     details: (
       <div>
         <p>
@@ -156,13 +216,20 @@ export const allTips: Tip[] = [
 ];
 
 export default function AppTipsComponent() {
-  const tips = useAppSelector(selectTips);
+  const { allRelevantTips } = useAppSelector(selectTips);
 
   return (
     <div>
-      {tips.map(({ summary, details }, i) => (
+      {allRelevantTips.map(({ summary, details, condition }, i) => (
         <Accordion key={i}>
-          <AccordionSummary>{summary}</AccordionSummary>
+          <AccordionSummary>
+            <div className="mr-8 relative">
+              <Info
+                className={`absolute left-0 top-1/2 -translate-y-1/2 ${condition.color}`}
+              />
+            </div>
+            <div>{summary}</div>
+          </AccordionSummary>
           <AccordionDetails>{details}</AccordionDetails>
         </Accordion>
       ))}
