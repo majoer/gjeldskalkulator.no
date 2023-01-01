@@ -18,6 +18,7 @@ export interface DebtDatum extends Datum {
 export interface DebtSerieSelectorResult {
   resolution: "Month" | "Year";
   serie: DebtDatum[];
+  paymentPlan: DebtDatum[];
 }
 
 export const selectDebtSeries = createSelector(
@@ -59,6 +60,7 @@ export const selectDebtSeries = createSelector(
     if (serie.length >= 12 * 5) {
       return {
         resolution: "Year",
+        paymentPlan: serie,
         serie: serie
           .filter((_, i) => {
             return i % 12 === 0;
@@ -73,6 +75,7 @@ export const selectDebtSeries = createSelector(
     return {
       resolution: "Month",
       serie,
+      paymentPlan: serie,
     };
   }
 );

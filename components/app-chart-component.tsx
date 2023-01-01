@@ -33,10 +33,10 @@ export default function AppChartComponent() {
   ];
 
   return (
-    <div className="h-full relative mr-3">
+    <div className="h-5/6">
       <ResponsiveLine
         data={data}
-        margin={{ top: 100, right: 20, bottom: 100, left: 80 }}
+        margin={{ top: 20, right: 70, bottom: 50, left: 70 }}
         xScale={{
           type: "linear",
         }}
@@ -81,7 +81,7 @@ export default function AppChartComponent() {
         useMesh={true}
         legends={[]}
       />
-      <div className="absolute bottom-1 left-1/2 -translate-x-1/2">
+      <div>
         Total cost of debt:{" "}
         {totalCost === -1
           ? `Too much. Its over ${Math.floor(

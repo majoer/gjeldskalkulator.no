@@ -45,3 +45,7 @@ button {
   padding: 0.5rem 1rem;
   font-weight: bold;
 }
+
+.h-full-header {
+  height: calc(100% - 72px)
+}
