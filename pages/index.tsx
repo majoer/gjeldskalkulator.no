@@ -26,7 +26,7 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      className="h-full-header w-full"
+      className="h-full-header w-full overflow-y-auto"
       {...other}
     >
       {value === index && (

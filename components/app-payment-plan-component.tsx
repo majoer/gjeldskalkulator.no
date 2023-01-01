@@ -6,7 +6,6 @@ import {
   TableRow,
 } from "@mui/material";
 import { selectDebtSeries } from "../store/selectors/graph-selector";
-import { selectResult } from "../store/selectors/result-selector";
 import { useAppSelector } from "../store/store";
 
 export default function AppPaymentPlanComponent() {

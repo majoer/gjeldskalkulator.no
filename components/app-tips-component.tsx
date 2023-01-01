@@ -1,3 +1,3 @@
 export default function AppTipsComponent() {
-  return <div></div>;
+  return <div>Coming soon</div>;
 }

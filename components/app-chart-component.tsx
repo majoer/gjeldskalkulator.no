@@ -36,7 +36,7 @@ export default function AppChartComponent() {
     <div className="h-5/6">
       <ResponsiveLine
         data={data}
-        margin={{ top: 20, right: 70, bottom: 50, left: 70 }}
+        margin={{ top: 20, right: 20, bottom: 50, left: 70 }}
         xScale={{
           type: "linear",
         }}
