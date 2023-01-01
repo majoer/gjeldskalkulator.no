@@ -10,6 +10,8 @@ import CreditCard from "@mui/icons-material/CreditCard";
 import ShowChart from "@mui/icons-material/ShowChart";
 import AppPaymentPlanComponent from "../components/app-payment-plan-component";
 import AppTipsComponent from "../components/app-tips-component";
+import { useAppSelector } from "../store/store";
+import { selectTips } from "../store/selectors/tips-selector";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -38,6 +40,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export default function Home() {
+  const tips = useAppSelector(selectTips);
   const [tab, setTab] = useState(0);
 
   return (
@@ -59,7 +62,7 @@ export default function Home() {
               <Tab
                 label="Tips"
                 icon={
-                  <Badge badgeContent={4} color="primary">
+                  <Badge badgeContent={tips.length} color="primary">
                     <TipsAndUpdates />
                   </Badge>
                 }
