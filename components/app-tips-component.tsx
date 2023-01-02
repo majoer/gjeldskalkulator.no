@@ -94,9 +94,9 @@ export const allTips: UnresolvedTip[] = [
   },
   {
     summary: "You have no money left for debt payments",
-    condition: ({ expenseMap, useTowardsDebt, result }) => ({
+    condition: ({ result }) => ({
       color: "",
-      active: useTowardsDebt >= result,
+      active: result <= 0,
       targetId: "",
     }),
     details: (
@@ -106,22 +106,20 @@ export const allTips: UnresolvedTip[] = [
     ),
   },
   {
-    summary:
-      "You have to spend more towards debt. Your debt is impossible to pay back.",
-    condition: ({ totalCostOfDebt }) => ({
+    summary: "Your debt is impossible to pay back.",
+    condition: ({ totalCostOfDebt, useTowardsDebt }) => ({
       color: "",
-      active: totalCostOfDebt === PLAN_BLOWS_TO_INFINITY,
+      active: totalCostOfDebt === PLAN_BLOWS_TO_INFINITY && useTowardsDebt > 0,
       targetId: "",
     }),
     details: (
       <div>
-        <p></p>
+        <p>You have to spend more towards debt. </p>
       </div>
     ),
   },
   {
-    summary:
-      "You have to spend more towards debt. You will never finish while you live.",
+    summary: "You will never finish while you live.",
     condition: ({ totalCostOfDebt }) => ({
       color: "",
       active: totalCostOfDebt === PLAN_TOO_LONG_TO_CALCULATE,
@@ -129,7 +127,7 @@ export const allTips: UnresolvedTip[] = [
     }),
     details: (
       <div>
-        <p></p>
+        <p>You have to spend more towards debt. </p>
       </div>
     ),
   },
