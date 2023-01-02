@@ -2,6 +2,8 @@ import { createSelector } from "@reduxjs/toolkit";
 import { allTips, ResolvedTip } from "../../components/app-tips-component";
 import { selectAllExpenses } from "../expense-slice";
 import { selectAllIncomes } from "../income-slice";
+import { selectTotalCostOfDebt } from "./graph-selector";
+import { selectResult, selectUseTowardsDebt } from "./result-selector";
 
 export interface SelectTipsResult {
   allRelevantTips: ResolvedTip[];
@@ -9,22 +11,49 @@ export interface SelectTipsResult {
 }
 
 export const selectTips = createSelector(
-  [selectAllIncomes, selectAllExpenses],
-  (allIncomes, allExpenses): SelectTipsResult => {
-    const incomeMap = allIncomes.reduce((map, i) => {
-      map[i.name] = i;
-      return map;
-    }, {});
+  [
+    selectAllIncomes,
+    selectAllExpenses,
+    selectUseTowardsDebt,
+    selectResult,
+    selectTotalCostOfDebt,
+  ],
+  (
+    allIncomes,
+    allExpenses,
+    useTowardsDebt,
+    result,
+    totalCostOfDebt
+  ): SelectTipsResult => {
+    const userStarted = allExpenses.length > 0 && allIncomes.length > 0;
 
-    const expenseMap = allExpenses.reduce((map, e) => {
-      map[e.name] = e;
-      return map;
-    }, {});
+    if (!userStarted) {
+      return {
+        allRelevantTips: [],
+        tipIdMap: {},
+      };
+    }
+
+    const incomeMap = allIncomes.reduce(
+      (map, i) => map.set(i.name, i),
+      new Map()
+    );
+
+    const expenseMap = allExpenses.reduce(
+      (map, e) => map.set(e.name, e),
+      new Map()
+    );
 
     const allRelevantTips = allTips
       .map((tip) => ({
         ...tip,
-        condition: tip.condition({ incomeMap, expenseMap }),
+        condition: tip.condition({
+          incomeMap,
+          expenseMap,
+          useTowardsDebt,
+          result,
+          totalCostOfDebt,
+        }),
       }))
       .filter((tip) => tip.condition.active);
 

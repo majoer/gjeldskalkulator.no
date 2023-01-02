@@ -4,13 +4,20 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { ExpenseState } from "../store/expense-slice";
-import { IncomeState } from "../store/income-slice";
+import {
+  PLAN_BLOWS_TO_INFINITY,
+  PLAN_TOO_LONG_TO_CALCULATE,
+} from "../store/selectors/graph-selector";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppSelector } from "../store/store";
+import { ExpenseOptionName } from "./app-expense-component";
 
 export interface TipConditionArgs {
-  incomeMap: { [key: string]: IncomeState };
-  expenseMap: { [key: string]: ExpenseState };
+  incomeMap: any;
+  expenseMap: Map<ExpenseOptionName, ExpenseState>;
+  result: number;
+  useTowardsDebt: number;
+  totalCostOfDebt: number;
 }
 export interface TipCondition {
   color: string;
@@ -73,10 +80,10 @@ export const allTips: UnresolvedTip[] = [
     ),
   },
   {
-    summary: "You have many small loans with high interest",
-    condition: ({}) => ({
+    summary: "You have no money left for savings",
+    condition: ({ expenseMap, useTowardsDebt, result }) => ({
       color: "",
-      active: false,
+      active: !expenseMap.get("Savings") && useTowardsDebt >= result,
       targetId: "",
     }),
     details: (
@@ -86,10 +93,64 @@ export const allTips: UnresolvedTip[] = [
     ),
   },
   {
-    summary: "You have no money left for savings",
-    condition: ({}) => ({
+    summary: "You have no money left for debt payments",
+    condition: ({ expenseMap, useTowardsDebt, result }) => ({
       color: "",
-      active: false,
+      active: useTowardsDebt >= result,
+      targetId: "",
+    }),
+    details: (
+      <div>
+        <p></p>
+      </div>
+    ),
+  },
+  {
+    summary:
+      "You have to spend more towards debt. Your debt is impossible to pay back.",
+    condition: ({ totalCostOfDebt }) => ({
+      color: "",
+      active: totalCostOfDebt === PLAN_BLOWS_TO_INFINITY,
+      targetId: "",
+    }),
+    details: (
+      <div>
+        <p></p>
+      </div>
+    ),
+  },
+  {
+    summary:
+      "You have to spend more towards debt. You will never finish while you live.",
+    condition: ({ totalCostOfDebt }) => ({
+      color: "",
+      active: totalCostOfDebt === PLAN_TOO_LONG_TO_CALCULATE,
+      targetId: "",
+    }),
+    details: (
+      <div>
+        <p></p>
+      </div>
+    ),
+  },
+  {
+    summary: "You can't afford what you want to use for debt payments",
+    condition: ({ useTowardsDebt, result }) => ({
+      color: "text-red-400",
+      active: useTowardsDebt !== 0 && useTowardsDebt > result,
+      targetId: "",
+    }),
+    details: (
+      <div>
+        <p></p>
+      </div>
+    ),
+  },
+  {
+    summary: "You should spend more money on your debt",
+    condition: ({ useTowardsDebt, result }) => ({
+      color: "text-red-400",
+      active: useTowardsDebt === 0 && result >= 0,
       targetId: "",
     }),
     details: (
@@ -167,8 +228,8 @@ export const allTips: UnresolvedTip[] = [
     summary: "You spend a lot on food",
     condition: ({ expenseMap }) => ({
       color: "text-blue-500",
-      active: expenseMap["Food"]?.amount > 5000,
-      targetId: expenseMap["Food"]?.id,
+      active: expenseMap.get("Food")?.amount > 5000,
+      targetId: expenseMap.get("Food")?.id,
     }),
     details: (
       <div>
@@ -180,8 +241,8 @@ export const allTips: UnresolvedTip[] = [
     summary: "You spend a lot on electricity",
     condition: ({ expenseMap }) => ({
       color: "text-yellow-500",
-      active: expenseMap["Electricity"]?.amount > 5000,
-      targetId: expenseMap["Electricity"]?.id,
+      active: expenseMap.get("Electricity")?.amount > 5000,
+      targetId: expenseMap.get("Electricity")?.id,
     }),
     details: (
       <div>

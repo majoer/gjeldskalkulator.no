@@ -13,8 +13,11 @@ export default function AppExpensesComponent() {
   const dispatch = useDispatch();
   const allExpenses = useAppSelector(selectAllExpenses);
 
-  const options = useMemo(
-    () => allOptions.filter((o) => !allExpenses.find((e) => e.name === o.name)),
+  const nextOptionKey: string | undefined = useMemo(
+    () =>
+      Object.keys(allOptions).filter(
+        (key) => !allExpenses.find((e) => e.name === key)
+      )[0],
     [allExpenses]
   );
 
@@ -28,8 +31,10 @@ export default function AppExpensesComponent() {
           dispatch(
             addExpense({
               id: nanoid(),
-              name: options[0] ? options[0].name : "",
-              amount: options[0] ? options[0].defaultAmount : 0,
+              name: nextOptionKey ? nextOptionKey : "",
+              amount: nextOptionKey
+                ? allOptions[nextOptionKey].defaultAmount
+                : 0,
             })
           );
         }}

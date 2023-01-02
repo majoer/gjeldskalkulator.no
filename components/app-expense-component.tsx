@@ -18,29 +18,31 @@ export interface AppExpenseProps {
   expense: ExpenseState;
 }
 
-export const allOptions = [
-  { name: "Rent", defaultAmount: 10000, synonyms: [] },
-  { name: "Electricity", defaultAmount: 3000, synonyms: [] },
-  { name: "Transportation", defaultAmount: 3000, synonyms: [] },
-  { name: "Food", defaultAmount: 5000, synonyms: [] },
-  { name: "Clothes", defaultAmount: 2000, synonyms: [] },
-  { name: "Internet", defaultAmount: 1000, synonyms: [] },
-  { name: "Phone", defaultAmount: 500, synonyms: [] },
-  { name: "Streaming", defaultAmount: 400, synonyms: [] },
-  { name: "Household", defaultAmount: 1000, synonyms: ["Living"] },
-  { name: "Hobby", defaultAmount: 500, synonyms: [] },
-  { name: "Savings", defaultAmount: 1000, synonyms: ["Stocks"] },
-  { name: "Vacation", defaultAmount: 1000, synonyms: ["Travel"] },
-  { name: "Medicine", defaultAmount: 1000, synonyms: [] },
-  { name: "Living", defaultAmount: 1000, synonyms: [] },
-  { name: "Alcohol", defaultAmount: 1000, synonyms: [] },
-  { name: "Child Support", defaultAmount: 10000, synonyms: [] },
-  { name: "Children", defaultAmount: 10000, synonyms: [] },
-  { name: "Other", defaultAmount: 0, synonyms: [] },
-];
+export type ExpenseOptionName = keyof typeof allOptions;
 
-const synonyms = allOptions.reduce((map, option) => {
-  option.synonyms.forEach((s) => (map[s] = option.name));
+export const allOptions = {
+  Rent: { defaultAmount: 10000, synonyms: [] },
+  Electricity: { defaultAmount: 3000, synonyms: [] },
+  Transportation: { defaultAmount: 3000, synonyms: [] },
+  Food: { defaultAmount: 5000, synonyms: [] },
+  Clothes: { defaultAmount: 2000, synonyms: [] },
+  Internet: { defaultAmount: 1000, synonyms: [] },
+  Phone: { defaultAmount: 500, synonyms: [] },
+  Streaming: { defaultAmount: 400, synonyms: [] },
+  Household: { defaultAmount: 1000, synonyms: ["Living"] },
+  Hobby: { defaultAmount: 500, synonyms: [] },
+  Savings: { defaultAmount: 1000, synonyms: ["Stocks"] },
+  Vacation: { defaultAmount: 1000, synonyms: ["Travel"] },
+  Medicine: { defaultAmount: 1000, synonyms: [] },
+  Living: { defaultAmount: 1000, synonyms: [] },
+  Alcohol: { defaultAmount: 1000, synonyms: [] },
+  "Child Support": { defaultAmount: 10000, synonyms: [] },
+  Children: { defaultAmount: 10000, synonyms: [] },
+  Other: { defaultAmount: 0, synonyms: [] },
+};
+
+const synonyms = Object.keys(allOptions).reduce((map, key) => {
+  allOptions[key].synonyms.forEach((s) => (map[s] = key));
   return map;
 }, {});
 
@@ -52,20 +54,20 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   const { tipIdMap } = useAppSelector(selectTips);
   const allExpenses = useAppSelector(selectAllExpenses);
 
+  const options = useMemo(
+    () =>
+      Object.keys(allOptions)
+        .filter((key) => !allExpenses.find((e) => e.name === key))
+        .flatMap((key) => allOptions[key].synonyms.concat([key]))
+        .sort(),
+    [allExpenses]
+  );
+
   const debouncedUpdate = useCallback(
     debounce((changes: Partial<ExpenseState>) => {
       dispatch(updateExpense({ id, changes }));
     }, 600),
     []
-  );
-
-  const options = useMemo(
-    () =>
-      allOptions
-        .filter((o) => !allExpenses.find((e) => e.name === o.name))
-        .flatMap((o) => o.synonyms.concat([o.name]))
-        .sort(),
-    [allExpenses]
   );
 
   useEffect(() => {

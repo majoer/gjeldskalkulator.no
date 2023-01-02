@@ -4,12 +4,14 @@ import { debtSlice } from "./debt-slice";
 import { expenseSlice } from "./expense-slice";
 import { incomeSlice } from "./income-slice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { resultSpendingSlice } from "./result-spending-slice";
 
 export const store = configureStore({
   reducer: {
     [debtSlice.name]: debtSlice.reducer,
     [expenseSlice.name]: expenseSlice.reducer,
     [incomeSlice.name]: incomeSlice.reducer,
+    [resultSpendingSlice.name]: resultSpendingSlice.reducer,
   },
   devTools: true,
 });

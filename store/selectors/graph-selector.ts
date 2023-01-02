@@ -1,9 +1,11 @@
 import { Datum } from "@nivo/line";
 import { createSelector } from "@reduxjs/toolkit";
 import { selectAllDebts, selectSumDebt, DebtState } from "../debt-slice";
-import { selectResult } from "./result-selector";
+import { selectUseTowardsDebt } from "./result-selector";
 
-export const maxMonths = 12 * 100;
+export const MAX_MONTHS = 12 * 100;
+export const PLAN_TOO_LONG_TO_CALCULATE = -1;
+export const PLAN_BLOWS_TO_INFINITY = -2;
 
 interface Debt extends DebtState {
   paidSoFar: number;
@@ -22,8 +24,8 @@ export interface DebtSerieSelectorResult {
 }
 
 export const selectDebtSeries = createSelector(
-  [selectResult, selectAllDebts, selectSumDebt],
-  (result, allDebt, sumDebt): DebtSerieSelectorResult => {
+  [selectUseTowardsDebt, selectAllDebts, selectSumDebt],
+  (useTowardsDebt, allDebt, sumDebt): DebtSerieSelectorResult => {
     const serie: DebtDatum[] = [
       {
         x: 0,
@@ -40,8 +42,8 @@ export const selectDebtSeries = createSelector(
       interestPaidSoFar: 0,
     }));
     let sumDebtSoFar = sumDebt;
-    while (sumDebtSoFar > 0 && month <= maxMonths) {
-      debtSoFar = advanceDebt(debtSoFar, Math.max(result, 0));
+    while (sumDebtSoFar > 0 && month <= MAX_MONTHS) {
+      debtSoFar = advanceDebt(debtSoFar, Math.max(useTowardsDebt, 0));
       sumDebtSoFar = debtSoFar.reduce((sum, debt) => (sum += debt.amount), 0);
       const latestDebt = debtSoFar[debtSoFar.length - 1];
       const sumInterestPaidSoFar = latestDebt.interestPaidSoFar;
@@ -102,6 +104,25 @@ function advanceDebt(currentDebt: Debt[], deduction: number) {
 
   return applyMontlyDeduction(debtAfterInterest, deduction);
 }
+
+export const selectTotalCostOfDebt = createSelector(
+  [selectDebtSeries],
+  ({ serie }) => {
+    const lastDatum = serie[serie.length - 1];
+
+    if (serie.length === 1) {
+      return lastDatum.sumPaidSoFar;
+    }
+
+    if (12 * (serie.length - 1) === MAX_MONTHS) {
+      return lastDatum.y > serie[serie.length - 2].y
+        ? PLAN_BLOWS_TO_INFINITY
+        : PLAN_TOO_LONG_TO_CALCULATE;
+    }
+
+    return Math.round(serie[serie.length - 1].sumPaidSoFar);
+  }
+);
 
 function applyMontlyDeduction(currentDebt: Debt[], deduction: number) {
   let rest = deduction;

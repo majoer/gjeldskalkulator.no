@@ -9,7 +9,7 @@ import { useAppSelector } from "../store/store";
 import AppDebtsComponent from "./app-debts-component";
 import AppExpensesComponent from "./app-expenses-component";
 import AppIncomesComponent from "./app-incomes-component";
-import AppResultComponent from "./app-result-component";
+import AppResultSpendingComponent from "./app-result-spending-component";
 import { selectResult } from "../store/selectors/result-selector";
 
 export default function AppUserInputComponent() {
@@ -60,7 +60,7 @@ export default function AppUserInputComponent() {
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <AppResultComponent />
+          <AppResultSpendingComponent />
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={true}>

@@ -1,28 +1,15 @@
 import { ResponsiveLine, Serie } from "@nivo/line";
-import { maxMonths, selectDebtSeries } from "../store/selectors/graph-selector";
+import {
+  MAX_MONTHS,
+  selectDebtSeries,
+  selectTotalCostOfDebt,
+} from "../store/selectors/graph-selector";
 import { useAppSelector } from "../store/store";
 import AppChartTooltipComponent from "./app-chart-tooltip-component";
-import { useMemo } from "react";
-
-const PLAN_TOO_LONG_TO_CALCULATE = -1;
-const PLAN_BLOWS_TO_INFINITY = -2;
 
 export default function AppChartComponent() {
   const { serie, resolution } = useAppSelector(selectDebtSeries);
-  const lastDatum = serie[serie.length - 1];
-  const totalCost = useMemo(() => {
-    if (serie.length === 1) {
-      return lastDatum.sumPaidSoFar;
-    }
-
-    if (12 * (serie.length - 1) === maxMonths) {
-      return lastDatum.y > serie[serie.length - 2].y
-        ? PLAN_BLOWS_TO_INFINITY
-        : PLAN_TOO_LONG_TO_CALCULATE;
-    }
-
-    return Math.round(serie[serie.length - 1].sumPaidSoFar);
-  }, [serie]);
+  const totalCost = useAppSelector(selectTotalCostOfDebt);
 
   const data: Serie[] = [
     {
@@ -85,7 +72,7 @@ export default function AppChartComponent() {
         Total cost of debt:{" "}
         {totalCost === -1
           ? `Too much. Its over ${Math.floor(
-              maxMonths / 12
+              MAX_MONTHS / 12
             )} years to complete.`
           : totalCost === -2
           ? "Infinity. This can't be paid back"
