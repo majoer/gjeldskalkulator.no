@@ -2,9 +2,10 @@ import Delete from "@mui/icons-material/Delete";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { IncomeState, removeIncome, updateIncome } from "../store/income-slice";
 import { useAppDispatch } from "../store/store";
+import { positiveInteger } from "../validation/validation";
 
 export interface AppIncomeProps {
   income: IncomeState;
@@ -13,19 +14,39 @@ export interface AppIncomeProps {
 export default function AppIncomeComponent({ income }: AppIncomeProps) {
   const dispatch = useAppDispatch();
   const [name, setName] = useState(income.name);
-  const [amount, setAmount] = useState(income.amount);
+  const [amount, setAmount] = useState("" + income.amount);
   const { id } = income;
 
+  const errors = useMemo(
+    () => ({
+      name: undefined,
+      amount: positiveInteger(amount),
+    }),
+    [name, amount]
+  );
+
   const debouncedUpdate = useCallback(
-    debounce((changes: Partial<IncomeState>) => {
+    debounce(({ name, amount, errors }) => {
+      const fullUpdate: Partial<IncomeState> = {
+        name,
+        amount: parseInt(amount, 10),
+      };
+
+      const changes: Partial<IncomeState> = Object.keys(errors)
+        .filter((field) => !errors[field])
+        .reduce((update, field) => {
+          update[field] = fullUpdate[field];
+          return update;
+        }, {});
+
       dispatch(updateIncome({ id, changes }));
     }, 600),
     []
   );
 
   useEffect(() => {
-    debouncedUpdate({ name, amount });
-  }, [name, amount]);
+    debouncedUpdate({ name, amount, errors });
+  }, [name, amount, errors]);
 
   return (
     <div className="relative">
@@ -40,12 +61,14 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
         />
         <TextField
           id="amount"
-          className="m-2 shrink-0 grow-0"
+          type="text"
           label="Amount"
           variant="standard"
-          type="number"
+          className="m-2 shrink-0 grow-0"
           value={amount}
-          onChange={(e) => setAmount(parseInt(e.target.value, 10))}
+          error={!!errors["amount"]}
+          helperText={errors["amount"]}
+          onChange={(e) => setAmount(e.target.value)}
         />
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton onClick={() => dispatch(removeIncome(id))}>

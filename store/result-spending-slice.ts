@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import * as BigNumber from "bignumber.js";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store";
 
 export interface ResultSpendingState {
-  useTowardsDebt: number;
+  useTowardsDebt: BigNumber.BigNumber;
   useTowardsDebtType: "percentage" | "number";
 }
 
 const initialState: ResultSpendingState = {
-  useTowardsDebt: 80,
+  useTowardsDebt: BigNumber.BigNumber(80),
   useTowardsDebtType: "percentage",
 };
 
@@ -34,6 +35,7 @@ export const resultSpendingSlice = createSlice({
 
 export const { updateResultSpending } = resultSpendingSlice.actions;
 
-export const selectResultSpending = (state: AppState) => state.result;
+export const selectResultSpending = (state): ResultSpendingState =>
+  state.result;
 
 export default resultSpendingSlice.reducer;

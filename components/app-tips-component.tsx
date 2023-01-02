@@ -3,6 +3,7 @@ import Info from "@mui/icons-material/Info";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import * as BigNumber from "bignumber.js";
 import { ExpenseState } from "../store/expense-slice";
 import {
   PLAN_BLOWS_TO_INFINITY,
@@ -16,7 +17,7 @@ export interface TipConditionArgs {
   incomeMap: any;
   expenseMap: Map<ExpenseOptionName, ExpenseState>;
   result: number;
-  useTowardsDebt: number;
+  useTowardsDebt: BigNumber.BigNumber;
   totalCostOfDebt: number;
 }
 export interface TipCondition {
@@ -83,7 +84,9 @@ export const allTips: UnresolvedTip[] = [
     summary: "You have no money left for savings",
     condition: ({ expenseMap, useTowardsDebt, result }) => ({
       color: "",
-      active: !expenseMap.get("Savings") && useTowardsDebt >= result,
+      active:
+        !expenseMap.get("Savings") &&
+        useTowardsDebt.isGreaterThanOrEqualTo(result),
       targetId: "",
     }),
     details: (
@@ -109,7 +112,9 @@ export const allTips: UnresolvedTip[] = [
     summary: "Your debt is impossible to pay back.",
     condition: ({ totalCostOfDebt, useTowardsDebt }) => ({
       color: "",
-      active: totalCostOfDebt === PLAN_BLOWS_TO_INFINITY && useTowardsDebt > 0,
+      active:
+        totalCostOfDebt === PLAN_BLOWS_TO_INFINITY &&
+        useTowardsDebt.isGreaterThan(0),
       targetId: "",
     }),
     details: (
@@ -135,7 +140,8 @@ export const allTips: UnresolvedTip[] = [
     summary: "You can't afford what you want to use for debt payments",
     condition: ({ useTowardsDebt, result }) => ({
       color: "text-red-400",
-      active: useTowardsDebt !== 0 && useTowardsDebt > result,
+      active:
+        useTowardsDebt.isPositive() && useTowardsDebt.isGreaterThan(result),
       targetId: "",
     }),
     details: (
@@ -148,7 +154,7 @@ export const allTips: UnresolvedTip[] = [
     summary: "You should spend more money on your debt",
     condition: ({ useTowardsDebt, result }) => ({
       color: "text-red-400",
-      active: useTowardsDebt === 0 && result >= 0,
+      active: useTowardsDebt.isZero() && result >= 0,
       targetId: "",
     }),
     details: (

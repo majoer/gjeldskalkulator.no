@@ -13,6 +13,7 @@ import {
 } from "../store/expense-slice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { selectTips } from "../store/selectors/tips-selector";
+import { positiveInteger } from "../validation/validation";
 
 export interface AppExpenseProps {
   expense: ExpenseState;
@@ -49,7 +50,7 @@ const synonyms = Object.keys(allOptions).reduce((map, key) => {
 export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   const dispatch = useAppDispatch();
   const [name, setName] = useState(expense.name);
-  const [amount, setAmount] = useState(expense.amount);
+  const [amount, setAmount] = useState("" + expense.amount);
   const { id } = expense;
   const { tipIdMap } = useAppSelector(selectTips);
   const allExpenses = useAppSelector(selectAllExpenses);
@@ -63,16 +64,36 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
     [allExpenses]
   );
 
+  const errors = useMemo(
+    () => ({
+      name: undefined,
+      amount: positiveInteger(amount),
+    }),
+    [name, amount]
+  );
+
   const debouncedUpdate = useCallback(
-    debounce((changes: Partial<ExpenseState>) => {
+    debounce(({ name, amount, errors }) => {
+      const fullUpdate: Partial<ExpenseState> = {
+        name,
+        amount: parseInt(amount, 10),
+      };
+
+      const changes: Partial<ExpenseState> = Object.keys(errors)
+        .filter((field) => !errors[field])
+        .reduce((update, field) => {
+          update[field] = fullUpdate[field];
+          return update;
+        }, {});
+
       dispatch(updateExpense({ id, changes }));
     }, 600),
     []
   );
 
   useEffect(() => {
-    debouncedUpdate({ name, amount });
-  }, [name, amount]);
+    debouncedUpdate({ name, amount, errors });
+  }, [name, amount, errors]);
 
   return (
     <div className="relative">
@@ -93,12 +114,14 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
         />
         <TextField
           id="amount"
-          className="m-2 shrink-0 grow-0"
+          type="text"
           label="Amount"
           variant="standard"
-          type="number"
+          className="m-2 shrink-0 grow-0"
           value={amount}
-          onChange={(e) => setAmount(parseInt(e.target.value, 10))}
+          error={!!errors["amount"]}
+          helperText={errors["amount"]}
+          onChange={(e) => setAmount(e.target.value)}
         />
         {tipIdMap[id] ? (
           <Info className={tipIdMap[id].condition.color} />

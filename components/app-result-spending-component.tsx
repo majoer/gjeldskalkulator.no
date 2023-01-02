@@ -4,7 +4,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import { useCallback, useEffect, useState } from "react";
+import BigNumber from "bignumber.js";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ResultSpendingState,
   selectResultSpending,
@@ -15,6 +16,7 @@ import {
   selectUseTowardsDebt,
 } from "../store/selectors/result-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
+import { nonNegativeInteger, percentage } from "../validation/validation";
 
 export default function AppResultSpendingComponent() {
   const dispatch = useAppDispatch();
@@ -22,22 +24,48 @@ export default function AppResultSpendingComponent() {
   const resultSpendingValue = useAppSelector(selectUseTowardsDebt);
   const resultSpending = useAppSelector(selectResultSpending);
   const [useTowardsDebt, setUseTowardsDebt] = useState(
-    resultSpending.useTowardsDebt
+    resultSpending.useTowardsDebt.toString()
   );
   const [useTowardsDebtType, setUseTowardsDebtType] = useState(
     resultSpending.useTowardsDebtType
   );
 
+  const errors = useMemo(
+    () => ({
+      useTowardsDebt:
+        useTowardsDebtType === "number"
+          ? nonNegativeInteger(useTowardsDebt)
+          : percentage(useTowardsDebt),
+      useTowardsDebtType: undefined,
+    }),
+    [useTowardsDebt, useTowardsDebtType]
+  );
+
   const debouncedUpdate = useCallback(
-    debounce((changes: Partial<ResultSpendingState>) => {
+    debounce(({ useTowardsDebt, useTowardsDebtType, errors }) => {
+      const fullUpdate: Partial<ResultSpendingState> = {
+        useTowardsDebtType,
+        useTowardsDebt:
+          useTowardsDebtType === "number"
+            ? BigNumber(useTowardsDebt)
+            : BigNumber(useTowardsDebt).dividedBy(100),
+      };
+
+      const changes: Partial<ResultSpendingState> = Object.keys(errors)
+        .filter((field) => !errors[field])
+        .reduce((update, field) => {
+          update[field] = fullUpdate[field];
+          return update;
+        }, {});
+
       dispatch(updateResultSpending(changes));
     }, 600),
     []
   );
 
   useEffect(() => {
-    debouncedUpdate({ useTowardsDebt, useTowardsDebtType });
-  }, [useTowardsDebt, useTowardsDebtType]);
+    debouncedUpdate({ useTowardsDebt, useTowardsDebtType, errors });
+  }, [useTowardsDebt, useTowardsDebtType, errors]);
 
   return (
     <div>
@@ -47,7 +75,9 @@ export default function AppResultSpendingComponent() {
         label="Use for Debt payments"
         variant="standard"
         value={useTowardsDebt}
-        onChange={(e) => setUseTowardsDebt(parseInt(e.target.value, 10))}
+        error={!!errors["useTowardsDebt"]}
+        helperText={errors["useTowardsDebt"]}
+        onChange={(e) => setUseTowardsDebt(e.target.value)}
       />
       <FormControl variant="standard" className="m-2">
         <InputLabel id="type-label">Type</InputLabel>
@@ -57,9 +87,24 @@ export default function AppResultSpendingComponent() {
           value={useTowardsDebtType}
           label="Type"
           variant="standard"
-          onChange={(e) =>
-            setUseTowardsDebtType(e.target.value as "percentage" | "number")
-          }
+          onChange={(e) => {
+            setUseTowardsDebtType(e.target.value as "percentage" | "number");
+
+            if (e.target.value === "number") {
+              setUseTowardsDebt(
+                resultSpendingValue.decimalPlaces(0).toFormat()
+              );
+            } else {
+              setUseTowardsDebt(
+                "" +
+                  resultSpendingValue
+                    .dividedBy(result)
+                    .multipliedBy(100)
+                    .decimalPlaces(0)
+                    .toNumber()
+              );
+            }
+          }}
         >
           <MenuItem value={"percentage"}>%</MenuItem>
           <MenuItem value={"number"}>,-</MenuItem>
@@ -73,7 +118,7 @@ export default function AppResultSpendingComponent() {
           className="m-2"
           label={`${useTowardsDebt}% of ${result} =`}
           variant="standard"
-          value={Math.round(resultSpendingValue)}
+          value={"" + resultSpendingValue.decimalPlaces(0).toNumber()}
         />
       ) : null}
     </div>

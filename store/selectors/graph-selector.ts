@@ -1,5 +1,6 @@
 import { Datum } from "@nivo/line";
 import { createSelector } from "@reduxjs/toolkit";
+import * as BigNumber from "bignumber.js";
 import { selectAllDebts, selectSumDebt, DebtState } from "../debt-slice";
 import { selectUseTowardsDebt } from "./result-selector";
 
@@ -43,7 +44,7 @@ export const selectDebtSeries = createSelector(
     }));
     let sumDebtSoFar = sumDebt;
     while (sumDebtSoFar > 0 && month <= MAX_MONTHS) {
-      debtSoFar = advanceDebt(debtSoFar, Math.max(useTowardsDebt, 0));
+      debtSoFar = advanceDebt(debtSoFar, useTowardsDebt);
       sumDebtSoFar = debtSoFar.reduce((sum, debt) => (sum += debt.amount), 0);
       const latestDebt = debtSoFar[debtSoFar.length - 1];
       const sumInterestPaidSoFar = latestDebt.interestPaidSoFar;
@@ -82,7 +83,7 @@ export const selectDebtSeries = createSelector(
   }
 );
 
-function advanceDebt(currentDebt: Debt[], deduction: number) {
+function advanceDebt(currentDebt: Debt[], deduction: BigNumber.BigNumber) {
   if (currentDebt.length === 0) {
     return [];
   }
@@ -124,17 +125,26 @@ export const selectTotalCostOfDebt = createSelector(
   }
 );
 
-function applyMontlyDeduction(currentDebt: Debt[], deduction: number) {
+function applyMontlyDeduction(
+  currentDebt: Debt[],
+  deduction: BigNumber.BigNumber
+) {
   let rest = deduction;
 
   return currentDebt.map((debt) => {
     if (debt.amount === 0) {
       return debt;
     }
-    const deductionAfterFee = rest - debt.fee;
-    const newDebt = Math.max(debt.amount - deductionAfterFee, 0);
-    rest = Math.max(deductionAfterFee - debt.amount, 0);
-    const paidSoFar = debt.paidSoFar + deduction - rest;
+    const deductionAfterFee = rest.minus(debt.fee);
+    const newDebt = BigNumber.BigNumber.max(
+      BigNumber.BigNumber(debt.amount).minus(deductionAfterFee),
+      0
+    ).toNumber();
+    rest = BigNumber.BigNumber.max(deductionAfterFee.minus(debt.amount), 0);
+    const paidSoFar = BigNumber.BigNumber(debt.paidSoFar)
+      .plus(deduction)
+      .minus(rest)
+      .toNumber();
 
     return {
       ...debt,
