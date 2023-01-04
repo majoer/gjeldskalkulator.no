@@ -27,7 +27,7 @@ export default function AppExpandingPaperComponent({
     <Paper
       elevation={5}
       className={`relative m-2 p-3 transition-all duration-700 ${
-        open ? "w-full h-96 " : "w-1/4 h-14"
+        open ? "w-full h-96 " : "w-full sm:w-2/5 md:w-3/12 h-14"
       }`}
     >
       {open ? (
