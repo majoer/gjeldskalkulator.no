@@ -52,10 +52,10 @@ export default function Home() {
 
       <main>
         <div className="min-h-screen">
-          <div className=" w-1/2 min-h-screen bg-slate-100 p-1 rounded">
+          <div className="w-full xl:w-1/2 xl:min-h-screen mb-4 xl:mb-0 bg-slate-100 xl:p-1 rounded">
             <AppUserInputComponent />
           </div>
-          <div className="w-1/2 fixed top-0 bottom-0 right-0">
+          <div className="w-full xl:w-1/2 static h-96 xl:h-screen xl:fixed xl:top-0 xl:bottom-0 xl:right-0">
             <Tabs value={tab} onChange={(_, newTab) => setTab(newTab)}>
               <Tab label="Chart" icon={<ShowChart />}></Tab>
               <Tab label="Payment plan" icon={<CreditCard />}></Tab>
