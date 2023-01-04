@@ -44,7 +44,7 @@ export default function AppExpandingPaperComponent({
       </Typography>
 
       <div
-        className={`p-4 transition-opacity duration-1000 ${
+        className={`p-4 transition-opacity duration-700 delay-300 ${
           open ? "opacity-100" : "opacity-0"
         }`}
       >
