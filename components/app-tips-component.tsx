@@ -1,17 +1,17 @@
 import Favorite from "@mui/icons-material/Favorite";
 import Info from "@mui/icons-material/Info";
 import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionDetailsComponent from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import * as BigNumber from "bignumber.js";
+import { useState } from "react";
 import { ExpenseState } from "../store/expense-slice";
-import {
-  PLAN_BLOWS_TO_INFINITY,
-  PLAN_TOO_LONG_TO_CALCULATE,
-} from "../store/selectors/graph-selector";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppSelector } from "../store/store";
-import { ExpenseOptionName } from "./app-expense-component";
+import { ExpenseOptionName, ExpenseOptionNames } from "./app-expense-component";
 
 export interface TipConditionArgs {
   incomeMap: any;
@@ -20,250 +20,207 @@ export interface TipConditionArgs {
   useTowardsDebt: BigNumber.BigNumber;
   totalCostOfDebt: number;
 }
-export interface TipCondition {
-  color: string;
-  active: boolean;
-  targetId: string;
-}
+export interface TipCondition {}
 
 export interface ResolvedTip {
   summary: string;
-  details: React.ReactNode;
-  condition: TipCondition;
+  active: boolean;
+  targetId: string[];
+  color: string;
+  DetailsComponent: React.FC;
 }
 
-export interface UnresolvedTip {
-  summary: string;
-  condition: (args: TipConditionArgs) => TipCondition;
-  details: React.ReactNode;
-}
+export type UnresolvedTip = (args: TipConditionArgs) => ResolvedTip;
+
+const expenseLimits: { [Property in ExpenseOptionName]: number } = {
+  Rent: 10000,
+  Electricity: 5000,
+  Transportation: 5000,
+  Food: 10000,
+  Clothes: 3000,
+  Internet: 1500,
+  Phone: 1000,
+  Streaming: 2000,
+  Household: 1000,
+  Hobby: 2000,
+  Savings: -1,
+  Vacation: 2000,
+  Medicine: -1,
+  Living: 3000,
+  Alcohol: 0,
+  "Child Support": 10000,
+  Children: 3000,
+  Other: 5000,
+};
 
 export const allTips: UnresolvedTip[] = [
-  {
-    summary: "Your income doesn't cover your expenses and debt",
-    condition: ({}) => ({
+  ({ expenseMap, incomeMap, result, totalCostOfDebt, useTowardsDebt }) => {
+    const expensesOverLimit = ExpenseOptionNames.filter(
+      (post) =>
+        expenseLimits[post] !== -1 &&
+        expenseMap.get(post)?.amount > expenseLimits[post]
+    );
+
+    return {
+      summary: "Reduce spending",
+      active: expensesOverLimit.length > 0,
       color: "",
-      active: false,
-      targetId: "",
-    }),
-    details: (
-      <div>
-        <p>
-          It is not uncommon to spend more money then you can afford. <br />
-          Hopefully we can help you balance your economy, so that your spending
-          can match your income. <br />
-          Here are some general suggestions:
-        </p>
-        <ul>
-          <li>
-            Reduce your expenses or debt payments. There should be other tips
-            here to help you.
-          </li>
-          <li>
-            Increase your income by getting a second job -{" "}
-            <a href="https://www.nav.no/">https://www.nav.no/</a>
-          </li>
-        </ul>
-      </div>
-    ),
+      targetId: expensesOverLimit.map((post) => expenseMap.get(post).id),
+      DetailsComponent: () => {
+        const [focused, setFocused] = useState(null);
+        return (
+          <div>
+            <div className="flex flex-wrap">
+              {expensesOverLimit
+                .filter((e) => !focused || e === focused)
+                .map((post) => (
+                  <Paper
+                    elevation={5}
+                    key={post}
+                    className={`relative m-2 p-3 h-15 ${
+                      focused === post
+                        ? "w-full h-96"
+                        : focused === null
+                        ? "w-1/4"
+                        : ""
+                    }`}
+                  >
+                    {focused ? (
+                      <Button
+                        className="absolute top-0 right-0"
+                        onClick={() => setFocused(null)}
+                      >
+                        x
+                      </Button>
+                    ) : null}
+
+                    <Typography
+                      align="center"
+                      variant="h6"
+                      onClick={() => {
+                        setFocused(post);
+                      }}
+                    >
+                      {post}
+                    </Typography>
+
+                    {focused ? (
+                      <Typography>
+                        Regjeringen har innført en rekke midlertidige
+                        støtteordninger som hjelp til å håndtere de rekordhøye
+                        strømprisene. Her får du en oversikt over alle
+                        støtteordningene og hvor mye som er bevilget.
+                      </Typography>
+                    ) : null}
+                  </Paper>
+                ))}
+            </div>
+            {/* <p>
+            It is not uncommon to spend more money then you can afford. <br />
+            Hopefully we can help you balance your economy, so that your
+            spending can match your income. <br />
+            Here are some general suggestions:
+          </p>
+          <ul>
+            <li>
+              Reduce your expenses or debt payments. There should be other tips
+              here to help you.
+            </li>
+            <li>
+              Increase your income by getting a second job -{" "}
+              <a href="https://www.nav.no/">https://www.nav.no/</a>
+            </li>
+          </ul> */}
+          </div>
+        );
+      },
+    };
   },
-  {
-    summary: "You have many small loans with high interest",
-    condition: ({}) => ({
-      color: "",
-      active: false,
-      targetId: "",
-    }),
-    details: (
+  ({ expenseMap }) => ({
+    summary: "Refinance your debt",
+    active: false,
+    color: "",
+    targetId: [],
+    DetailsComponent: () => (
       <div>
         <p></p>
       </div>
     ),
-  },
-  {
-    summary: "You have no money left for savings",
-    condition: ({ expenseMap, useTowardsDebt, result }) => ({
-      color: "",
-      active:
-        !expenseMap.get("Savings") &&
-        useTowardsDebt.isGreaterThanOrEqualTo(result),
-      targetId: "",
-    }),
-    details: (
+  }),
+  ({ expenseMap, useTowardsDebt, result }) => ({
+    summary: "Set some money aside for savings",
+    active:
+      !expenseMap.get("Savings") &&
+      useTowardsDebt.isGreaterThanOrEqualTo(result),
+    color: "",
+    targetId: [],
+    DetailsComponent: () => (
       <div>
         <p></p>
       </div>
     ),
-  },
-  {
-    summary: "You have no money left for debt payments",
-    condition: ({ result }) => ({
-      color: "",
-      active: result <= 0,
-      targetId: "",
-    }),
-    details: (
+  }),
+  ({ expenseMap }) => ({
+    summary: "Use more of your profits on debt",
+    active: false,
+    color: "",
+    targetId: [],
+    DetailsComponent: () => (
       <div>
         <p></p>
       </div>
     ),
-  },
-  {
-    summary: "Your debt is impossible to pay back.",
-    condition: ({ totalCostOfDebt, useTowardsDebt }) => ({
-      color: "",
-      active:
-        totalCostOfDebt === PLAN_BLOWS_TO_INFINITY &&
-        useTowardsDebt.isGreaterThan(0),
-      targetId: "",
-    }),
-    details: (
+  }),
+  ({ expenseMap }) => ({
+    summary: "Apply for public debt annullment",
+    active: false,
+    color: "",
+    targetId: [],
+    DetailsComponent: () => (
       <div>
         <p>You have to spend more towards debt. </p>
       </div>
     ),
-  },
-  {
-    summary: "You will never finish while you live.",
-    condition: ({ totalCostOfDebt }) => ({
-      color: "",
-      active: totalCostOfDebt === PLAN_TOO_LONG_TO_CALCULATE,
-      targetId: "",
-    }),
-    details: (
+  }),
+  ({ expenseMap }) => ({
+    summary: "Prioritize high interest debt first",
+    active: false,
+    color: "",
+    targetId: [],
+    DetailsComponent: () => (
       <div>
         <p>You have to spend more towards debt. </p>
       </div>
     ),
-  },
-  {
-    summary: "You can't afford what you want to use for debt payments",
-    condition: ({ useTowardsDebt, result }) => ({
-      color: "text-red-400",
-      active:
-        useTowardsDebt.isPositive() && useTowardsDebt.isGreaterThan(result),
-      targetId: "",
-    }),
-    details: (
+  }),
+  ({ expenseMap }) => ({
+    summary: "Take up a second job",
+    active: false,
+    color: "",
+    targetId: [],
+    DetailsComponent: () => (
       <div>
         <p></p>
       </div>
     ),
-  },
-  {
-    summary: "You should spend more money on your debt",
-    condition: ({ useTowardsDebt, result }) => ({
-      color: "text-red-400",
-      active: useTowardsDebt.isZero() && result >= 0,
-      targetId: "",
-    }),
-    details: (
+  }),
+  ({ expenseMap }) => ({
+    summary: "Talk with NAV",
+    active: false,
+    color: "",
+    targetId: [],
+    DetailsComponent: () => (
       <div>
         <p></p>
       </div>
     ),
-  },
-  {
-    summary: "Alimony is a big part of you expenses",
-    condition: ({}) => ({
-      color: "",
-      active: false,
-      targetId: "",
-    }),
-    details: (
-      <div>
-        <p></p>
-      </div>
-    ),
-  },
-  {
-    summary: "You spend a lot on transportation",
-    condition: ({}) => ({
-      color: "",
-      active: false,
-      targetId: "",
-    }),
-    details: (
-      <div>
-        <p></p>
-      </div>
-    ),
-  },
-  {
-    summary: "You spend a lot on vacations",
-    condition: ({}) => ({
-      color: "",
-      active: false,
-      targetId: "",
-    }),
-    details: (
-      <div>
-        <p></p>
-      </div>
-    ),
-  },
-  {
-    summary: "You spend a lot on your hobbies",
-    condition: ({}) => ({
-      color: "",
-      active: false,
-      targetId: "",
-    }),
-    details: (
-      <div>
-        <p></p>
-      </div>
-    ),
-  },
-  {
-    summary: "You spend a lot on alcohol",
-    condition: ({}) => ({
-      color: "",
-      active: false,
-      targetId: "",
-    }),
-    details: (
-      <div>
-        <p></p>
-      </div>
-    ),
-  },
-  {
-    summary: "You spend a lot on food",
-    condition: ({ expenseMap }) => ({
-      color: "text-blue-500",
-      active: expenseMap.get("Food")?.amount > 5000,
-      targetId: expenseMap.get("Food")?.id,
-    }),
-    details: (
-      <div>
-        <a href="https://www.bunnpris.no/">https://www.bunnpris.no/</a>
-      </div>
-    ),
-  },
-  {
-    summary: "You spend a lot on electricity",
-    condition: ({ expenseMap }) => ({
-      color: "text-yellow-500",
-      active: expenseMap.get("Electricity")?.amount > 5000,
-      targetId: expenseMap.get("Electricity")?.id,
-    }),
-    details: (
-      <div>
-        <a href="https://www.regjeringen.no/no/tema/energi/regjeringens-stromtiltak/id2900232/">
-          https://www.regjeringen.no/no/tema/energi/regjeringens-stromtiltak/id2900232/
-        </a>
-      </div>
-    ),
-  },
-  {
+  }),
+  ({ expenseMap }) => ({
     summary: "You haven't classified your expenses",
-    condition: ({ expenseMap }) => ({
-      color: "text-orange-500",
-      active: !!expenseMap["Other"],
-      targetId: expenseMap["Other"]?.id,
-    }),
-    details: (
+    active: !!expenseMap["Other"],
+    color: "text-orange-500",
+    targetId: expenseMap["Other"]?.id,
+    DetailsComponent: () => (
       <div>
         <p>
           This app can't give any meaningful advice without insight into your
@@ -277,7 +234,7 @@ export const allTips: UnresolvedTip[] = [
         </p>
       </div>
     ),
-  },
+  }),
 ];
 
 export default function AppTipsComponent() {
@@ -285,19 +242,23 @@ export default function AppTipsComponent() {
 
   return (
     <div>
-      {allRelevantTips.map(({ summary, details, condition }, i) => (
-        <Accordion key={i}>
-          <AccordionSummary>
-            <div className="mr-8 relative">
-              <Info
-                className={`absolute left-0 top-1/2 -translate-y-1/2 ${condition.color}`}
-              />
-            </div>
-            <div>{summary}</div>
-          </AccordionSummary>
-          <AccordionDetails>{details}</AccordionDetails>
-        </Accordion>
-      ))}
+      {allRelevantTips.map(
+        ({ summary, DetailsComponent, active, color }, i) => (
+          <Accordion key={i}>
+            <AccordionSummary>
+              <div className="mr-8 relative">
+                <Info
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 ${color}`}
+                />
+              </div>
+              <div>{summary}</div>
+            </AccordionSummary>
+            <AccordionDetailsComponent>
+              <DetailsComponent />
+            </AccordionDetailsComponent>
+          </Accordion>
+        )
+      )}
     </div>
   );
 }

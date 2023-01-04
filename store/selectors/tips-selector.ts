@@ -45,20 +45,19 @@ export const selectTips = createSelector(
     );
 
     const allRelevantTips = allTips
-      .map((tip) => ({
-        ...tip,
-        condition: tip.condition({
+      .map((resolveTip) =>
+        resolveTip({
           incomeMap,
           expenseMap,
           useTowardsDebt,
           result,
           totalCostOfDebt,
-        }),
-      }))
-      .filter((tip) => tip.condition.active);
+        })
+      )
+      .filter((tip) => tip.active);
 
     const tipIdMap = allRelevantTips.reduce((map, tip) => {
-      map[tip.condition.targetId] = tip;
+      tip.targetId.forEach((id) => (map[id] = tip));
       return map;
     }, {});
 

@@ -19,8 +19,6 @@ export interface AppExpenseProps {
   expense: ExpenseState;
 }
 
-export type ExpenseOptionName = keyof typeof allOptions;
-
 export const allOptions = {
   Rent: { defaultAmount: 10000, synonyms: [] },
   Electricity: { defaultAmount: 3000, synonyms: [] },
@@ -41,6 +39,11 @@ export const allOptions = {
   Children: { defaultAmount: 10000, synonyms: [] },
   Other: { defaultAmount: 0, synonyms: [] },
 };
+
+export type ExpenseOptionName = keyof typeof allOptions;
+export const ExpenseOptionNames = Object.keys(
+  allOptions
+) as ExpenseOptionName[];
 
 const synonyms = Object.keys(allOptions).reduce((map, key) => {
   allOptions[key].synonyms.forEach((s) => (map[s] = key));
@@ -123,9 +126,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           helperText={errors["amount"]}
           onChange={(e) => setAmount(e.target.value)}
         />
-        {tipIdMap[id] ? (
-          <Info className={tipIdMap[id].condition.color} />
-        ) : null}
+        {tipIdMap[id] ? <Info className={tipIdMap[id].color} /> : null}
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton onClick={() => dispatch(removeExpense(id))}>
