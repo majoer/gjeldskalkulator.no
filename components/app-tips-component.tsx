@@ -3,14 +3,12 @@ import Info from "@mui/icons-material/Info";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetailsComponent from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import * as BigNumber from "bignumber.js";
 import { useState } from "react";
 import { ExpenseState } from "../store/expense-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppSelector } from "../store/store";
+import AppExpandingPaperComponent from "./app-expanding-paper-component";
 import { ExpenseOptionName, ExpenseOptionNames } from "./app-expense-component";
 
 export interface TipConditionArgs {
@@ -67,53 +65,24 @@ export const allTips: UnresolvedTip[] = [
       color: "",
       targetId: expensesOverLimit.map((post) => expenseMap.get(post).id),
       DetailsComponent: () => {
-        const [focused, setFocused] = useState(null);
+        const [open, setOpen] = useState(null);
         return (
           <div>
             <div className="flex flex-wrap">
-              {expensesOverLimit
-                .filter((e) => !focused || e === focused)
-                .map((post) => (
-                  <Paper
-                    elevation={5}
-                    key={post}
-                    className={`relative m-2 p-3 h-15 ${
-                      focused === post
-                        ? "w-full h-96"
-                        : focused === null
-                        ? "w-1/4"
-                        : ""
-                    }`}
-                  >
-                    {focused ? (
-                      <Button
-                        className="absolute top-0 right-0"
-                        onClick={() => setFocused(null)}
-                      >
-                        x
-                      </Button>
-                    ) : null}
-
-                    <Typography
-                      align="center"
-                      variant="h6"
-                      onClick={() => {
-                        setFocused(post);
-                      }}
-                    >
-                      {post}
-                    </Typography>
-
-                    {focused ? (
-                      <Typography>
-                        Regjeringen har innført en rekke midlertidige
-                        støtteordninger som hjelp til å håndtere de rekordhøye
-                        strømprisene. Her får du en oversikt over alle
-                        støtteordningene og hvor mye som er bevilget.
-                      </Typography>
-                    ) : null}
-                  </Paper>
-                ))}
+              {expensesOverLimit.map((post) => (
+                <AppExpandingPaperComponent
+                  key={post}
+                  title={post}
+                  onChange={({ open }) => setOpen(open ? post : null)}
+                >
+                  <>
+                    Regjeringen har innført en rekke midlertidige
+                    støtteordninger som hjelp til å håndtere de rekordhøye
+                    strømprisene. Her får du en oversikt over alle
+                    støtteordningene og hvor mye som er bevilget.
+                  </>
+                </AppExpandingPaperComponent>
+              ))}
             </div>
             {/* <p>
             It is not uncommon to spend more money then you can afford. <br />
