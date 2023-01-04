@@ -2,7 +2,7 @@ import Clear from "@mui/icons-material/Clear";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 
 export interface AppExpandingPaperComponentProps {
   title: string;
@@ -16,6 +16,7 @@ export default function AppExpandingPaperComponent({
   onChange,
 }: AppExpandingPaperComponentProps) {
   const [open, setOpen] = useState(false);
+  const paperRef = useRef(null);
 
   useEffect(() => {
     if (onChange) {
@@ -25,6 +26,7 @@ export default function AppExpandingPaperComponent({
 
   return (
     <Paper
+      ref={paperRef}
       elevation={5}
       className={`relative m-2 p-3 transition-all duration-700 ${
         open ? "w-full h-96 " : "w-full sm:w-2/5 md:w-3/12 h-14"
@@ -39,7 +41,14 @@ export default function AppExpandingPaperComponent({
         </IconButton>
       ) : null}
 
-      <Typography align="center" variant="h6" onClick={() => setOpen(true)}>
+      <Typography
+        align="center"
+        variant="h6"
+        onClick={() => {
+          setOpen(true);
+          setTimeout(() => paperRef.current.scrollIntoView(), 400);
+        }}
+      >
         {title}
       </Typography>
 

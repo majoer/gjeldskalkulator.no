@@ -33,7 +33,7 @@ export default function AppPaymentPlanComponent() {
             const principal = payment - interest;
 
             return (
-              <TableRow>
+              <TableRow key={x as number}>
                 <TableCell align="left">{month}</TableCell>
                 <TableCell align="left">{Math.round(payment)}</TableCell>
                 <TableCell align="left">{Math.round(principal)}</TableCell>
