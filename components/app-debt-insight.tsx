@@ -2,6 +2,7 @@ import CreditCard from "@mui/icons-material/CreditCard";
 import ShowChart from "@mui/icons-material/ShowChart";
 import TipsAndUpdates from "@mui/icons-material/TipsAndUpdates";
 import Badge from "@mui/material/Badge";
+import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import AppChartComponent from "../components/app-chart-component";
@@ -31,7 +32,7 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      className={`h-full-header w-full ${scrollable ? "overflow-y-auto" : ""}`}
+      className={`xl:h-full h-96 w-full ${scrollable ? "overflow-y-auto" : ""}`}
       {...other}
     >
       {value === index && (

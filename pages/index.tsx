@@ -6,8 +6,6 @@ import Link from "next/link.js";
 import { useState } from "react";
 
 export default function Home() {
-  const [tab, setTab] = useState(0);
-
   return (
     <div className="h-screen">
       <Head>

@@ -1,10 +1,11 @@
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import Favorite from "@mui/icons-material/Favorite";
 import Info from "@mui/icons-material/Info";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetailsComponent from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import * as BigNumber from "bignumber.js";
-import React, { useState } from "react";
+import React from "react";
 import {
   selectOpenTips,
   setOpenTips,
@@ -244,13 +245,18 @@ export default function AppTipsComponent() {
               )
             }
           >
-            <AccordionSummary>
-              <div className="mr-8 relative">
-                <Info
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 ${color}`}
-                />
+            <AccordionSummary
+              className="flex-row-reverse"
+              expandIcon={<ExpandMore />}
+            >
+              <div className="ml-3 relative flex justify-between w-full">
+                <div>{summary}</div>
+                <div className="ml-3 relative">
+                  <Info
+                    className={`absolute right-1 top-1/2 -translate-y-1/2 ${color}`}
+                  />
+                </div>
               </div>
-              <div>{summary}</div>
             </AccordionSummary>
             <AccordionDetailsComponent>
               <DetailsComponent />

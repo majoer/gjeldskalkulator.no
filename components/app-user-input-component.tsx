@@ -11,6 +11,7 @@ import AppExpensesComponent from "./app-expenses-component";
 import AppIncomesComponent from "./app-incomes-component";
 import AppResultSpendingComponent from "./app-result-spending-component";
 import { selectResult } from "../store/selectors/result-selector";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
 export default function AppUserInputComponent() {
   const sumIncome = useAppSelector(selectSumIncome);
@@ -31,8 +32,11 @@ export default function AppUserInputComponent() {
   return (
     <div>
       <Accordion defaultExpanded={true}>
-        <AccordionSummary>
-          <div className="flex justify-between w-full">
+        <AccordionSummary
+          className="flex-row-reverse"
+          expandIcon={<ExpandMore />}
+        >
+          <div className="flex justify-between ml-3 w-full">
             <div>Income</div>
             <div>{sumIncome},-</div>
           </div>
@@ -42,8 +46,11 @@ export default function AppUserInputComponent() {
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={true}>
-        <AccordionSummary>
-          <div className="flex justify-between w-full">
+        <AccordionSummary
+          className="flex-row-reverse"
+          expandIcon={<ExpandMore />}
+        >
+          <div className="flex justify-between ml-3 w-full">
             <div>Expense</div>
             <div>{sumExpense},-</div>
           </div>
@@ -53,8 +60,11 @@ export default function AppUserInputComponent() {
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={false} className={resultClassName}>
-        <AccordionSummary>
-          <div className="flex justify-between w-full">
+        <AccordionSummary
+          className="flex-row-reverse"
+          expandIcon={<ExpandMore />}
+        >
+          <div className="flex justify-between ml-3 w-full">
             <div>Result</div>
             <div>{result},-</div>
           </div>
@@ -64,8 +74,11 @@ export default function AppUserInputComponent() {
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={true}>
-        <AccordionSummary>
-          <div className="flex justify-between w-full">
+        <AccordionSummary
+          className="flex-row-reverse"
+          expandIcon={<ExpandMore />}
+        >
+          <div className="flex justify-between ml-3 w-full">
             <div>Debt</div>
             <div>{sumDebt},-</div>
           </div>
