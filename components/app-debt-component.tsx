@@ -1,4 +1,5 @@
 import Delete from "@mui/icons-material/Delete";
+import InputAdornment from "@mui/material/InputAdornment";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
@@ -86,11 +87,18 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           error={!!errors["amount"]}
           helperText={errors["amount"]}
           onChange={(e) => setAmount(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" className="absolute right-0">
+                <div>kr</div>
+              </InputAdornment>
+            ),
+          }}
         />
         <TextField
           id="interest"
           type="text"
-          label="Interest (%)"
+          label="Interest"
           variant="standard"
           className="m-2 shrink-0 grow-0"
           inputProps={{ pattern: "\\d*" }}
@@ -98,6 +106,13 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           error={!!errors["interest"]}
           helperText={errors["interest"]}
           onChange={(e) => setInterest(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" className="absolute right-0">
+                <div>%</div>
+              </InputAdornment>
+            ),
+          }}
         />
         <TextField
           id="fee"
@@ -110,6 +125,13 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           error={!!errors["fee"]}
           helperText={errors["fee"]}
           onChange={(e) => setFee(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" className="absolute right-0">
+                <div>kr</div>
+              </InputAdornment>
+            ),
+          }}
         />
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">

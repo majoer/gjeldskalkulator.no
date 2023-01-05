@@ -1,4 +1,5 @@
 import { debounce } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -78,6 +79,13 @@ export default function AppResultSpendingComponent() {
         error={!!errors["useTowardsDebt"]}
         helperText={errors["useTowardsDebt"]}
         onChange={(e) => setUseTowardsDebt(e.target.value)}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end" className="absolute right-0">
+              <div>{useTowardsDebtType === "number" ? "kr" : "%"}</div>
+            </InputAdornment>
+          ),
+        }}
       />
       <FormControl variant="standard" className="m-2">
         <InputLabel id="type-label">Type</InputLabel>
@@ -106,8 +114,8 @@ export default function AppResultSpendingComponent() {
             }
           }}
         >
-          <MenuItem value={"percentage"}>%</MenuItem>
-          <MenuItem value={"number"}>,-</MenuItem>
+          <MenuItem value={"percentage"}>Percent</MenuItem>
+          <MenuItem value={"number"}>NOK</MenuItem>
         </Select>
       </FormControl>
 

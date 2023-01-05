@@ -1,4 +1,5 @@
 import Delete from "@mui/icons-material/Delete";
+import InputAdornment from "@mui/material/InputAdornment";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
@@ -69,6 +70,13 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
           error={!!errors["amount"]}
           helperText={errors["amount"]}
           onChange={(e) => setAmount(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" className="absolute right-0">
+                <div>kr</div>
+              </InputAdornment>
+            ),
+          }}
         />
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton onClick={() => dispatch(removeIncome(id))}>

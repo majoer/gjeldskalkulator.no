@@ -1,9 +1,10 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { debtInsightSlice } from "./debt-insight-slice";
 import { debtSlice } from "./debt-slice";
 import { expenseSlice } from "./expense-slice";
 import { incomeSlice } from "./income-slice";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { resultSpendingSlice } from "./result-spending-slice";
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     [expenseSlice.name]: expenseSlice.reducer,
     [incomeSlice.name]: incomeSlice.reducer,
     [resultSpendingSlice.name]: resultSpendingSlice.reducer,
+    [debtInsightSlice.name]: debtInsightSlice.reducer,
   },
   devTools: true,
 });

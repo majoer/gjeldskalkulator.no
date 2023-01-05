@@ -1,19 +1,23 @@
 import Delete from "@mui/icons-material/Delete";
 import Info from "@mui/icons-material/Info";
 import { debounce } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
 import Autocomplete from "@mui/material/Autocomplete";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { updateNavigation, setOpenTips } from "../store/debt-insight-slice";
 import {
   ExpenseState,
   removeExpense,
   selectAllExpenses,
   updateExpense,
 } from "../store/expense-slice";
-import { useAppDispatch, useAppSelector } from "../store/store";
 import { selectTips } from "../store/selectors/tips-selector";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { positiveInteger } from "../validation/validation";
+import { TAB_TIPS } from "./app-debt-insight";
 
 export interface AppExpenseProps {
   expense: ExpenseState;
@@ -124,9 +128,37 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           value={amount}
           error={!!errors["amount"]}
           helperText={errors["amount"]}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" className="absolute right-0">
+                {tipIdMap[id] ? (
+                  <Tooltip title={`Tip: ${tipIdMap[id].summary}`}>
+                    <IconButton
+                      onClick={() => {
+                        dispatch(
+                          updateNavigation({
+                            activeTab: TAB_TIPS,
+                          })
+                        );
+                        dispatch(
+                          setOpenTips({
+                            [tipIdMap[id].summary]: true,
+                            [`${tipIdMap[id].summary}-${name}`]: true,
+                          })
+                        );
+                      }}
+                    >
+                      <Info className={tipIdMap[id].color} />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <div>kr</div>
+                )}
+              </InputAdornment>
+            ),
+          }}
           onChange={(e) => setAmount(e.target.value)}
         />
-        {tipIdMap[id] ? <Info className={tipIdMap[id].color} /> : null}
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton onClick={() => dispatch(removeExpense(id))}>
