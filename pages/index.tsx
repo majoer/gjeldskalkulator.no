@@ -1,4 +1,8 @@
+import { Button } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Container from "@mui/system/Container";
 import Head from "next/head";
+import Link from "next/link.js";
 import { useState } from "react";
 import AppDebtInsightComponent from "../components/app-debt-insight";
 import AppUserInputComponent from "../components/app-user-input-component";
@@ -7,24 +11,37 @@ export default function Home() {
   const [tab, setTab] = useState(0);
 
   return (
-    <div>
+    <div className="h-screen">
       <Head>
-        <title>Create Next App</title>
+        <title>
+          Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt
+        </title>
+        <meta
+          name="description"
+          content="Har du lite oversikt over økonomien? Prøv vår lånekalkulator for å se når du kan bli gjeldsfri."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <div className="min-h-screen">
-          <div className="w-full xl:w-1/2 xl:min-h-screen mb-4 xl:mb-0 bg-slate-100 xl:p-1 rounded">
-            <AppUserInputComponent />
-          </div>
-          <div className="w-full xl:w-1/2 static h-96 xl:h-screen xl:fixed xl:top-0 xl:bottom-0 xl:right-0">
-            <AppDebtInsightComponent />
-          </div>
-        </div>
+      <main className="h-5/6 text-center">
+        <Container className="h-full pt-40">
+          <Paper className="h-1/3 flex flex-col justify-center">
+            <Button LinkComponent={Link} href="calculator">
+              Kom i gang
+            </Button>
+          </Paper>
+        </Container>
       </main>
 
-      <footer></footer>
+      <footer className="h-1/6">
+        <Paper className="h-full p-4 flex flex-col-reverse" elevation={6}>
+          <a href="https://www.flaticon.com/free-icons/debt" title="Page icon">
+            Page icon created by Freepik - Flaticon
+          </a>
+        </Paper>
+      </footer>
 
       <style jsx global>{`
         html,
