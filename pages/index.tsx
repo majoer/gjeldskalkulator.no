@@ -29,7 +29,7 @@ export default function Home() {
         <Container className="h-full pt-40">
           <Paper className="h-1/3 flex flex-col justify-center">
             <Button LinkComponent={Link} href="calculator">
-              Kom i gang
+              Lets get started!
             </Button>
           </Paper>
         </Container>
