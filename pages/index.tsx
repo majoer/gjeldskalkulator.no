@@ -4,8 +4,6 @@ import Container from "@mui/system/Container";
 import Head from "next/head";
 import Link from "next/link.js";
 import { useState } from "react";
-import AppDebtInsightComponent from "../components/app-debt-insight";
-import AppUserInputComponent from "../components/app-user-input-component";
 
 export default function Home() {
   const [tab, setTab] = useState(0);
