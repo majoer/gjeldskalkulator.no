@@ -28,18 +28,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-.h-full-header {
-  min-height: calc(100vh - 64px)
-}
-
-.top-64px {
-  top: 64px
-}
-
-@media (min-width: 1280px) {
-  
-  .xl-h-full-header {
-    height: calc(100% - 64px)
-  }
-}
