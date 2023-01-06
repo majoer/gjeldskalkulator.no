@@ -1,9 +1,7 @@
 import { Button } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import Container from "@mui/system/Container";
 import Head from "next/head";
 import Link from "next/link.js";
-import { useState } from "react";
 
 export default function Home() {
   return (

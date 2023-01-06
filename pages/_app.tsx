@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <AppBar>
           <Toolbar>
             <Link href="/">
-              <img width="32" height="32" src="/debt.png" />
+              <img width="32" height="32" src="/debt.png" alt="logo" />
             </Link>
           </Toolbar>
         </AppBar>
