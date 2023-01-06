@@ -46,10 +46,7 @@ export default function AppResultSpendingComponent() {
     debounce(({ useTowardsDebt, useTowardsDebtType, errors }) => {
       const fullUpdate: Partial<ResultSpendingState> = {
         useTowardsDebtType,
-        useTowardsDebt:
-          useTowardsDebtType === "number"
-            ? BigNumber(useTowardsDebt)
-            : BigNumber(useTowardsDebt).dividedBy(100),
+        useTowardsDebt,
       };
 
       const changes: Partial<ResultSpendingState> = Object.keys(errors)
@@ -100,7 +97,7 @@ export default function AppResultSpendingComponent() {
 
             if (e.target.value === "number") {
               setUseTowardsDebt(
-                resultSpendingValue.decimalPlaces(0).toFormat()
+                resultSpendingValue.decimalPlaces(0).toString()
               );
             } else {
               setUseTowardsDebt(

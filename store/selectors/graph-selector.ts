@@ -10,7 +10,8 @@ export const PLAN_BLOWS_TO_INFINITY = -2;
 
 interface Debt extends DebtState {
   paidSoFar: number;
-  interestPaidSoFar: number;
+  interestPaidSoFar: BigNumber.BigNumber;
+  interestBig: BigNumber.BigNumber;
 }
 
 export interface DebtDatum extends Datum {
@@ -39,8 +40,9 @@ export const selectDebtSeries = createSelector(
     let month = 1;
     let debtSoFar: Debt[] = allDebt.map((debt) => ({
       ...debt,
+      interestBig: BigNumber.BigNumber(debt.interest),
       paidSoFar: 0,
-      interestPaidSoFar: 0,
+      interestPaidSoFar: BigNumber.BigNumber(0),
     }));
     let sumDebtSoFar = sumDebt;
     while (sumDebtSoFar > 0 && month <= MAX_MONTHS) {
@@ -53,7 +55,7 @@ export const selectDebtSeries = createSelector(
       serie.push({
         x: month,
         y: sumDebtSoFar,
-        sumInterestPaidSoFar,
+        sumInterestPaidSoFar: sumInterestPaidSoFar.toNumber(),
         sumPaidSoFar,
       });
 
@@ -93,13 +95,16 @@ function advanceDebt(currentDebt: Debt[], deduction: BigNumber.BigNumber) {
       return debt;
     }
 
-    const interest = debt.interest.multipliedBy(debt.amount).dividedBy(12);
+    const interest = debt.interestBig
+      .dividedBy(100)
+      .multipliedBy(debt.amount)
+      .dividedBy(12);
     const newDebt = interest.plus(debt.amount).toNumber();
 
     return {
       ...debt,
       amount: newDebt,
-      interestPaidSoFar: interest.plus(debt.interestPaidSoFar).toNumber(),
+      interestPaidSoFar: interest.plus(debt.interestPaidSoFar),
     };
   });
 

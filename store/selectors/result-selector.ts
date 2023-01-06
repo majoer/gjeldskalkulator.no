@@ -1,4 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
+import * as BigNumber from "bignumber.js";
 import { selectSumExpense } from "../expense-slice";
 import { selectSumIncome } from "../income-slice";
 import { selectResultSpending } from "../result-spending-slice";
@@ -12,6 +13,6 @@ export const selectUseTowardsDebt = createSelector(
   [selectResult, selectResultSpending],
   (result, { useTowardsDebt, useTowardsDebtType }) =>
     useTowardsDebtType === "number"
-      ? useTowardsDebt
-      : useTowardsDebt.multipliedBy(result)
+      ? BigNumber.BigNumber(useTowardsDebt)
+      : BigNumber.BigNumber(useTowardsDebt).multipliedBy(result).dividedBy(100)
 );

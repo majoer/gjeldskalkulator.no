@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addDebt, selectAllDebts } from "../store/debt-slice";
 import { useAppSelector } from "../store/store";
 import AppDebtComponent from "./app-debt-component";
-import { BigNumber } from "bignumber.js";
+import * as BigNumber from "bignumber.js";
 
 export default function AppDebtsComponent() {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export default function AppDebtsComponent() {
               id: nanoid(),
               fee: 60,
               amount: 100000,
-              interest: BigNumber(0.1),
+              interest: BigNumber.BigNumber(10).toJSON(),
               name: `Creditor ${debts.length + 1}`,
             })
           );

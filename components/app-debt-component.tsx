@@ -21,9 +21,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
   const dispatch = useAppDispatch();
   const [name, setName] = useState(debt.name);
   const [amount, setAmount] = useState("" + debt.amount);
-  const [interest, setInterest] = useState(
-    "" + debt.interest.multipliedBy(100)
-  );
+  const [interest, setInterest] = useState(debt.interest);
   const [fee, setFee] = useState("" + debt.fee);
   const { id } = debt;
 
@@ -42,7 +40,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
       const fullUpdate: Partial<DebtState> = {
         name,
         amount: parseInt(amount, 10),
-        interest: BigNumber(interest).dividedBy(100),
+        interest,
         fee: parseInt(fee, 10),
       };
 

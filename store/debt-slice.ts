@@ -12,7 +12,7 @@ export interface DebtState {
   fee: number;
   name: string;
   amount: number;
-  interest: BigNumber.BigNumber;
+  interest: string;
 }
 
 export const debtAdapter = createEntityAdapter<DebtState>({
