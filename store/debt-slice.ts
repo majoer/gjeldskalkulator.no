@@ -5,7 +5,6 @@ import {
 } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store";
-import * as BigNumber from "bignumber.js";
 
 export interface DebtState {
   id: string;

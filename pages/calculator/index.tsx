@@ -1,6 +1,7 @@
 import Paper from "@mui/material/Paper";
 import AppDebtInsightComponent from "../../components/app-debt-insight";
 import AppUserInputComponent from "../../components/app-user-input-component";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function CalculatorPage() {
   return (
@@ -13,4 +14,12 @@ export default function CalculatorPage() {
       </div>
     </Paper>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [])),
+    },
+  };
 }

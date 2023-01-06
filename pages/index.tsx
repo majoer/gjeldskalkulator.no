@@ -2,8 +2,12 @@ import { Button } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Head from "next/head";
 import Link from "next/link.js";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
-export default function Home() {
+export default function LandingPage() {
+  const { t } = useTranslation("landing");
+
   return (
     <div className="h-screen">
       <Head>
@@ -24,7 +28,7 @@ export default function Home() {
           <Paper className="h-1/3 flex flex-col justify-center">
             <div>
               <Button LinkComponent={Link} href="calculator">
-                Lets get started!
+                {t("landing")}
               </Button>
             </div>
           </Paper>
@@ -59,4 +63,12 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["landing"])),
+    },
+  };
 }
