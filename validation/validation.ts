@@ -6,14 +6,6 @@ export const positiveInteger = (str: string) => {
   return "errors.positiveInteger";
 };
 
-export const nonNegativeInteger = (str: string) => {
-  if (isInteger(str) && isPositiveInc0(str)) {
-    return undefined;
-  }
-
-  return "errors.nonNegativeInteger";
-};
-
 export const positiveNumber = (str: string) => {
   if (isNumeric(str) && isPositive(str)) {
     return undefined;

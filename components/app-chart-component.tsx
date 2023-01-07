@@ -9,9 +9,9 @@ import { useAppSelector } from "../store/store";
 import AppChartTooltipComponent from "./app-chart-tooltip-component";
 
 export default function AppChartComponent() {
+  const { t } = useTranslation(["calculator"]);
   const { serie, resolution } = useAppSelector(selectDebtSeries);
   const totalCost = useAppSelector(selectTotalCostOfDebt);
-  const { t } = useTranslation(["calculator"]);
 
   const data: Serie[] = [
     {
@@ -43,7 +43,7 @@ export default function AppChartComponent() {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: `${resolution}s`,
+          legend: t(`calculator:chart.legend.x.${resolution}`),
           legendOffset: 36,
           legendPosition: "middle",
         }}
@@ -51,7 +51,7 @@ export default function AppChartComponent() {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "Debt",
+          legend: t("calculator:chart.legend.y"),
           legendOffset: -55,
           legendPosition: "start",
         }}

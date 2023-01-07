@@ -171,7 +171,11 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
             endAdornment: (
               <InputAdornment position="end" className="absolute right-0">
                 {tipIdMap[id] ? (
-                  <Tooltip title={`Tip: ${tipIdMap[id].summary}`}>
+                  <Tooltip
+                    title={t("calculator:tips.tooltip.title", {
+                      value: tipIdMap[id].summary,
+                    })}
+                  >
                     <IconButton
                       onClick={() => {
                         dispatch(

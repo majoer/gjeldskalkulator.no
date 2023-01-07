@@ -1,11 +1,11 @@
 import { debounce } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import BigNumber from "bignumber.js";
+import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ResultSpendingState,
@@ -17,8 +17,7 @@ import {
   selectUseTowardsDebt,
 } from "../store/selectors/result-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { nonNegativeInteger, percentage } from "../validation/validation";
-import { useTranslation } from "next-i18next";
+import { naturalNumber, percentage } from "../validation/validation";
 
 export default function AppResultSpendingComponent() {
   const { t } = useTranslation(["calculator"]);
@@ -37,7 +36,7 @@ export default function AppResultSpendingComponent() {
     () => ({
       useTowardsDebt:
         useTowardsDebtType === "number"
-          ? nonNegativeInteger(useTowardsDebt)
+          ? naturalNumber(useTowardsDebt)
           : percentage(useTowardsDebt),
       useTowardsDebtType: undefined,
     }),
@@ -87,7 +86,9 @@ export default function AppResultSpendingComponent() {
         }}
       />
       <FormControl variant="standard" className="m-2">
-        <InputLabel id="type-label">Type</InputLabel>
+        <InputLabel id="type-label">
+          {t("calculator:resultSpending.useTowardsDebtType.label")}
+        </InputLabel>
         <Select
           labelId="type-label"
           id="type"

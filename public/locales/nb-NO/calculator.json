@@ -1,0 +1,110 @@
+{
+  "userInput": {
+    "income": "Inntekter",
+    "expense": "Utgifter",
+    "result": "Resultat",
+    "debt": "Gjeld"
+  },
+  "incomes": {
+    "defaultNewDebt": { "name": "Jobb {{value}}" }
+  },
+  "income": {
+    "name": { "label": "Inntekt" },
+    "amount": { "label": "Beløp" }
+  },
+  "expense": {
+    "name": { "label": "Expense" },
+    "amount": { "label": "Beløp" },
+    "options": {
+      "rent": "Husleie",
+      "electricity": "Strøm",
+      "transportation": "Transport",
+      "food": "Mat",
+      "clothes": "Klær",
+      "internet": "Internett",
+      "phone": "Mobiltelefon",
+      "streaming": "Strømmetjenester",
+
+      "medicine": "Medisin",
+      "alcohol": "Alkohol",
+      "childSupport": "Barnebidrag",
+      "children": "Barn",
+      "other": "Annet",
+
+      "household": "Hus og hjem",
+      "living": "Bokostnader",
+
+      "hobby": "Hobby",
+
+      "savings": "Sparing",
+      "stocks": "Aksjer",
+
+      "vacation": "Ferie",
+      "travel": "Reise"
+    }
+  },
+  "resultSpending": {
+    "useTowardsDebt": { "label": "Bruk til nedbetaling av gjeld" },
+    "useTowardsDebtType": {
+      "label": "Benevning",
+      "options": {
+        "percentage": "Prosent",
+        "number": "NOK"
+      }
+    }
+  },
+  "debts": {
+    "defaultNewDebt": { "name": "Kreditor {{value}}" }
+  },
+  "debt": {
+    "name": { "label": "Creditor" },
+    "amount": { "label": "Beløp" },
+    "interest": { "label": "Rente" },
+    "fee": { "label": "Gebyr" }
+  },
+  "debtInsight": {
+    "tabs": {
+      "chart": { "label": "Graf" },
+      "paymentPlan": { "label": "Nedbetalingsplan" },
+      "tips": { "label": "Tips" }
+    }
+  },
+  "errors": {
+    "positiveInteger": "Må være et heltall, 1 eller over",
+    "positiveNumber": "Må være et tall, 1 eller over",
+    "percentage": "Må være en % mellom 0 and 100",
+    "naturalNumber": "Må være et heltall, 0 eller over"
+  },
+  "chart": {
+    "totalCost": {
+      "tooMuch": "For mye. Gjeld tar over {{value}} år å bli ferdig med.",
+      "infinity": "Uendelig. Gjeld kan aldri tilbakebetales."
+    },
+    "legend": {
+      "x": { "Month": "Måneder", "Year": "År" },
+      "y": "Gjeld"
+    },
+    "tooltip": {
+      "resolution": {
+        "Year": "År: {{value}}",
+        "Month": "Måned: {{value}}"
+      },
+      "principalAmount": "Avdrag: {{value}}",
+      "interestAmount": "Rente: {{value}}",
+      "paymentAmount": "Å betale: {{value}}",
+      "remainingDebt": "Gjenstående: {{value}}"
+    }
+  },
+  "paymentPlan": {
+    "tableHeader": {
+      "month": "Måned",
+      "paymentAmount": "Å betale",
+      "principalAmount": "Avdrag",
+      "interestAmount": "Rente",
+      "paidSoFar": "Betalt så langt"
+    }
+  },
+  "tips": {
+    "tooltip": { "title": "Tips: {{value}}" }
+  }
+}

@@ -1,5 +1,4 @@
 {
-  "landing": "Get started!",
   "userInput": {
     "income": "Income",
     "expense": "Expense",
@@ -7,10 +6,7 @@
     "debt": "Debt"
   },
   "incomes": {
-    "defaultNewDebt": { "name": "Job {{value}}" },
-    "amount": { "label": "Amount" },
-    "interest": { "label": "Interest" },
-    "fee": { "label": "Fee" }
+    "defaultNewDebt": { "name": "Job {{value}}" }
   },
   "income": {
     "name": { "label": "Income" },
@@ -58,10 +54,7 @@
     }
   },
   "debts": {
-    "defaultNewDebt": { "name": "Creditor {{value}}" },
-    "amount": { "label": "Amount" },
-    "interest": { "label": "Interest" },
-    "fee": { "label": "Fee" }
+    "defaultNewDebt": { "name": "Creditor {{value}}" }
   },
   "debt": {
     "name": { "label": "Creditor" },
@@ -78,7 +71,6 @@
   },
   "errors": {
     "positiveInteger": "Must be an integer, 1 or higher",
-    "nonNegativeInteger": "Must be an integer, 0 or higher",
     "positiveNumber": "Must be a number, 1 or higher",
     "percentage": "Must be % between 0 and 100",
     "naturalNumber": "Must be an integer, 0 or higher"
@@ -87,6 +79,10 @@
     "totalCost": {
       "tooMuch": "Too much. Its over {{value}} years to complete.",
       "infinity": "Infinity. This can't be paid back."
+    },
+    "legend": {
+      "x": { "Month": "Months", "Year": "Years" },
+      "y": "Debt"
     },
     "tooltip": {
       "resolution": {
@@ -107,5 +103,8 @@
       "interestAmount": "Interest Amount",
       "paidSoFar": "Paid so far"
     }
+  },
+  "tips": {
+    "tooltip": { "title": "Tips: {{value}}" }
   }
 }
