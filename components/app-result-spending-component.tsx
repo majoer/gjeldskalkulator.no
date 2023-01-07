@@ -18,8 +18,10 @@ import {
 } from "../store/selectors/result-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { nonNegativeInteger, percentage } from "../validation/validation";
+import { useTranslation } from "next-i18next";
 
 export default function AppResultSpendingComponent() {
+  const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
   const result = useAppSelector(selectResult);
   const resultSpendingValue = useAppSelector(selectUseTowardsDebt);
@@ -70,11 +72,11 @@ export default function AppResultSpendingComponent() {
       <TextField
         id="useTowardsDebt"
         className="m-2"
-        label="Use for Debt payments"
+        label={t("calculator:resultSpending.useTowardsDebt.label")}
         variant="standard"
         value={useTowardsDebt}
         error={!!errors["useTowardsDebt"]}
-        helperText={errors["useTowardsDebt"]}
+        helperText={t(errors["useTowardsDebt"])}
         onChange={(e) => setUseTowardsDebt(e.target.value)}
         InputProps={{
           endAdornment: (
@@ -90,7 +92,7 @@ export default function AppResultSpendingComponent() {
           labelId="type-label"
           id="type"
           value={useTowardsDebtType}
-          label="Type"
+          label={t("calculator:resultSpending.useTowardsDebtType.label")}
           variant="standard"
           onChange={(e) => {
             setUseTowardsDebtType(e.target.value as "percentage" | "number");
@@ -111,8 +113,14 @@ export default function AppResultSpendingComponent() {
             }
           }}
         >
-          <MenuItem value={"percentage"}>Percent</MenuItem>
-          <MenuItem value={"number"}>NOK</MenuItem>
+          <MenuItem value={"percentage"}>
+            {t(
+              "calculator:resultSpending.useTowardsDebtType.options.percentage"
+            )}
+          </MenuItem>
+          <MenuItem value={"number"}>
+            {t("calculator:resultSpending.useTowardsDebtType.options.number")}
+          </MenuItem>
         </Select>
       </FormControl>
 

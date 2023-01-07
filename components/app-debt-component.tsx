@@ -1,9 +1,9 @@
 import Delete from "@mui/icons-material/Delete";
-import InputAdornment from "@mui/material/InputAdornment";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import { BigNumber } from "bignumber.js";
+import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DebtState, removeDebt, updateDebt } from "../store/debt-slice";
 import { useAppDispatch } from "../store/store";
@@ -18,6 +18,7 @@ export interface AppLoanProps {
 }
 
 export default function AppDebtComponent({ debt }: AppLoanProps) {
+  const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
   const [name, setName] = useState(debt.name);
   const [amount, setAmount] = useState("" + debt.amount);
@@ -66,24 +67,24 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
         <TextField
           id="name"
           type="text"
-          label="Name"
+          label={t("calculator:debt.name.label")}
           variant="standard"
           className="m-2 shrink-0 grow-0"
           value={name}
           error={!!errors["name"]}
-          helperText={errors["name"]}
+          helperText={t(errors["name"])}
           onChange={(e) => setName(e.target.value)}
         />
         <TextField
           id="amount"
           type="text"
-          label="Amount"
+          label={t("calculator:debt.amount.label")}
           variant="standard"
           className="m-2 shrink-0 grow-0"
           inputProps={{ pattern: "\\d*" }}
           value={amount}
           error={!!errors["amount"]}
-          helperText={errors["amount"]}
+          helperText={t(errors["amount"])}
           onChange={(e) => setAmount(e.target.value)}
           InputProps={{
             endAdornment: (
@@ -96,13 +97,13 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
         <TextField
           id="interest"
           type="text"
-          label="Interest"
+          label={t("calculator:debt.interest.label")}
           variant="standard"
           className="m-2 shrink-0 grow-0"
           inputProps={{ pattern: "\\d*" }}
           value={interest}
           error={!!errors["interest"]}
-          helperText={errors["interest"]}
+          helperText={t(errors["interest"])}
           onChange={(e) => setInterest(e.target.value)}
           InputProps={{
             endAdornment: (
@@ -115,13 +116,13 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
         <TextField
           id="fee"
           type="text"
-          label="Fee"
+          label={t("calculator:debt.fee.label")}
           variant="standard"
           className="m-2 shrink-0 grow-0"
           inputProps={{ pattern: "\\d*" }}
           value={fee}
           error={!!errors["fee"]}
-          helperText={errors["fee"]}
+          helperText={t(errors["fee"])}
           onChange={(e) => setFee(e.target.value)}
           InputProps={{
             endAdornment: (

@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
+import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { updateNavigation, setOpenTips } from "../store/debt-insight-slice";
 import {
@@ -24,24 +25,23 @@ export interface AppExpenseProps {
 }
 
 export const allOptions = {
-  Rent: { defaultAmount: 10000, synonyms: [] },
-  Electricity: { defaultAmount: 3000, synonyms: [] },
-  Transportation: { defaultAmount: 3000, synonyms: [] },
-  Food: { defaultAmount: 5000, synonyms: [] },
-  Clothes: { defaultAmount: 2000, synonyms: [] },
-  Internet: { defaultAmount: 1000, synonyms: [] },
-  Phone: { defaultAmount: 500, synonyms: [] },
-  Streaming: { defaultAmount: 400, synonyms: [] },
-  Household: { defaultAmount: 1000, synonyms: ["Living"] },
-  Hobby: { defaultAmount: 500, synonyms: [] },
-  Savings: { defaultAmount: 1000, synonyms: ["Stocks"] },
-  Vacation: { defaultAmount: 1000, synonyms: ["Travel"] },
-  Medicine: { defaultAmount: 1000, synonyms: [] },
-  Living: { defaultAmount: 1000, synonyms: [] },
-  Alcohol: { defaultAmount: 1000, synonyms: [] },
-  "Child Support": { defaultAmount: 10000, synonyms: [] },
-  Children: { defaultAmount: 10000, synonyms: [] },
-  Other: { defaultAmount: 0, synonyms: [] },
+  rent: { defaultAmount: 10000, synonyms: [] },
+  electricity: { defaultAmount: 3000, synonyms: [] },
+  transportation: { defaultAmount: 3000, synonyms: [] },
+  food: { defaultAmount: 5000, synonyms: [] },
+  clothes: { defaultAmount: 2000, synonyms: [] },
+  internet: { defaultAmount: 1000, synonyms: [] },
+  phone: { defaultAmount: 500, synonyms: [] },
+  streaming: { defaultAmount: 400, synonyms: [] },
+  household: { defaultAmount: 1000, synonyms: ["living"] },
+  hobby: { defaultAmount: 500, synonyms: [] },
+  savings: { defaultAmount: 1000, synonyms: ["stocks"] },
+  vacation: { defaultAmount: 1000, synonyms: ["travel"] },
+  medicine: { defaultAmount: 1000, synonyms: [] },
+  alcohol: { defaultAmount: 1000, synonyms: [] },
+  childSupport: { defaultAmount: 10000, synonyms: [] },
+  children: { defaultAmount: 10000, synonyms: [] },
+  other: { defaultAmount: 0, synonyms: [] },
 };
 
 export type ExpenseOptionName = keyof typeof allOptions;
@@ -49,26 +49,54 @@ export const ExpenseOptionNames = Object.keys(
   allOptions
 ) as ExpenseOptionName[];
 
-const synonyms = Object.keys(allOptions).reduce((map, key) => {
-  allOptions[key].synonyms.forEach((s) => (map[s] = key));
-  return map;
-}, {});
+interface ExpenseOption {
+  id: string;
+  label: string;
+}
 
 export default function AppExpenseComponent({ expense }: AppExpenseProps) {
+  const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
-  const [name, setName] = useState(expense.name);
+  const [customName, setCustomName] = useState("");
+  const [knownName, setKnownName] = useState<ExpenseOption | null>(
+    expense.name
+      ? {
+          id: expense.name,
+          label: t(`calculator:expense.options.${expense.name}`),
+        }
+      : null
+  );
   const [amount, setAmount] = useState("" + expense.amount);
   const { id } = expense;
   const { tipIdMap } = useAppSelector(selectTips);
   const allExpenses = useAppSelector(selectAllExpenses);
 
-  const options = useMemo(
+  const options: ExpenseOption[] = useMemo(
     () =>
       Object.keys(allOptions)
         .filter((key) => !allExpenses.find((e) => e.name === key))
         .flatMap((key) => allOptions[key].synonyms.concat([key]))
+        .map((option) => ({
+          label: t(`calculator:expense.options.${option}`),
+          id: option,
+        }))
         .sort(),
     [allExpenses]
+  );
+
+  const synonyms = useMemo(
+    () =>
+      Object.keys(allOptions).reduce((map, key) => {
+        allOptions[key].synonyms.forEach(
+          (synonym) =>
+            (map[synonym] = {
+              id: key,
+              label: t(`calculator:expense.options.${key}`),
+            })
+        );
+        return map;
+      }, {}),
+    []
   );
 
   const errors = useMemo(
@@ -76,13 +104,13 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
       name: undefined,
       amount: positiveInteger(amount),
     }),
-    [name, amount]
+    [customName, amount]
   );
 
   const debouncedUpdate = useCallback(
-    debounce(({ name, amount, errors }) => {
+    debounce(({ knownName, amount, errors }) => {
       const fullUpdate: Partial<ExpenseState> = {
-        name,
+        name: knownName ? knownName.id : "",
         amount: parseInt(amount, 10),
       };
 
@@ -99,35 +127,46 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   );
 
   useEffect(() => {
-    debouncedUpdate({ name, amount, errors });
-  }, [name, amount, errors]);
+    debouncedUpdate({ knownName, amount, errors });
+  }, [knownName, amount, errors]);
 
   return (
     <div className="relative">
       <div className="m-2 flex flex-row flex-wrap justify-center lg:justify-start">
         <Autocomplete
           id="expenseName"
+          multiple={false}
           freeSolo={true}
           sx={{ width: 200 }}
           className="m-2 shrink-0 grow-0 inline-flex"
           options={options}
-          inputValue={name}
-          onInputChange={(_, newName) =>
-            setName(synonyms[newName] ? synonyms[newName] : newName)
-          }
+          value={knownName}
+          inputValue={customName}
+          onInputChange={(_, newName) => setCustomName(newName)}
+          onChange={(e_, value) => {
+            if (value === null) {
+              setKnownName(null);
+            } else if (typeof value !== "string") {
+              setKnownName(synonyms[value.id] ? synonyms[value.id] : value);
+            }
+          }}
           renderInput={(params) => (
-            <TextField {...params} variant="standard" label="Expense" />
+            <TextField
+              {...params}
+              variant="standard"
+              label={t("calculator:expense.name.label")}
+            />
           )}
         />
         <TextField
           id="amount"
           type="text"
-          label="Amount"
+          label={t("calculator:expense.amount.label")}
           variant="standard"
           className="m-2 shrink-0 grow-0"
           value={amount}
           error={!!errors["amount"]}
-          helperText={errors["amount"]}
+          helperText={t(errors["amount"])}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end" className="absolute right-0">
@@ -143,7 +182,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
                         dispatch(
                           setOpenTips({
                             [tipIdMap[id].summary]: true,
-                            [`${tipIdMap[id].summary}-${name}`]: true,
+                            [`${tipIdMap[id].summary}-${customName}`]: true,
                           })
                         );
                       }}

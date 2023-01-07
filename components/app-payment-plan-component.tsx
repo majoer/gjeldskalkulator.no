@@ -5,21 +5,33 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useTranslation } from "next-i18next";
 import { selectDebtSeries } from "../store/selectors/graph-selector";
 import { useAppSelector } from "../store/store";
 
 export default function AppPaymentPlanComponent() {
+  const { t } = useTranslation(["calculator"]);
   const { paymentPlan } = useAppSelector(selectDebtSeries);
 
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell align="left">Month</TableCell>
-          <TableCell align="left">Payment Amount</TableCell>
-          <TableCell align="left">Principal Amount</TableCell>
-          <TableCell align="left">Interest Amount</TableCell>
-          <TableCell align="left">Paid so far</TableCell>
+          <TableCell align="left">
+            {t("calculator:paymentPlan.tableHeader.month")}
+          </TableCell>
+          <TableCell align="left">
+            {t("calculator:paymentPlan.tableHeader.paymentAmount")}
+          </TableCell>
+          <TableCell align="left">
+            {t("calculator:paymentPlan.tableHeader.principalAmount")}
+          </TableCell>
+          <TableCell align="left">
+            {t("calculator:paymentPlan.tableHeader.interestAmount")}
+          </TableCell>
+          <TableCell align="left">
+            {t("calculator:paymentPlan.tableHeader.paidSoFar")}
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

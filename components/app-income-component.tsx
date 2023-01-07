@@ -7,12 +7,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { IncomeState, removeIncome, updateIncome } from "../store/income-slice";
 import { useAppDispatch } from "../store/store";
 import { positiveInteger } from "../validation/validation";
+import { useTranslation } from "next-i18next";
 
 export interface AppIncomeProps {
   income: IncomeState;
 }
 
 export default function AppIncomeComponent({ income }: AppIncomeProps) {
+  const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
   const [name, setName] = useState(income.name);
   const [amount, setAmount] = useState("" + income.amount);
@@ -55,7 +57,7 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
         <TextField
           id="name"
           className="m-2 shrink-0 grow-0"
-          label="Name"
+          label={t("calculator:income.name.label")}
           variant="standard"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -63,7 +65,7 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
         <TextField
           id="amount"
           type="text"
-          label="Amount"
+          label={t("calculator:income.amount.label")}
           variant="standard"
           className="m-2 shrink-0 grow-0"
           value={amount}

@@ -3,11 +3,13 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import { Stack } from "@mui/system";
 import { nanoid } from "@reduxjs/toolkit";
+import { useTranslation } from "next-i18next";
 import { addIncome, selectAllIncomes } from "../store/income-slice";
 import { useAppSelector, useAppDispatch } from "../store/store";
 import AppIncomeComponent from "./app-income-component";
 
 export default function AppIncomesComponent() {
+  const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
   const incomes = useAppSelector(selectAllIncomes);
 
@@ -22,7 +24,9 @@ export default function AppIncomesComponent() {
             addIncome({
               id: nanoid(),
               amount: 30000,
-              name: `Job ${incomes.length + 1}`,
+              name: t("incomes.defaultNewDebt.name", {
+                value: incomes.length + 1,
+              }),
             })
           );
         }}

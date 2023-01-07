@@ -5,6 +5,7 @@ import Badge from "@mui/material/Badge";
 import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import { useTranslation } from "next-i18next";
 import AppChartComponent from "../components/app-chart-component";
 import AppPaymentPlanComponent from "../components/app-payment-plan-component";
 import AppTipsComponent from "../components/app-tips-component";
@@ -43,6 +44,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export default function AppDebtInsightComponent() {
+  const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
   const activeTab = useAppSelector(selectActiveTab);
   const { allRelevantTips } = useAppSelector(selectTips);
@@ -55,10 +57,16 @@ export default function AppDebtInsightComponent() {
           dispatch(updateNavigation({ activeTab: newTab }))
         }
       >
-        <Tab label="Chart" icon={<ShowChart />}></Tab>
-        <Tab label="Payment plan" icon={<CreditCard />}></Tab>
         <Tab
-          label="Tips"
+          label={t("calculator:debtInsight.tabs.chart.label")}
+          icon={<ShowChart />}
+        ></Tab>
+        <Tab
+          label={t("calculator:debtInsight.tabs.paymentPlan.label")}
+          icon={<CreditCard />}
+        ></Tab>
+        <Tab
+          label={t("calculator:debtInsight.tabs.tips.label")}
           icon={
             <Badge badgeContent={allRelevantTips.length} color="primary">
               <TipsAndUpdates />

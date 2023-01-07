@@ -8,8 +8,10 @@ import { addDebt, selectAllDebts } from "../store/debt-slice";
 import { useAppSelector } from "../store/store";
 import AppDebtComponent from "./app-debt-component";
 import * as BigNumber from "bignumber.js";
+import { useTranslation } from "next-i18next";
 
 export default function AppDebtsComponent() {
+  const { t } = useTranslation(["calculator"]);
   const dispatch = useDispatch();
   const debts = useAppSelector(selectAllDebts);
 
@@ -26,7 +28,9 @@ export default function AppDebtsComponent() {
               fee: 60,
               amount: 100000,
               interest: BigNumber.BigNumber(10).toJSON(),
-              name: `Creditor ${debts.length + 1}`,
+              name: t("calculator:debts.defaultNewDebt.name", {
+                value: debts.length + 1,
+              }),
             })
           );
         }}

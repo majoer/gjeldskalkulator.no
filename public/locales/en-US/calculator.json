@@ -1,0 +1,111 @@
+{
+  "landing": "Get started!",
+  "userInput": {
+    "income": "Income",
+    "expense": "Expense",
+    "result": "Result",
+    "debt": "Debt"
+  },
+  "incomes": {
+    "defaultNewDebt": { "name": "Job {{value}}" },
+    "amount": { "label": "Amount" },
+    "interest": { "label": "Interest" },
+    "fee": { "label": "Fee" }
+  },
+  "income": {
+    "name": { "label": "Income" },
+    "amount": { "label": "Amount" }
+  },
+  "expense": {
+    "name": { "label": "Expense" },
+    "amount": { "label": "Amount" },
+    "options": {
+      "rent": "Rent",
+      "electricity": "Electricity",
+      "transportation": "Transportation",
+      "food": "Food",
+      "clothes": "Clothes",
+      "internet": "Internet",
+      "phone": "Phone",
+      "streaming": "Streaming",
+
+      "medicine": "Medicine",
+      "alcohol": "Alcohol",
+      "childSupport": "Child support",
+      "children": "Children",
+      "other": "Other",
+
+      "household": "Household",
+      "living": "Living",
+
+      "hobby": "Hobby",
+
+      "savings": "Savings",
+      "stocks": "Stocks",
+
+      "vacation": "Vacation",
+      "travel": "Travel"
+    }
+  },
+  "resultSpending": {
+    "useTowardsDebt": { "label": "Use for debt payments" },
+    "useTowardsDebtType": {
+      "label": "Use for debt payments",
+      "options": {
+        "percentage": "Percent",
+        "number": "NOK"
+      }
+    }
+  },
+  "debts": {
+    "defaultNewDebt": { "name": "Creditor {{value}}" },
+    "amount": { "label": "Amount" },
+    "interest": { "label": "Interest" },
+    "fee": { "label": "Fee" }
+  },
+  "debt": {
+    "name": { "label": "Creditor" },
+    "amount": { "label": "Amount" },
+    "interest": { "label": "Interest" },
+    "fee": { "label": "Fee" }
+  },
+  "debtInsight": {
+    "tabs": {
+      "chart": { "label": "Chart" },
+      "paymentPlan": { "label": "Payment Plan" },
+      "tips": { "label": "Tips" }
+    }
+  },
+  "errors": {
+    "positiveInteger": "Must be an integer, 1 or higher",
+    "nonNegativeInteger": "Must be an integer, 0 or higher",
+    "positiveNumber": "Must be a number, 1 or higher",
+    "percentage": "Must be % between 0 and 100",
+    "naturalNumber": "Must be an integer, 0 or higher"
+  },
+  "chart": {
+    "totalCost": {
+      "tooMuch": "Too much. Its over {{value}} years to complete.",
+      "infinity": "Infinity. This can't be paid back."
+    },
+    "tooltip": {
+      "resolution": {
+        "Year": "Year: {{value}}",
+        "Month": "Month: {{value}}"
+      },
+      "principalAmount": "Principal: {{value}}",
+      "interestAmount": "Interest: {{value}}",
+      "paymentAmount": "Payment: {{value}}",
+      "remainingDebt": "Remaining Debt: {{value}}"
+    }
+  },
+  "paymentPlan": {
+    "tableHeader": {
+      "month": "Month",
+      "paymentAmount": "Payment Amount",
+      "principalAmount": "Principal Amount",
+      "interestAmount": "Interest Amount",
+      "paidSoFar": "Paid so far"
+    }
+  }
+}

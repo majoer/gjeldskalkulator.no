@@ -1,4 +1,5 @@
 import { ResponsiveLine, Serie } from "@nivo/line";
+import { useTranslation } from "next-i18next";
 import {
   MAX_MONTHS,
   selectDebtSeries,
@@ -10,6 +11,7 @@ import AppChartTooltipComponent from "./app-chart-tooltip-component";
 export default function AppChartComponent() {
   const { serie, resolution } = useAppSelector(selectDebtSeries);
   const totalCost = useAppSelector(selectTotalCostOfDebt);
+  const { t } = useTranslation(["calculator"]);
 
   const data: Serie[] = [
     {
@@ -71,11 +73,11 @@ export default function AppChartComponent() {
       <div>
         Total cost of debt:{" "}
         {totalCost === -1
-          ? `Too much. Its over ${Math.floor(
-              MAX_MONTHS / 12
-            )} years to complete.`
+          ? t("calculator:chart.totalCost.tooMuch", {
+              value: Math.floor(MAX_MONTHS / 12),
+            })
           : totalCost === -2
-          ? "Infinity. This can't be paid back"
+          ? t("calculator:chart.totalCost.infinity")
           : `${totalCost},-`}
       </div>
     </div>

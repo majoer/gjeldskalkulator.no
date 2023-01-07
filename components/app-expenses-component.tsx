@@ -13,11 +13,11 @@ export default function AppExpensesComponent() {
   const dispatch = useDispatch();
   const allExpenses = useAppSelector(selectAllExpenses);
 
-  const nextOptionKey: string | undefined = useMemo(
+  const nextOptionKey: string = useMemo(
     () =>
       Object.keys(allOptions).filter(
         (key) => !allExpenses.find((e) => e.name === key)
-      )[0],
+      )[0] || "",
     [allExpenses]
   );
 
@@ -31,7 +31,7 @@ export default function AppExpensesComponent() {
           dispatch(
             addExpense({
               id: nanoid(),
-              name: nextOptionKey ? nextOptionKey : "",
+              name: nextOptionKey,
               amount: nextOptionKey
                 ? allOptions[nextOptionKey].defaultAmount
                 : 0,

@@ -39,24 +39,23 @@ export type UnresolvedTip = (args: TipConditionArgs) => ResolvedTip;
 const expenseLimits: {
   [Property in ExpenseOptionName]: { limit: number; component: React.FC };
 } = {
-  Rent: { limit: 10000, component: () => <div>re</div> },
-  Electricity: { limit: 5000, component: () => <div>el</div> },
-  Transportation: { limit: 5000, component: () => <div></div> },
-  Food: { limit: 10000, component: () => <div></div> },
-  Clothes: { limit: 3000, component: () => <div></div> },
-  Internet: { limit: 1500, component: () => <div></div> },
-  Phone: { limit: 1000, component: () => <div></div> },
-  Streaming: { limit: 2000, component: () => <div></div> },
-  Household: { limit: 1000, component: () => <div></div> },
-  Hobby: { limit: 2000, component: () => <div></div> },
-  Savings: { limit: -1, component: () => <div></div> },
-  Vacation: { limit: 2000, component: () => <div></div> },
-  Medicine: { limit: -1, component: () => <div></div> },
-  Living: { limit: 3000, component: () => <div></div> },
-  Alcohol: { limit: 0, component: () => <div></div> },
-  "Child Support": { limit: 10000, component: () => <div></div> },
-  Children: { limit: 3000, component: () => <div></div> },
-  Other: { limit: 5000, component: () => <div></div> },
+  rent: { limit: 10000, component: () => <div></div> },
+  electricity: { limit: 5000, component: () => <div></div> },
+  transportation: { limit: 5000, component: () => <div></div> },
+  food: { limit: 10000, component: () => <div></div> },
+  clothes: { limit: 3000, component: () => <div></div> },
+  internet: { limit: 1500, component: () => <div></div> },
+  phone: { limit: 1000, component: () => <div></div> },
+  streaming: { limit: 2000, component: () => <div></div> },
+  household: { limit: 3000, component: () => <div></div> },
+  hobby: { limit: 2000, component: () => <div></div> },
+  savings: { limit: -1, component: () => <div></div> },
+  vacation: { limit: 2000, component: () => <div></div> },
+  medicine: { limit: -1, component: () => <div></div> },
+  alcohol: { limit: 0, component: () => <div></div> },
+  childSupport: { limit: 10000, component: () => <div></div> },
+  children: { limit: 3000, component: () => <div></div> },
+  other: { limit: 5000, component: () => <div></div> },
 };
 
 export const allTips: UnresolvedTip[] = [
@@ -135,7 +134,7 @@ export const allTips: UnresolvedTip[] = [
   ({ expenseMap, useTowardsDebt, result }) => ({
     summary: "Set some money aside for savings",
     active:
-      !expenseMap.get("Savings") &&
+      !expenseMap.get("savings") &&
       useTowardsDebt.isGreaterThanOrEqualTo(result),
     color: "",
     targetId: [],

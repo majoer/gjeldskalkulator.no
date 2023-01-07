@@ -12,8 +12,10 @@ import AppIncomesComponent from "./app-incomes-component";
 import AppResultSpendingComponent from "./app-result-spending-component";
 import { selectResult } from "../store/selectors/result-selector";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import { useTranslation } from "next-i18next";
 
 export default function AppUserInputComponent() {
+  const { t } = useTranslation(["calculator"]);
   const sumIncome = useAppSelector(selectSumIncome);
   const sumExpense = useAppSelector(selectSumExpense);
   const sumDebt = useAppSelector(selectSumDebt);
@@ -37,7 +39,7 @@ export default function AppUserInputComponent() {
           expandIcon={<ExpandMore />}
         >
           <div className="flex justify-between ml-3 w-full">
-            <div>Income</div>
+            <div>{t("calculator:userInput.income")}</div>
             <div>{sumIncome},-</div>
           </div>
         </AccordionSummary>
@@ -51,7 +53,7 @@ export default function AppUserInputComponent() {
           expandIcon={<ExpandMore />}
         >
           <div className="flex justify-between ml-3 w-full">
-            <div>Expense</div>
+            <div>{t("calculator:userInput.expense")}</div>
             <div>{sumExpense},-</div>
           </div>
         </AccordionSummary>
@@ -65,7 +67,7 @@ export default function AppUserInputComponent() {
           expandIcon={<ExpandMore />}
         >
           <div className="flex justify-between ml-3 w-full">
-            <div>Result</div>
+            <div>{t("calculator:userInput.result")}</div>
             <div>{result},-</div>
           </div>
         </AccordionSummary>
@@ -79,7 +81,7 @@ export default function AppUserInputComponent() {
           expandIcon={<ExpandMore />}
         >
           <div className="flex justify-between ml-3 w-full">
-            <div>Debt</div>
+            <div>{t("calculator:userInput.debt")}</div>
             <div>{sumDebt},-</div>
           </div>
         </AccordionSummary>

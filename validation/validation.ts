@@ -3,7 +3,7 @@ export const positiveInteger = (str: string) => {
     return undefined;
   }
 
-  return "Must be an integer, 1 or higher";
+  return "errors.positiveInteger";
 };
 
 export const nonNegativeInteger = (str: string) => {
@@ -11,7 +11,7 @@ export const nonNegativeInteger = (str: string) => {
     return undefined;
   }
 
-  return "Must be an integer, 0 or higher";
+  return "errors.nonNegativeInteger";
 };
 
 export const positiveNumber = (str: string) => {
@@ -19,7 +19,7 @@ export const positiveNumber = (str: string) => {
     return undefined;
   }
 
-  return "Must be a number, 1 or higher";
+  return "errors.positiveNumber";
 };
 
 export const percentage = (str: string) => {
@@ -27,7 +27,7 @@ export const percentage = (str: string) => {
     return undefined;
   }
 
-  return "Must be % between 0 and 100";
+  return "errors.percentage";
 };
 
 export const naturalNumber = (str: string) => {
@@ -35,7 +35,7 @@ export const naturalNumber = (str: string) => {
     return undefined;
   }
 
-  return "Must be an integer, 0 or higher";
+  return "errors.naturalNumber";
 };
 
 function isInteger(str: string) {

@@ -1,34 +1,20 @@
 import { Button } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import Head from "next/head";
-import Link from "next/link.js";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Link from "next/link.js";
 
 export default function LandingPage() {
-  const { t } = useTranslation("landing");
+  const { t } = useTranslation(["common", "landing"]);
 
   return (
     <div className="h-screen">
-      <Head>
-        <title>
-          Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt
-        </title>
-        <meta
-          name="description"
-          content="Har du lite oversikt over økonomien? Prøv vår lånekalkulator for å se når du kan bli gjeldsfri."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className="h-5/6 text-center">
         <Paper className="h-full w-full pt-40">
           <Paper className="h-1/3 flex flex-col justify-center">
             <div>
               <Button LinkComponent={Link} href="calculator">
-                {t("landing")}
+                {t("landing:landing")}
               </Button>
             </div>
           </Paper>
@@ -42,7 +28,7 @@ export default function LandingPage() {
               href="https://www.flaticon.com/free-icons/debt"
               title="Page icon"
             >
-              Page icon created by Freepik - Flaticon
+              {t("landing:logo-attribution")}
             </a>
           </div>
         </Paper>
@@ -68,7 +54,7 @@ export default function LandingPage() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["landing"])),
+      ...(await serverSideTranslations(locale, ["common", "landing"])),
     },
   };
 }
