@@ -7,6 +7,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { updateNavigation, setOpenTips } from "../store/debt-insight-slice";
 import {
@@ -70,19 +71,14 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   const { id } = expense;
   const { tipIdMap } = useAppSelector(selectTips);
   const allExpenses = useAppSelector(selectAllExpenses);
-
-  const options: ExpenseOption[] = useMemo(
-    () =>
-      Object.keys(allOptions)
-        .filter((key) => !allExpenses.find((e) => e.name === key))
-        .flatMap((key) => allOptions[key].synonyms.concat([key]))
-        .map((option) => ({
-          label: t(`calculator:expense.options.${option}`),
-          id: option,
-        }))
-        .sort(),
-    [allExpenses]
-  );
+  const resolvedOptions = useMemo(() => {
+    return Object.keys(allOptions)
+      .flatMap((key) => allOptions[key].synonyms.concat([key]))
+      .map((option) => ({
+        label: t(`calculator:expense.options.${option}`, {}),
+        id: option,
+      }));
+  }, [t]);
 
   const synonyms = useMemo(
     () =>
@@ -96,7 +92,22 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
         );
         return map;
       }, {}),
-    []
+    [t]
+  );
+
+  useEffect(() => {
+    setKnownName({
+      ...knownName,
+      label: t(`calculator:expense.options.${expense.name}`),
+    });
+  }, [t]);
+
+  const options: ExpenseOption[] = useMemo(
+    () =>
+      resolvedOptions
+        .filter(({ id }) => !allExpenses.find((e) => e.name === id))
+        .sort(),
+    [allExpenses, resolvedOptions]
   );
 
   const errors = useMemo(
@@ -120,7 +131,6 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           update[field] = fullUpdate[field];
           return update;
         }, {});
-
       dispatch(updateExpense({ id, changes }));
     }, 600),
     []

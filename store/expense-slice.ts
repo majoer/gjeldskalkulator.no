@@ -39,7 +39,7 @@ export const { addExpense, updateExpense, removeExpense } =
   expenseSlice.actions;
 
 export const { selectAll: selectAllExpenses } =
-  expenseAdapter.getSelectors<AppState>((state) => state.expenses);
+  expenseAdapter.getSelectors<AppState>((state: AppState) => state.expenses);
 
 export const selectSumExpense = createSelector(
   [selectAllExpenses],
