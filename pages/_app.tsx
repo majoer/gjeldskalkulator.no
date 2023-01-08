@@ -1,4 +1,3 @@
-import createCache from "@emotion/cache";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -60,11 +59,6 @@ const theme = createTheme({
       },
     },
   },
-});
-
-const cache = createCache({
-  key: "css",
-  prepend: true,
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -138,6 +132,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <AppBar>
