@@ -81,7 +81,10 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
           }}
         />
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
-          <IconButton onClick={() => dispatch(removeIncome(id))}>
+          <IconButton
+            color="secondary"
+            onClick={() => dispatch(removeIncome(id))}
+          >
             <Delete />
           </IconButton>
         </div>

@@ -214,7 +214,10 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
         />
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
-          <IconButton onClick={() => dispatch(removeExpense(id))}>
+          <IconButton
+            color="secondary"
+            onClick={() => dispatch(removeExpense(id))}
+          >
             <Delete />
           </IconButton>
         </div>

@@ -134,15 +134,14 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
         />
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
-          <IconButton onClick={() => dispatch(removeDebt(id))}>
+          <IconButton
+            color="secondary"
+            onClick={() => dispatch(removeDebt(id))}
+          >
             <Delete />
           </IconButton>
         </div>
       </div>
-      {/* <Accordion className="w-full" expanded={expanded}>
-          <AccordionSummary className="h-0"></AccordionSummary>
-          <AccordionDetails>Secret</AccordionDetails>
-        </Accordion> */}
     </div>
   );
 }
