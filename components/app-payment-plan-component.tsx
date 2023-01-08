@@ -1,16 +1,14 @@
+import { debounce } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useTranslation } from "next-i18next";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { selectDebtSeries } from "../store/selectors/graph-selector";
 import { useAppSelector } from "../store/store";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { TAB_PLAN } from "./app-debt-insight";
-import { debounce } from "@mui/material";
-// import InfiniteScroll from "react-infinite-scroller";
 
 const LOAD_NUMBER_OF_ROWS = 40;
 
