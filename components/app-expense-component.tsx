@@ -146,11 +146,17 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           id="expenseName"
           multiple={false}
           freeSolo={true}
-          className="m-2 shrink-0 grow-0 inline-flex"
+          className="m-2 shrink-0 grow-0 inline-flex pr-0"
           options={options}
           value={knownName}
           inputValue={customName}
           onInputChange={(_, newName) => setCustomName(newName)}
+          sx={{
+            "& .MuiFormControl-root .MuiInputBase-root": {
+              paddingRight: 0,
+            },
+          }}
+          ChipProps={{ className: "pr-0" }}
           onChange={(e_, value) => {
             if (value === null) {
               setKnownName(null);
