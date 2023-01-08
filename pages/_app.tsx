@@ -115,7 +115,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           href: router.pathname,
           locale: "nb-NO",
           selected: router.locale === "nb-NO",
-          text: "Norwegian",
+          text: "Norsk",
           icon: <Language fontSize="small" />,
         },
         {
