@@ -1,46 +1,53 @@
+import Calculate from "@mui/icons-material/Calculate";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import { CardMedia, Container } from "@mui/material";
 
 export default function LandingPage() {
   const { t } = useTranslation(["common", "landing"]);
 
   return (
-    <div className="h-screen">
-      <main className="h-5/6 text-center">
-        <Paper className="h-full w-full pt-40">
-          <Paper className="h-1/3 flex flex-col justify-center">
-            <div>
-              <Button LinkComponent={Link} href="/kalkulator">
-                {t("landing:landing")}
-              </Button>
-            </div>
-          </Paper>
-        </Paper>
-      </main>
-
-      <footer className="h-1/6">
-        <Paper className="h-full p-4 flex flex-col-reverse" elevation={6}>
-          <div className="flex flex-row justify-between"></div>
-        </Paper>
-      </footer>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
+    <main className="w-full h-screen text-center bg-slate-100">
+      <Box className="w-full h-1/4"></Box>
+      <div className="w-full h-2/4">
+        <Card elevation={10} className="lg:w-2/3 xl:w-5/12 lg:m-auto p-6">
+          <CardHeader
+            title={t("landing:title")}
+            subheader={t("landing:subheader")}
+            titleTypographyProps={{ component: "h1" }}
+            subheaderTypographyProps={{ component: "h2" }}
+          />
+          <CardMedia
+            component="img"
+            alt="logo"
+            image="/debt.png"
+            height="150px"
+            sx={{ objectFit: "contain" }}
+          ></CardMedia>
+          <CardContent></CardContent>
+          <CardActions className="justify-center">
+            <Button
+              className="w-full sm:w-3/12"
+              LinkComponent={Link}
+              href="/kalkulator"
+              variant="contained"
+            >
+              {t("landing:landing")}
+            </Button>
+          </CardActions>
+        </Card>
+      </div>
+      <Box className="w-full h-1/4"></Box>
+    </main>
   );
 }
 
