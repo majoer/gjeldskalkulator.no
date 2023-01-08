@@ -63,7 +63,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
 
   return (
     <div className="relative py-4 sm:py-1">
-      <div className="sm:m-2 w-3/4 flex flex-col sm:flex-row flex-wrap">
+      <div className="sm:m-2 w-3/4 md:w-5/6 flex flex-col sm:flex-row flex-wrap">
         <TextField
           id="name"
           type="text"
@@ -99,7 +99,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           type="text"
           label={t("calculator:debt.interest.label")}
           variant="standard"
-          className="m-2 shrink-0 grow-0"
+          className="m-2 shrink-0 grow-0 w-auto sm:w-16"
           inputProps={{ pattern: "\\d*" }}
           value={interest}
           error={!!errors["interest"]}
@@ -118,7 +118,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           type="text"
           label={t("calculator:debt.fee.label")}
           variant="standard"
-          className="m-2 shrink-0 grow-0"
+          className="m-2 shrink-0 grow-0 w-auto sm:w-16"
           inputProps={{ pattern: "\\d*" }}
           value={fee}
           error={!!errors["fee"]}
