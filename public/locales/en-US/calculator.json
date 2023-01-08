@@ -85,9 +85,15 @@
   },
   "chart": {
     "totalCost": {
-      "result": "Total cost of debt: {{value}},-",
-      "tooMuch": "Total cost of debt: Too much. Its over {{value}} years to complete.",
-      "infinity": "Total cost of debt: Infinity. This can't be paid back."
+      "result": "Debt will cost you: {{value}},-",
+      "tooMuch": "Debt will cost you: Too much. ",
+      "infinity": "Debt will cost you: Infinity. "
+    },
+    "remainingTime": {
+      "result": "You can be done: {{value}}.",
+      "noData": "You can add some debt to calculate when you are done.",
+      "tooMuch": "You will use more then {{value}} years to pay back this debt.",
+      "infinity": "This debt is impossible to pay back. It will grow forever."
     },
     "legend": {
       "x": { "Month": "Months", "Year": "Years" },

@@ -85,9 +85,15 @@
   },
   "chart": {
     "totalCost": {
-      "result": "Total kostnad av gjeld: {{value}},-",
-      "tooMuch": "Total kostnad av gjeld: For mye. Gjeld tar over {{value}} år å bli ferdig med.",
-      "infinity": "Total kostnad av gjeld: Uendelig. Gjeld kan aldri tilbakebetales."
+      "result": "Din gjeld vil koste: {{value}},-",
+      "tooMuch": "Din gjeld vil koste: For mye.",
+      "infinity": "Din gjeld vil koste: Uendelig."
+    },
+    "remainingTime": {
+      "result": "Du kan bli gjeldsfri: {{value}}.",
+      "noData": "Du kan legge til gjeld, slik at vi kan regne ut når du er ferdig.",
+      "tooMuch": "Du kommer til å bruke mer enn {{value}} år på å tilbakebetale gjelda.",
+      "infinity": "Det er umulig å tilbakebetale gjelda. Den vil fortsette å vokse til evig tid."
     },
     "legend": {
       "x": { "Month": "Måneder", "Year": "År" },

@@ -1,6 +1,8 @@
 import Typography from "@mui/material/Typography";
 import { ResponsiveLine, Serie } from "@nivo/line";
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router.js";
+import { useMemo } from "react";
 import {
   MAX_MONTHS,
   selectDebtSeries,
@@ -12,7 +14,22 @@ import AppChartTooltipComponent from "./app-chart-tooltip-component";
 export default function AppChartComponent() {
   const { t } = useTranslation(["calculator"]);
   const { serie, resolution } = useAppSelector(selectDebtSeries);
+  const router = useRouter();
   const totalCost = useAppSelector(selectTotalCostOfDebt);
+
+  const endDate = useMemo(() => {
+    if (serie.length === 1) {
+      return undefined;
+    }
+    const formatter = new Intl.DateTimeFormat(router.locale, {
+      month: "long",
+      year: "numeric",
+    });
+
+    const today = new Date();
+    const done = new Date(today.setMonth(today.getMonth() + serie.length - 1));
+    return formatter.format(done);
+  }, [serie]);
 
   const data: Serie[] = [
     {
@@ -73,13 +90,24 @@ export default function AppChartComponent() {
       />
       <Typography>
         {totalCost === -1
-          ? t("calculator:chart.totalCost.tooMuch", {
-              value: Math.floor(MAX_MONTHS / 12),
-            })
+          ? t("calculator:chart.totalCost.tooMuch")
           : totalCost === -2
           ? t("calculator:chart.totalCost.infinity")
           : t("calculator:chart.totalCost.result", {
               value: totalCost,
+            })}
+      </Typography>
+      <Typography>
+        {totalCost === -1
+          ? t("calculator:chart.remainingTime.tooMuch", {
+              value: Math.floor(MAX_MONTHS / 12),
+            })
+          : totalCost === -2
+          ? t("calculator:chart.remainingTime.infinity")
+          : !endDate
+          ? t("calculator:chart.remainingTime.noData")
+          : t("calculator:chart.remainingTime.result", {
+              value: endDate,
             })}
       </Typography>
     </div>
