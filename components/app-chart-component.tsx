@@ -1,3 +1,4 @@
+import Typography from "@mui/material/Typography";
 import { ResponsiveLine, Serie } from "@nivo/line";
 import { useTranslation } from "next-i18next";
 import {
@@ -70,7 +71,7 @@ export default function AppChartComponent() {
         useMesh={true}
         legends={[]}
       />
-      <div>
+      <Typography>
         {totalCost === -1
           ? t("calculator:chart.totalCost.tooMuch", {
               value: Math.floor(MAX_MONTHS / 12),
@@ -80,7 +81,7 @@ export default function AppChartComponent() {
           : t("calculator:chart.totalCost.result", {
               value: totalCost,
             })}
-      </div>
+      </Typography>
     </div>
   );
 }

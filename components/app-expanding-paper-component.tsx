@@ -1,5 +1,5 @@
 import Clear from "@mui/icons-material/Clear";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";

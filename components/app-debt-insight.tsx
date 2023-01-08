@@ -2,7 +2,6 @@ import CreditCard from "@mui/icons-material/CreditCard";
 import ShowChart from "@mui/icons-material/ShowChart";
 import TipsAndUpdates from "@mui/icons-material/TipsAndUpdates";
 import Badge from "@mui/material/Badge";
-import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useTranslation } from "next-i18next";

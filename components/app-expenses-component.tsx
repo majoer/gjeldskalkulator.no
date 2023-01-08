@@ -1,7 +1,7 @@
 import Add from "@mui/icons-material/Add";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import { Stack } from "@mui/system";
+import Stack from "@mui/system/Stack";
 import { nanoid } from "@reduxjs/toolkit";
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";

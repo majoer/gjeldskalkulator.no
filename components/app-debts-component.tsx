@@ -1,14 +1,14 @@
 import Add from "@mui/icons-material/Add";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import { Stack } from "@mui/system";
+import Stack from "@mui/system/Stack";
 import { nanoid } from "@reduxjs/toolkit";
+import * as BigNumber from "bignumber.js";
+import { useTranslation } from "next-i18next";
 import { useDispatch } from "react-redux";
 import { addDebt, selectAllDebts } from "../store/debt-slice";
 import { useAppSelector } from "../store/store";
 import AppDebtComponent from "./app-debt-component";
-import * as BigNumber from "bignumber.js";
-import { useTranslation } from "next-i18next";
 
 export default function AppDebtsComponent() {
   const { t } = useTranslation(["calculator"]);

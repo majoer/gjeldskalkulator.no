@@ -7,9 +7,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { useTranslation } from "next-i18next";
-import { useRouter } from "next/router.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { updateNavigation, setOpenTips } from "../store/debt-insight-slice";
+import { setOpenTips, updateNavigation } from "../store/debt-insight-slice";
 import {
   ExpenseState,
   removeExpense,
