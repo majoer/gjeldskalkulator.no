@@ -53,10 +53,10 @@ module.exports = {
             key: 'Content-Security-Policy',
             value: `
             default-src 'self';
-            connect-src 'self' https://vercel-insights.com/;
+            connect-src 'self' https://vitals.vercel-insights.com/;
             script-src 'self' ${localhost ? "'unsafe-eval'" : ""};
             style-src 'self' 'unsafe-inline';
-            font-src 'self';  
+            font-src 'self';
           `.replace(/\s{2,}/g, ' ').trim()
           }
         ],
