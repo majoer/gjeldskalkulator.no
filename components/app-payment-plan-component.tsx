@@ -41,15 +41,6 @@ export default function AppPaymentPlanComponent() {
     const canLoadMore = index <= paymentPlan.length - 1;
     const shouldLoadMore = el.scrollTop >= el.scrollHeight - 1000;
 
-    console.log(
-      el.scrollTop,
-      el.scrollHeight - 1500,
-      canLoadMore,
-      shouldLoadMore,
-      index,
-      paymentPlan.length
-    );
-
     if (canLoadMore && shouldLoadMore) {
       fetchMoreData();
     }
