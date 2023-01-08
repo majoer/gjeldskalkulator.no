@@ -5,7 +5,6 @@ import Badge from "@mui/material/Badge";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useTranslation } from "next-i18next";
-import { Ref, useRef } from "react";
 import AppChartComponent from "../components/app-chart-component";
 import AppPaymentPlanComponent from "../components/app-payment-plan-component";
 import AppTipsComponent from "../components/app-tips-component";
@@ -50,7 +49,6 @@ export default function AppDebtInsightComponent() {
   const dispatch = useAppDispatch();
   const activeTab = useAppSelector(selectActiveTab);
   const { allRelevantTips } = useAppSelector(selectTips);
-  const scrollRef = useRef(null);
 
   return (
     <div className="h-full flex flex-col">
