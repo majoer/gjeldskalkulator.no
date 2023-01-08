@@ -136,6 +136,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton
             color="secondary"
+            title={t("calculator:debt.remove.title")}
             onClick={() => dispatch(removeDebt(id))}
           >
             <Delete />

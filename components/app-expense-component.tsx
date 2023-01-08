@@ -214,6 +214,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton
+            title={t("calculator:expense.remove.title")}
             color="secondary"
             onClick={() => dispatch(removeExpense(id))}
           >

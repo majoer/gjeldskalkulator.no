@@ -6,15 +6,21 @@
     "debt": "Debt"
   },
   "incomes": {
-    "defaultNewDebt": { "name": "Job {{value}}" }
+    "defaultNewDebt": { "name": "Job {{value}}" },
+    "add": { "title": "Add Job" }
   },
   "income": {
     "name": { "label": "Income" },
-    "amount": { "label": "Amount" }
+    "amount": { "label": "Amount" },
+    "remove": { "title": "Remove job" }
+  },
+  "expenses": {
+    "add": { "title": "Add expense" }
   },
   "expense": {
     "name": { "label": "Expense" },
     "amount": { "label": "Amount" },
+    "remove": { "title": "Remove expense" },
     "options": {
       "rent": "Rent",
       "electricity": "Electricity",
@@ -54,13 +60,15 @@
     }
   },
   "debts": {
-    "defaultNewDebt": { "name": "Creditor {{value}}" }
+    "defaultNewDebt": { "name": "Creditor {{value}}" },
+    "add": { "title": "Add debt" }
   },
   "debt": {
     "name": { "label": "Creditor" },
     "amount": { "label": "Amount" },
     "interest": { "label": "Interest" },
-    "fee": { "label": "Fee" }
+    "fee": { "label": "Fee" },
+    "remove": { "title": "Remove debt" }
   },
   "debtInsight": {
     "tabs": {

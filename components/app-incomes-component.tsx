@@ -20,6 +20,7 @@ export default function AppIncomesComponent() {
       ))}
       <IconButton
         color="primary"
+        title={t("calculator:incomes.add.title")}
         onClick={() => {
           dispatch(
             addIncome({

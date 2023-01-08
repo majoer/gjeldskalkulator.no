@@ -22,6 +22,7 @@ export default function AppDebtsComponent() {
       ))}
       <IconButton
         color="primary"
+        title={t("calculator:debts.add.title")}
         onClick={() => {
           dispatch(
             addDebt({

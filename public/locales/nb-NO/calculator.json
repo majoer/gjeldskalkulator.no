@@ -6,15 +6,21 @@
     "debt": "Gjeld"
   },
   "incomes": {
-    "defaultNewDebt": { "name": "Jobb {{value}}" }
+    "defaultNewDebt": { "name": "Jobb {{value}}" },
+    "add": { "title": "Legg til Jobb" }
   },
   "income": {
     "name": { "label": "Inntekt" },
-    "amount": { "label": "Beløp" }
+    "amount": { "label": "Beløp" },
+    "remove": { "title": "Fjern jobb" }
+  },
+  "expenses": {
+    "add": { "title": "Legg til utgift" }
   },
   "expense": {
-    "name": { "label": "Expense" },
+    "name": { "label": "Utgift" },
     "amount": { "label": "Beløp" },
+    "remove": { "title": "Fjern utgift" },
     "options": {
       "rent": "Husleie",
       "electricity": "Strøm",
@@ -54,13 +60,15 @@
     }
   },
   "debts": {
-    "defaultNewDebt": { "name": "Kreditor {{value}}" }
+    "defaultNewDebt": { "name": "Kreditor {{value}}" },
+    "add": { "title": "Legg til gjeld" }
   },
   "debt": {
     "name": { "label": "Creditor" },
     "amount": { "label": "Beløp" },
     "interest": { "label": "Rente" },
-    "fee": { "label": "Gebyr" }
+    "fee": { "label": "Gebyr" },
+    "remove": { "title": "Fjern gjeld" }
   },
   "debtInsight": {
     "tabs": {
