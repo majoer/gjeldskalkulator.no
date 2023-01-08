@@ -61,7 +61,12 @@ function MyApp({ Component, pageProps }: AppProps) {
             >
               <MenuIcon />
             </IconButton>
-            <Menu anchorEl={anchorEl} open={open} onClose={closeMenu}>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={closeMenu}
+              disableScrollLock={true}
+            >
               <MenuItem
                 component={Link}
                 href={`/`}

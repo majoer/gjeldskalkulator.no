@@ -95,6 +95,7 @@ export default function AppResultSpendingComponent() {
           value={useTowardsDebtType}
           label={t("calculator:resultSpending.useTowardsDebtType.label")}
           variant="standard"
+          MenuProps={{ disableScrollLock: true }}
           onChange={(e) => {
             setUseTowardsDebtType(e.target.value as "percentage" | "number");
 
@@ -128,7 +129,7 @@ export default function AppResultSpendingComponent() {
       {useTowardsDebtType === "percentage" ? (
         <TextField
           id="result"
-          disabled
+          disabled={true}
           className="m-2"
           label={`${useTowardsDebt}% of ${result} =`}
           variant="standard"
