@@ -71,14 +71,15 @@ export default function AppChartComponent() {
         legends={[]}
       />
       <div>
-        Total cost of debt:{" "}
         {totalCost === -1
           ? t("calculator:chart.totalCost.tooMuch", {
               value: Math.floor(MAX_MONTHS / 12),
             })
           : totalCost === -2
           ? t("calculator:chart.totalCost.infinity")
-          : `${totalCost},-`}
+          : t("calculator:chart.totalCost.result", {
+              value: totalCost,
+            })}
       </div>
     </div>
   );

@@ -77,8 +77,9 @@
   },
   "chart": {
     "totalCost": {
-      "tooMuch": "For mye. Gjeld tar over {{value}} år å bli ferdig med.",
-      "infinity": "Uendelig. Gjeld kan aldri tilbakebetales."
+      "result": "Total kostnad av gjeld: {{value}},-",
+      "tooMuch": "Total kostnad av gjeld: For mye. Gjeld tar over {{value}} år å bli ferdig med.",
+      "infinity": "Total kostnad av gjeld: Uendelig. Gjeld kan aldri tilbakebetales."
     },
     "legend": {
       "x": { "Month": "Måneder", "Year": "År" },

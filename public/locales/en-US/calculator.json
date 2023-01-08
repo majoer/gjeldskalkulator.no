@@ -77,8 +77,9 @@
   },
   "chart": {
     "totalCost": {
-      "tooMuch": "Too much. Its over {{value}} years to complete.",
-      "infinity": "Infinity. This can't be paid back."
+      "result": "Total cost of debt: {{value}},-",
+      "tooMuch": "Total cost of debt: Too much. Its over {{value}} years to complete.",
+      "infinity": "Total cost of debt: Infinity. This can't be paid back."
     },
     "legend": {
       "x": { "Month": "Months", "Year": "Years" },
