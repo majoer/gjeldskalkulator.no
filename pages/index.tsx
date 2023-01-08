@@ -41,7 +41,7 @@ export default function LandingPage() {
               href="/kalkulator"
               variant="contained"
             >
-              {t("landing:landing")}
+              {t("landing:goToCalculator")}
             </Button>
           </CardActions>
         </Card>
