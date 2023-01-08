@@ -2,5 +2,8 @@
   "meta": {
     "title": "Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt",
     "description": "Har du lite oversikt over økonomien? Prøv vår lånekalkulator for å se når du kan bli gjeldsfri."
+  },
+  "menu": {
+    "home": "Home"
   }
 }

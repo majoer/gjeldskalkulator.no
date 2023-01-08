@@ -76,7 +76,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <ListItemIcon>
                   <img width="20" height="20" src="/debt.png" alt="logo" />
                 </ListItemIcon>
-                <ListItemText>Home</ListItemText>
+                <ListItemText>{t("menu.home")}</ListItemText>
               </MenuItem>
               <Divider />
               <MenuItem
