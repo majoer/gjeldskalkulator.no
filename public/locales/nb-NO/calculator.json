@@ -73,7 +73,7 @@
   "debtInsight": {
     "tabs": {
       "chart": { "label": "Graf" },
-      "paymentPlan": { "label": "Nedbetalingsplan" },
+      "paymentPlan": { "label": "Betalingsplan" },
       "tips": { "label": "Tips" }
     }
   },
