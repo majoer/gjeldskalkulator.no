@@ -140,7 +140,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   }, [knownName, amount, errors]);
 
   return (
-    <div className="relative py-1">
+    <div className="relative py-3 sm:py-1">
       <div className="sm:m-2 w-3/4 flex flex-col sm:flex-row flex-wrap">
         <Autocomplete
           id="expenseName"
