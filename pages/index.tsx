@@ -2,10 +2,12 @@ import { Button } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Link from "next/link.js";
+import Link from "next/link";
+import { useRouter } from "next/router.js";
 
 export default function LandingPage() {
   const { t } = useTranslation(["common", "landing"]);
+  const router = useRouter();
 
   return (
     <div className="h-screen">
