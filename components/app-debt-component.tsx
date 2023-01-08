@@ -62,7 +62,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
   }, [name, amount, interest, fee, errors]);
 
   return (
-    <div className="relative py-3 sm:py-1">
+    <div className="relative py-4 sm:py-1">
       <div className="sm:m-2 w-3/4 flex flex-col sm:flex-row flex-wrap">
         <TextField
           id="name"
