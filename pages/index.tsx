@@ -15,7 +15,7 @@ export default function LandingPage() {
         <Paper className="h-full w-full pt-40">
           <Paper className="h-1/3 flex flex-col justify-center">
             <div>
-              <Button LinkComponent={Link} href="/calculator">
+              <Button LinkComponent={Link} href="/kalkulator">
                 {t("landing:landing")}
               </Button>
             </div>
