@@ -141,12 +141,11 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
 
   return (
     <div className="relative">
-      <div className="m-2 flex flex-row flex-wrap justify-center lg:justify-start">
+      <div className="sm:m-2 w-3/4 flex flex-col sm:flex-row flex-wrap">
         <Autocomplete
           id="expenseName"
           multiple={false}
           freeSolo={true}
-          sx={{ width: 200 }}
           className="m-2 shrink-0 grow-0 inline-flex"
           options={options}
           value={knownName}
@@ -162,6 +161,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           renderInput={(params) => (
             <TextField
               {...params}
+              inputProps={{ ...params.inputProps, className: "w-full" }}
               variant="standard"
               label={t("calculator:expense.name.label")}
             />
