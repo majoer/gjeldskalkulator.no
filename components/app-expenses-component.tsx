@@ -27,6 +27,7 @@ export default function AppExpensesComponent() {
         <AppExpenseComponent key={expense.id} expense={expense} />
       ))}
       <IconButton
+        color="primary"
         onClick={() => {
           dispatch(
             addExpense({

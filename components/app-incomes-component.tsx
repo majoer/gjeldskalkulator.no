@@ -19,6 +19,7 @@ export default function AppIncomesComponent() {
         <AppIncomeComponent key={income.id} income={income} />
       ))}
       <IconButton
+        color="primary"
         onClick={() => {
           dispatch(
             addIncome({

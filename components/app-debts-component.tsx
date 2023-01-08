@@ -21,6 +21,7 @@ export default function AppDebtsComponent() {
         <AppDebtComponent key={debt.id} debt={debt} />
       ))}
       <IconButton
+        color="primary"
         onClick={() => {
           dispatch(
             addDebt({
