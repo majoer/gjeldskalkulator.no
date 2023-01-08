@@ -17,8 +17,8 @@ export default function LandingPage() {
 
   return (
     <main className="w-full h-screen text-center bg-slate-100">
-      <Box className="w-full h-1/4"></Box>
-      <div className="w-full h-2/4">
+      <Box className="w-full h-1/6 sm:h-2/6"></Box>
+      <div className="w-full h-3/6">
         <Card elevation={10} className="lg:w-2/3 xl:w-5/12 lg:m-auto p-6">
           <CardHeader
             title={t("landing:title")}
@@ -46,7 +46,7 @@ export default function LandingPage() {
           </CardActions>
         </Card>
       </div>
-      <Box className="w-full h-1/4"></Box>
+      <Box className="w-full h-2/6"></Box>
     </main>
   );
 }
