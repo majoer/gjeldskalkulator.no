@@ -23,14 +23,7 @@ export default function LandingPage() {
 
       <footer className="h-1/6">
         <Paper className="h-full p-4 flex flex-col-reverse" elevation={6}>
-          <div className="flex flex-row justify-between">
-            <a
-              href="https://www.flaticon.com/free-icons/debt"
-              title="Page icon"
-            >
-              {t("landing:logo-attribution")}
-            </a>
-          </div>
+          <div className="flex flex-row justify-between"></div>
         </Paper>
       </footer>
 

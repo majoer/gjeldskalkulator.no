@@ -4,6 +4,15 @@
     "description": "Har du lite oversikt over økonomien? Prøv vår lånekalkulator for å se når du kan bli gjeldsfri."
   },
   "menu": {
-    "home": "Home"
+    "groups": {
+      "sites": "Sites",
+      "languages": "Languages"
+    },
+    "links": {
+      "home": "Home",
+      "calculator": "Calculator",
+      "contributions": "Contributions",
+      "feedback": "Got feedback?"
+    }
   }
 }

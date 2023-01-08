@@ -1,9 +1,15 @@
+import createCache from "@emotion/cache";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import Calculate from "@mui/icons-material/Calculate";
+import Chat from "@mui/icons-material/Chat";
+import Handshake from "@mui/icons-material/Handshake";
+import Home from "@mui/icons-material/Home";
 import Language from "@mui/icons-material/Language";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -11,7 +17,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { createTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
+import ThemeProvider from "@mui/system/ThemeProvider";
 import { appWithTranslation, i18n, useTranslation } from "next-i18next";
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -33,12 +41,93 @@ if (process.env.NODE_ENV !== "production") {
   }
 }
 
+let rootElement = undefined;
+if (typeof window === "object") {
+  rootElement =
+    document != null ? document.getElementById("__next") : undefined;
+}
+
+const theme = createTheme({
+  components: {
+    MuiPopover: {
+      defaultProps: {
+        container: rootElement,
+      },
+    },
+    MuiPopper: {
+      defaultProps: {
+        container: rootElement,
+      },
+    },
+  },
+});
+
+const cache = createCache({
+  key: "css",
+  prepend: true,
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { t } = useTranslation(["common"]);
   const closeMenu = () => setAnchorEl(null);
+
+  const menuItems = [
+    {
+      group: t("menu.groups.sites"),
+      links: [
+        {
+          href: `/`,
+          locale: router.locale,
+          selected: router.pathname === "/",
+          text: t("menu.links.home"),
+          icon: <Home color="primary" />,
+        },
+        {
+          href: `/kalkulator`,
+          locale: router.locale,
+          selected: router.pathname === "/kalkulator",
+          text: t("menu.links.calculator"),
+          icon: <Calculate color="primary" />,
+        },
+        {
+          href: `/takk-til`,
+          locale: router.locale,
+          selected: router.pathname === "/takk-til",
+          text: t("menu.links.contributions"),
+          icon: <Handshake color="primary" />,
+        },
+        {
+          href: `/kontakt-oss`,
+          locale: router.locale,
+          selected: router.pathname === "/kontakt-oss",
+          text: t("menu.links.feedback"),
+          icon: <Chat color="primary" />,
+        },
+      ],
+    },
+    {
+      group: t("menu.groups.languages"),
+      links: [
+        {
+          href: router.pathname,
+          locale: "nb-NO",
+          selected: router.locale === "nb-NO",
+          text: "Norwegian",
+          icon: <Language fontSize="small" />,
+        },
+        {
+          href: router.pathname,
+          locale: "en-US",
+          selected: router.locale === "en-US",
+          text: "English",
+          icon: <Language fontSize="small" />,
+        },
+      ],
+    },
+  ];
 
   return (
     <>
@@ -49,63 +138,56 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Provider store={store}>
-        <AppBar>
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={(e) => setAnchorEl(e.currentTarget)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              onClose={closeMenu}
-              disableScrollLock={true}
-            >
-              <MenuItem
-                component={Link}
-                href={`/`}
-                locale={router.locale}
-                onClick={closeMenu}
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <AppBar>
+            <Toolbar>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={(e) => setAnchorEl(e.currentTarget)}
               >
-                <ListItemIcon>
-                  <img width="20" height="20" src="/debt.png" alt="logo" />
-                </ListItemIcon>
-                <ListItemText>{t("menu.home")}</ListItemText>
-              </MenuItem>
-              <Divider />
-              <MenuItem
-                component={Link}
-                href={`${router.pathname}`}
-                locale="nb-NO"
-                onClick={closeMenu}
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={closeMenu}
+                disableScrollLock={true}
               >
-                <ListItemIcon>
-                  <Language fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Norsk</ListItemText>
-              </MenuItem>
-              <MenuItem
-                component={Link}
-                href={`/en-US${router.pathname}`}
-                locale="en-US"
-                onClick={closeMenu}
-              >
-                <ListItemIcon>
-                  <Language fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>English</ListItemText>
-              </MenuItem>
-            </Menu>
-          </Toolbar>
-        </AppBar>
-        <Component {...pageProps} />
-      </Provider>
+                {menuItems.map(({ group, links }, i) => (
+                  <div key={i}>
+                    <Divider textAlign="left">
+                      <Typography fontSize="small">{group}</Typography>
+                    </Divider>
+                    {links.map(({ href, locale, icon, text, selected }, j) => (
+                      <MenuItem
+                        key={j}
+                        sx={{
+                          backgroundColor: selected
+                            ? theme.palette.warning.light
+                            : "inherit",
+                        }}
+                        disabled={selected}
+                        component={Link}
+                        href={href}
+                        locale={locale}
+                        onClick={closeMenu}
+                      >
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <ListItemText>{text}</ListItemText>
+                      </MenuItem>
+                    ))}
+                  </div>
+                ))}
+              </Menu>
+            </Toolbar>
+          </AppBar>
+          <Component {...pageProps} />
+        </Provider>
+      </ThemeProvider>
     </>
   );
 }
