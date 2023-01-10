@@ -187,8 +187,8 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
               <InputAdornment position="end" className="absolute right-0">
                 {tipIdMap[id] ? (
                   <Tooltip
-                    title={t("calculator:tips.tooltip.title", {
-                      value: tipIdMap[id].summary,
+                    title={t("calculator:tipsPanel.tooltip.title", {
+                      value: t(`calculator:tips.${tipIdMap[id].tipId}.summary`),
                     })}
                   >
                     <IconButton
@@ -200,8 +200,8 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
                         );
                         dispatch(
                           setOpenTips({
-                            [tipIdMap[id].summary]: true,
-                            [`${tipIdMap[id].summary}-${customName}`]: true,
+                            [tipIdMap[id].tipId]: true,
+                            [`${tipIdMap[id].tipId}-${knownName.id}`]: true,
                           })
                         );
                       }}

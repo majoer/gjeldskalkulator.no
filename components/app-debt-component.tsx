@@ -1,17 +1,22 @@
 import Delete from "@mui/icons-material/Delete";
+import Info from "@mui/icons-material/Info";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { setOpenTips, updateNavigation } from "../store/debt-insight-slice";
 import { DebtState, removeDebt, updateDebt } from "../store/debt-slice";
-import { useAppDispatch } from "../store/store";
+import { selectTips } from "../store/selectors/tips-selector";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import {
   naturalNumber,
   positiveInteger,
   positiveNumber,
 } from "../validation/validation";
+import { TAB_TIPS } from "./app-debt-insight";
 
 export interface AppLoanProps {
   debt: DebtState;
@@ -25,6 +30,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
   const [interest, setInterest] = useState(debt.interest);
   const [fee, setFee] = useState("" + debt.fee);
   const { id } = debt;
+  const { tipIdMap } = useAppSelector(selectTips);
 
   const errors = useMemo(
     () => ({
@@ -132,6 +138,33 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
             ),
           }}
         />
+
+        {tipIdMap[id] ? (
+          <Tooltip
+            title={t("calculator:tipsPanel.tooltip.title", {
+              value: t(`calculator:tips.${tipIdMap[id].tipId}.summary`),
+            })}
+          >
+            <IconButton
+              onClick={() => {
+                dispatch(
+                  updateNavigation({
+                    activeTab: TAB_TIPS,
+                  })
+                );
+                dispatch(
+                  setOpenTips({
+                    [tipIdMap[id].tipId]: true,
+                  })
+                );
+              }}
+            >
+              <Info className={tipIdMap[id].color} />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <div>kr</div>
+        )}
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton

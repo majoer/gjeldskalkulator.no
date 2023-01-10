@@ -119,8 +119,40 @@
       "paidSoFar": "Betalt så langt"
     }
   },
-  "tips": {
+  "tipsPanel": {
     "tooltip": { "title": "Tips: {{value}}" },
     "beta": "* Vi jobber med å lage flere og bedre tips. Vennligst konsulter en profesjonell før du eventuelt tar til deg disse tipsene."
+  },
+  "tips": {
+    "reduceSpending": {
+      "summary": "Prøv å redusere forbruket ditt",
+      "content": ""
+    },
+    "refinanceDebt": {
+      "summary": "Undersøk mulighetene for slå sammen lånene dine",
+      "content": "Du har to eller flere lån med høy rente. Du kan slå de sammen til et større lån hvis du finner en kreditor som kan gi deg lavere rente."
+    },
+    "saveMoreMoney": {
+      "summary": "Sett av litt penger til sparing",
+      "content": ""
+    },
+    "useMoreProfitsOnDebt": {
+      "summary": "Bruk mer av overskuddet ditt på gjeld",
+      "content": ""
+    },
+    "applyForPublicDebtAnnullment": {
+      "summary": "Søk offentlig gjeldsordning",
+      "content": ""
+    },
+    "reorderDebt": {
+      "summary": "Prioriter gjeld med høy rente først",
+      "content": ""
+    },
+    "takeAnExtraJob": { "summary": "Ta en ektra jobb", "content": "" },
+    "contactNav": { "summary": "Snakk med NAV", "content": "" },
+    "classifyExpenses": {
+      "summary": "Kategoriser utgiftene dine",
+      "content": ""
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { createSelector, nanoid } from "@reduxjs/toolkit";
 import { allTips, ResolvedTip } from "../../components/app-tips-component";
+import { selectAllDebts } from "../debt-slice";
 import { selectAllExpenses } from "../expense-slice";
 import { selectAllIncomes } from "../income-slice";
 import { selectTotalCostOfDebt } from "./graph-selector";
@@ -14,6 +15,7 @@ export const selectTips = createSelector(
   [
     selectAllIncomes,
     selectAllExpenses,
+    selectAllDebts,
     selectUseTowardsDebt,
     selectResult,
     selectTotalCostOfDebt,
@@ -21,6 +23,7 @@ export const selectTips = createSelector(
   (
     allIncomes,
     allExpenses,
+    allDebts,
     useTowardsDebt,
     result,
     totalCostOfDebt
@@ -44,11 +47,15 @@ export const selectTips = createSelector(
       new Map()
     );
 
+    const debtMap = allDebts.reduce((map, e) => map.set(e.name, e), new Map());
+
     const allRelevantTips = allTips
       .map((resolveTip) =>
         resolveTip({
           incomeMap,
           expenseMap,
+          debtMap,
+          allDebts,
           useTowardsDebt,
           result,
           totalCostOfDebt,

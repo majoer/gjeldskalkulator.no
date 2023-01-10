@@ -119,8 +119,40 @@
       "paidSoFar": "Paid so far"
     }
   },
-  "tips": {
+  "tipsPanel": {
     "tooltip": { "title": "Tips: {{value}}" },
     "beta": "* We're working on creating more and better tips. Please consult a professional before acting on our tips."
+  },
+  "tips": {
+    "reduceSpending": {
+      "summary": "Reduce Spending",
+      "content": ""
+    },
+    "refinanceDebt": {
+      "summary": "Refinance your debt",
+      "content": "You have more than two loans with high interest. You can combine the loans into one larger loan with lower interest if you can find a creditor that can give you a lower interest."
+    },
+    "saveMoreMoney": {
+      "summary": "Set some money aside for savings",
+      "content": ""
+    },
+    "useMoreProfitsOnDebt": {
+      "summary": "Use more of your profits on debt",
+      "content": ""
+    },
+    "applyForPublicDebtAnnullment": {
+      "summary": "Apply for public debt annullment",
+      "content": ""
+    },
+    "reorderDebt": {
+      "summary": "Prioritize high interest debt first",
+      "content": ""
+    },
+    "takeAnExtraJob": { "summary": "Take up a an extra job", "content": "" },
+    "contactNav": { "summary": "Talk with NAV", "content": "" },
+    "classifyExpenses": {
+      "summary": "Classify all your expenses",
+      "content": ""
+    }
   }
 }

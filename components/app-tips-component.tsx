@@ -13,6 +13,7 @@ import {
   setOpenTips,
   updateNavigation,
 } from "../store/debt-insight-slice";
+import { DebtState } from "../store/debt-slice.js";
 import { ExpenseState } from "../store/expense-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
@@ -22,6 +23,8 @@ import { ExpenseOptionName, ExpenseOptionNames } from "./app-expense-component";
 export interface TipConditionArgs {
   incomeMap: any;
   expenseMap: Map<ExpenseOptionName, ExpenseState>;
+  debtMap: Map<string, DebtState>;
+  allDebts: DebtState[];
   result: number;
   useTowardsDebt: BigNumber.BigNumber;
   totalCostOfDebt: number;
@@ -29,7 +32,7 @@ export interface TipConditionArgs {
 export interface TipCondition {}
 
 export interface ResolvedTip {
-  summary: string;
+  tipId: string;
   active: boolean;
   targetId: string[];
   color: string;
@@ -69,7 +72,7 @@ export const allTips: UnresolvedTip[] = [
     );
 
     return {
-      summary: "Reduce spending",
+      tipId: "reduceSpending",
       active: expensesOverLimit.length > 0,
       color: "text-blue-500",
       targetId: expensesOverLimit.map((post) => expenseMap.get(post).id),
@@ -81,17 +84,18 @@ export const allTips: UnresolvedTip[] = [
           <div>
             <div className="flex flex-wrap">
               {expensesOverLimit.map((post) => {
+                const { t } = useTranslation("calculator");
                 const Component = expenseLimits[post].component;
                 return (
                   <AppExpandingPaperComponent
                     key={post}
-                    title={post}
-                    open={openTips[`Reduce spending-${post}`] || false}
+                    title={t(`calculator:expense.options.${post}`)}
+                    open={openTips[`reduceSpending-${post}`] || false}
                     onChange={({ open }) =>
                       dispatch(
                         setOpenTips({
-                          [`Reduce spending`]: true,
-                          [`Reduce spending-${post}`]: open,
+                          [`reduceSpending`]: true,
+                          [`reduceSpending-${post}`]: open,
                         })
                       )
                     }
@@ -122,19 +126,22 @@ export const allTips: UnresolvedTip[] = [
       },
     };
   },
-  ({ expenseMap }) => ({
-    summary: "Refinance your debt",
-    active: false,
-    color: "",
-    targetId: [],
-    DetailsComponent: () => (
-      <div>
-        <p></p>
-      </div>
-    ),
+  ({ expenseMap, allDebts }) => ({
+    tipId: "refinanceDebt",
+    active: allDebts.length > 1,
+    color: "text-purple-500",
+    targetId: allDebts.map((d) => d.id),
+    DetailsComponent: () => {
+      const { t } = useTranslation("calculator");
+      return (
+        <div>
+          <p>{t("calculator:tips.refinanceDebt.content")}</p>
+        </div>
+      );
+    },
   }),
   ({ expenseMap, useTowardsDebt, result }) => ({
-    summary: "Set some money aside for savings",
+    tipId: "saveMoreMoney",
     active:
       !expenseMap.get("savings") &&
       useTowardsDebt.isGreaterThanOrEqualTo(result),
@@ -147,7 +154,7 @@ export const allTips: UnresolvedTip[] = [
     ),
   }),
   ({ expenseMap }) => ({
-    summary: "Use more of your profits on debt",
+    tipId: "useMoreProfitsOnDebt",
     active: false,
     color: "",
     targetId: [],
@@ -158,7 +165,7 @@ export const allTips: UnresolvedTip[] = [
     ),
   }),
   ({ expenseMap }) => ({
-    summary: "Apply for public debt annullment",
+    tipId: "applyForPublicDebtAnnullment",
     active: false,
     color: "",
     targetId: [],
@@ -169,7 +176,7 @@ export const allTips: UnresolvedTip[] = [
     ),
   }),
   ({ expenseMap }) => ({
-    summary: "Prioritize high interest debt first",
+    tipId: "reorderDebt",
     active: false,
     color: "",
     targetId: [],
@@ -180,7 +187,7 @@ export const allTips: UnresolvedTip[] = [
     ),
   }),
   ({ expenseMap }) => ({
-    summary: "Take up a second job",
+    tipId: "takeAnExtraJob",
     active: false,
     color: "",
     targetId: [],
@@ -191,7 +198,7 @@ export const allTips: UnresolvedTip[] = [
     ),
   }),
   ({ expenseMap }) => ({
-    summary: "Talk with NAV",
+    tipId: "contactNav",
     active: false,
     color: "",
     targetId: [],
@@ -202,7 +209,7 @@ export const allTips: UnresolvedTip[] = [
     ),
   }),
   ({ expenseMap }) => ({
-    summary: "You haven't classified your expenses",
+    tipId: "classifyExpenses",
     active: !!expenseMap["Other"],
     color: "text-orange-500",
     targetId: expenseMap["Other"]?.id,
@@ -231,43 +238,41 @@ export default function AppTipsComponent() {
 
   return (
     <div>
-      {allRelevantTips.map(
-        ({ summary, DetailsComponent, active, color }, i) => (
-          <Accordion
-            key={i}
-            expanded={openTips[summary] || false}
-            onChange={(_, isExpanded) =>
-              dispatch(
-                updateNavigation({
-                  openTips: {
-                    ...openTips,
-                    [summary]: isExpanded,
-                  },
-                })
-              )
-            }
+      {allRelevantTips.map(({ tipId, DetailsComponent, active, color }, i) => (
+        <Accordion
+          key={i}
+          expanded={openTips[tipId] || false}
+          onChange={(_, isExpanded) =>
+            dispatch(
+              updateNavigation({
+                openTips: {
+                  ...openTips,
+                  [tipId]: isExpanded,
+                },
+              })
+            )
+          }
+        >
+          <AccordionSummary
+            className="flex-row-reverse"
+            expandIcon={<ExpandMore />}
           >
-            <AccordionSummary
-              className="flex-row-reverse"
-              expandIcon={<ExpandMore />}
-            >
-              <div className="ml-3 relative flex justify-between w-full">
-                <div>{summary}</div>
-                <div className="ml-3 relative">
-                  <Info
-                    className={`absolute right-1 top-1/2 -translate-y-1/2 ${color}`}
-                  />
-                </div>
+            <div className="ml-3 relative flex justify-between w-full">
+              <div>{t(`calculator:tips.${tipId}.summary`)}</div>
+              <div className="ml-3 relative">
+                <Info
+                  className={`absolute right-1 top-1/2 -translate-y-1/2 ${color}`}
+                />
               </div>
-            </AccordionSummary>
-            <AccordionDetailsComponent>
-              <DetailsComponent />
-            </AccordionDetailsComponent>
-          </Accordion>
-        )
-      )}
+            </div>
+          </AccordionSummary>
+          <AccordionDetailsComponent>
+            <DetailsComponent />
+          </AccordionDetailsComponent>
+        </Accordion>
+      ))}
       <br />
-      <Typography variant="body2">{t("calculator:tips.beta")}</Typography>
+      <Typography variant="body2">{t("calculator:tipsPanel.beta")}</Typography>
     </div>
   );
 }
