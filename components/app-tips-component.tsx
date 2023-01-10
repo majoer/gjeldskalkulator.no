@@ -1,10 +1,12 @@
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Favorite from "@mui/icons-material/Favorite";
 import Info from "@mui/icons-material/Info";
+import { Typography } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetailsComponent from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import * as BigNumber from "bignumber.js";
+import { useTranslation } from "next-i18next";
 import React from "react";
 import {
   selectOpenTips,
@@ -222,6 +224,7 @@ export const allTips: UnresolvedTip[] = [
 ];
 
 export default function AppTipsComponent() {
+  const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
   const { allRelevantTips } = useAppSelector(selectTips);
   const openTips = useAppSelector(selectOpenTips);
@@ -263,6 +266,8 @@ export default function AppTipsComponent() {
           </Accordion>
         )
       )}
+      <br />
+      <Typography variant="body2">{t("calculator:tips.beta")}</Typography>
     </div>
   );
 }

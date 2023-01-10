@@ -120,6 +120,7 @@
     }
   },
   "tips": {
-    "tooltip": { "title": "Tips: {{value}}" }
+    "tooltip": { "title": "Tips: {{value}}" },
+    "beta": "* Vi jobber med å lage flere og bedre tips. Vennligst konsulter en profesjonell før du eventuelt tar til deg disse tipsene."
   }
 }

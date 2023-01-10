@@ -120,6 +120,7 @@
     }
   },
   "tips": {
-    "tooltip": { "title": "Tips: {{value}}" }
+    "tooltip": { "title": "Tips: {{value}}" },
+    "beta": "* We're working on creating more and better tips. Please consult a professional before acting on our tips."
   }
 }
