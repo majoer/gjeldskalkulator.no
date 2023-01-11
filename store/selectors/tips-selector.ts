@@ -55,6 +55,8 @@ export const selectTips = createSelector(
           incomeMap,
           expenseMap,
           debtMap,
+          allIncomes,
+          allExpenses,
           allDebts,
           useTowardsDebt,
           result,

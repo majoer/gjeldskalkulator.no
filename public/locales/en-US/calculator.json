@@ -152,7 +152,10 @@
     "contactNav": { "summary": "Talk with NAV", "content": "" },
     "classifyExpenses": {
       "summary": "Classify all your expenses",
-      "content": ""
+      "content": {
+        "p1": "We can't give any meaningful advice without insight into your expenses. Try to be as specific as possible when filling out your expenses.",
+        "p2": "Don't worry, we don't store any of your data on our end. You are anonymous here."
+      }
     }
   }
 }

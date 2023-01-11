@@ -152,7 +152,10 @@
     "contactNav": { "summary": "Snakk med NAV", "content": "" },
     "classifyExpenses": {
       "summary": "Kategoriser utgiftene dine",
-      "content": ""
+      "content": {
+        "p1": "Vi kan ikke gi gode tips uten å ha innsikt i utgiftene dine. Prøv å være så spesifikk som mulig og velg budsjettposter fra forslagslisten.",
+        "p2": "Vi lagrer ingenting hos oss av det du oppgir her. På denne nettsiden er du anonym!"
+      }
     }
   }
 }

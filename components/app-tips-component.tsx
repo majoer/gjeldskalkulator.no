@@ -1,10 +1,10 @@
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Favorite from "@mui/icons-material/Favorite";
 import Info from "@mui/icons-material/Info";
-import { Typography } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetailsComponent from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import Typography from "@mui/material/Typography";
 import * as BigNumber from "bignumber.js";
 import { useTranslation } from "next-i18next";
 import React from "react";
@@ -13,17 +13,24 @@ import {
   setOpenTips,
   updateNavigation,
 } from "../store/debt-insight-slice";
-import { DebtState } from "../store/debt-slice.js";
+import { DebtState } from "../store/debt-slice";
 import { ExpenseState } from "../store/expense-slice";
+import { IncomeState } from "../store/income-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import AppExpandingPaperComponent from "./app-expanding-paper-component";
-import { ExpenseOptionName, ExpenseOptionNames } from "./app-expense-component";
+import {
+  allOptions,
+  ExpenseOptionName,
+  ExpenseOptionNames,
+} from "./app-expense-component";
 
 export interface TipConditionArgs {
   incomeMap: any;
   expenseMap: Map<ExpenseOptionName, ExpenseState>;
   debtMap: Map<string, DebtState>;
+  allIncomes: IncomeState[];
+  allExpenses: ExpenseState[];
   allDebts: DebtState[];
   result: number;
   useTowardsDebt: BigNumber.BigNumber;
@@ -208,26 +215,32 @@ export const allTips: UnresolvedTip[] = [
       </div>
     ),
   }),
-  ({ expenseMap }) => ({
-    tipId: "classifyExpenses",
-    active: !!expenseMap["Other"],
-    color: "text-orange-500",
-    targetId: expenseMap["Other"]?.id,
-    DetailsComponent: () => (
-      <div>
-        <p>
-          This app can't give any meaningful advice without insight into your
-          expenses. Try to be as specific as possible when filling out your
-          expenses.
-        </p>
+  ({ allExpenses, expenseMap }) => {
+    const unknownExpensePosts = allExpenses.filter((e) => !allOptions[e.name]);
+    const otherExpensePost = expenseMap.get("other");
 
-        <p>
-          Don't worry, we don't store any of your data on our end. You are 100%
-          anonymous here. <Favorite className="text-red-500" color="inherit" />
-        </p>
-      </div>
-    ),
-  }),
+    return {
+      tipId: "classifyExpenses",
+      active: unknownExpensePosts.length > 0 || !!otherExpensePost,
+      color: "text-orange-500",
+      targetId: unknownExpensePosts
+        .map((e) => e.id)
+        .concat(otherExpensePost ? [otherExpensePost.id] : []),
+      DetailsComponent: () => {
+        const { t } = useTranslation("calculator");
+        return (
+          <div>
+            <p>{t("calculator:tips.classifyExpenses.content.p1")}</p>
+
+            <p>
+              {t("calculator:tips.classifyExpenses.content.p2")}{" "}
+              <Favorite className="text-red-500" color="inherit" />
+            </p>
+          </div>
+        );
+      },
+    };
+  },
 ];
 
 export default function AppTipsComponent() {

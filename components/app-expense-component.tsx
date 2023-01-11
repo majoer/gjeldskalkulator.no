@@ -57,9 +57,11 @@ interface ExpenseOption {
 export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
-  const [customName, setCustomName] = useState("");
+  const [customName, setCustomName] = useState(
+    allOptions[expense.name] ? "" : expense.name
+  );
   const [knownName, setKnownName] = useState<ExpenseOption | null>(
-    expense.name
+    allOptions[expense.name]
       ? {
           id: expense.name,
           label: t(`calculator:expense.options.${expense.name}`),
@@ -95,10 +97,12 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   );
 
   useEffect(() => {
-    setKnownName({
-      ...knownName,
-      label: t(`calculator:expense.options.${expense.name}`),
-    });
+    if (knownName) {
+      setKnownName({
+        ...knownName,
+        label: t(`calculator:expense.options.${expense.name}`),
+      });
+    }
   }, [t]);
 
   const options: ExpenseOption[] = useMemo(
@@ -118,9 +122,10 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   );
 
   const debouncedUpdate = useCallback(
-    debounce(({ knownName, amount, errors }) => {
+    debounce(({ knownName, customName, amount, errors }) => {
+      console.log(customName, knownName);
       const fullUpdate: Partial<ExpenseState> = {
-        name: knownName ? knownName.id : "",
+        name: customName === knownName?.label ? knownName.id : customName,
         amount: parseInt(amount, 10),
       };
 
@@ -136,8 +141,8 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   );
 
   useEffect(() => {
-    debouncedUpdate({ knownName, amount, errors });
-  }, [knownName, amount, errors]);
+    debouncedUpdate({ knownName, customName, amount, errors });
+  }, [knownName, customName, amount, errors]);
 
   return (
     <div className="relative py-4 sm:py-1">
@@ -201,7 +206,12 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
                         dispatch(
                           setOpenTips({
                             [tipIdMap[id].tipId]: true,
-                            [`${tipIdMap[id].tipId}-${knownName.id}`]: true,
+                            ...(knownName
+                              ? {
+                                  [`${tipIdMap[id].tipId}-${knownName.id}`]:
+                                    true,
+                                }
+                              : {}),
                           })
                         );
                       }}
