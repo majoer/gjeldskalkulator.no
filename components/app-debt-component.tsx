@@ -162,9 +162,8 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
               <Info className={tipIdMap[id].color} />
             </IconButton>
           </Tooltip>
-        ) : (
-          <div>kr</div>
-        )}
+        ) : null
+        }
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton
