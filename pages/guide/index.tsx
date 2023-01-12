@@ -1,4 +1,3 @@
-import Favorite from "@mui/icons-material/Favorite";
 import Info from "@mui/icons-material/Info";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
@@ -14,10 +13,7 @@ import { useRouter } from "next/router.js";
 import Papa from "papaparse";
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  ExpenseOptionNames,
-  ExpenseOptionName,
-} from "../../components/app-expense-component";
+import { ExpenseOptionNames } from "../../components/app-expense-component";
 import AppGuideCardComponent from "../../components/app-guide-card-component";
 import { ExpenseState, setAllExpenses } from "../../store/expense-slice";
 import { IncomeState, setAllIncomes } from "../../store/income-slice";
@@ -166,8 +162,7 @@ export default function LandingPage() {
           <Typography>
             {t("guide:dnb.uploadBudget.upload")}
             <br />
-            {t("guide:dnb.uploadBudget.disclaimer")}{" "}
-            <Favorite className="text-red-500" />
+            {t("guide:dnb.uploadBudget.disclaimer")}
           </Typography>
 
           <br />
