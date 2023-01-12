@@ -35,12 +35,12 @@ export default function LandingPage() {
         title: t("guide:steps.selectBank.title"),
       },
       {
-        step: t("guide:steps.selectBank.step"),
-        title: t("guide:steps.selectBank.title"),
+        step: t("guide:steps.downloadBudget.step"),
+        title: t("guide:steps.downloadBudget.title"),
       },
       {
-        step: t("guide:steps.selectBank.step"),
-        title: t("guide:steps.selectBank.title"),
+        step: t("guide:steps.uploadBudget.step"),
+        title: t("guide:steps.uploadBudget.title"),
       },
     ];
   }, [t]);
