@@ -89,6 +89,7 @@ export default function AppUserInputComponent() {
           <AppDebtsComponent />
         </AccordionDetails>
       </Accordion>
+      <div className="h-2"></div>
     </div>
   );
 }
