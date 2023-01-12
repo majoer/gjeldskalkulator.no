@@ -25,6 +25,7 @@ export const incomeSlice = createSlice({
     addIncome: incomeAdapter.addOne,
     updateIncome: incomeAdapter.updateOne,
     removeIncome: incomeAdapter.removeOne,
+    setAllIncomes: incomeAdapter.setAll,
   },
   extraReducers: {
     [HYDRATE]: (state: any, action: any): any => {
@@ -35,7 +36,8 @@ export const incomeSlice = createSlice({
   },
 });
 
-export const { addIncome, updateIncome, removeIncome } = incomeSlice.actions;
+export const { addIncome, updateIncome, removeIncome, setAllIncomes } =
+  incomeSlice.actions;
 
 export const { selectAll: selectAllIncomes } =
   incomeAdapter.getSelectors<AppState>((state) => state.incomes);

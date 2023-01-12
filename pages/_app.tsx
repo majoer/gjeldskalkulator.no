@@ -180,7 +180,9 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Menu>
             </Toolbar>
           </AppBar>
-          <Component {...pageProps} />
+          <main className="relative pt-20 min-h-screen">
+            <Component {...pageProps} />
+          </main>
         </Provider>
       </ThemeProvider>
     </>

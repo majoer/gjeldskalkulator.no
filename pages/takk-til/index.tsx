@@ -14,7 +14,7 @@ export default function AppContributionsPage() {
   const { t } = useTranslation(["common", "contributions"]);
 
   return (
-    <Container className="pt-20 m-auto text-center">
+    <Container className="m-auto text-center">
       <Typography variant="h2" className="mb-10">
         {t("contributions:header")}
       </Typography>

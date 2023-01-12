@@ -8,14 +8,14 @@ import CardHeader from "@mui/material/CardHeader";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
+import Typography from "@mui/material/Typography";
 
 export default function LandingPage() {
   const { t } = useTranslation(["common", "landing"]);
 
   return (
-    <main className="w-full h-screen text-center bg-slate-100">
-      <Box className="w-full h-1/6 sm:h-2/6"></Box>
-      <div className="w-full h-3/6">
+    <div className="w-full h-screen text-center">
+      <div className="w-full h-3/6 xl:mt-32">
         <Card elevation={10} className="lg:w-2/3 xl:w-5/12 lg:m-auto p-6">
           <CardHeader
             title={t("landing:title")}
@@ -30,7 +30,11 @@ export default function LandingPage() {
             height="150px"
             sx={{ objectFit: "contain" }}
           ></CardMedia>
-          <CardContent></CardContent>
+          <CardContent>
+            <Typography variant="subtitle1">
+              {t("landing:subsubheader")}
+            </Typography>
+          </CardContent>
           <CardActions className="justify-center">
             <Button
               className="w-full sm:w-3/12"
@@ -40,11 +44,20 @@ export default function LandingPage() {
             >
               {t("landing:goToCalculator")}
             </Button>
+            <Button
+              className="w-full sm:w-3/12"
+              color="secondary"
+              LinkComponent={Link}
+              href="/guide"
+              variant="contained"
+            >
+              {t("landing:goToGuide")}
+            </Button>
           </CardActions>
         </Card>
       </div>
       <Box className="w-full h-2/6"></Box>
-    </main>
+    </div>
   );
 }
 

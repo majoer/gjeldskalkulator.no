@@ -11,7 +11,7 @@ export default function AppKontaktOssPage() {
   const { t } = useTranslation(["common", "contact-us"]);
 
   return (
-    <Container className="pt-20 m-auto text-center">
+    <Container className="m-auto text-center">
       <Typography variant="h2" className="mb-10">
         {t("contact-us:header")}
       </Typography>

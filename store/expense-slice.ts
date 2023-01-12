@@ -25,6 +25,7 @@ export const expenseSlice = createSlice({
     addExpense: expenseAdapter.addOne,
     updateExpense: expenseAdapter.updateOne,
     removeExpense: expenseAdapter.removeOne,
+    setAllExpenses: expenseAdapter.setAll,
   },
   extraReducers: {
     [HYDRATE]: (state: any, action: any): any => {
@@ -35,7 +36,7 @@ export const expenseSlice = createSlice({
   },
 });
 
-export const { addExpense, updateExpense, removeExpense } =
+export const { addExpense, updateExpense, removeExpense, setAllExpenses } =
   expenseSlice.actions;
 
 export const { selectAll: selectAllExpenses } =
