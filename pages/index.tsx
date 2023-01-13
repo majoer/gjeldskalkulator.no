@@ -35,9 +35,9 @@ export default function LandingPage() {
               {t("landing:subsubheader")}
             </Typography>
           </CardContent>
-          <CardActions className="justify-center">
+          <CardActions className="justify-center flex-row flex-wrap w-full">
             <Button
-              className="w-full sm:w-3/12"
+              className="w-full sm:w-5/12 my-3"
               LinkComponent={Link}
               href="/kalkulator"
               variant="contained"
@@ -45,7 +45,7 @@ export default function LandingPage() {
               {t("landing:goToCalculator")}
             </Button>
             <Button
-              className="w-full sm:w-3/12"
+              className="w-full sm:w-5/12 m-0 sm:ml-6"
               color="secondary"
               LinkComponent={Link}
               href="/guide"
