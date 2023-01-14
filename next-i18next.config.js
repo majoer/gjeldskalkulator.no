@@ -4,6 +4,10 @@ module.exports = {
   i18n: {
     defaultLocale: 'nb-NO',
     locales: ['nb-NO', 'en-US',],
+    fallbackLng: {
+      'nb-NO': ['nb', 'nn'],
+      default: ['nb-NO']
+    }
   },
   ...(typeof window !== 'undefined'
     ? {
