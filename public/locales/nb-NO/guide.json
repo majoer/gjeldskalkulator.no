@@ -5,14 +5,15 @@
       "title": "Hvilken bank bruker du?"
     },
     "downloadBudget": {
-      "step": "Hent budsjett fra bank",
+      "step": "Hent budsjett",
       "title": "Last ned ditt budsjett fra DnB"
     },
     "uploadBudget": {
-      "step": "Importer budsjett i kalkulatoren",
+      "step": "Importer budsjett",
       "title": "Importer ditt budsjett"
     }
   },
+  "backButton": { "text": "Tilbake" },
   "noBank": "* Finner du ikke din bank?",
   "dnb": {
     "downloadBudget": {

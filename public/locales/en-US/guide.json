@@ -5,14 +5,15 @@
       "title": "Which bank do you use?"
     },
     "downloadBudget": {
-      "step": "Get budget from bank",
+      "step": "Get budget",
       "title": "Download your budget from DnB"
     },
     "uploadBudget": {
-      "step": "Put budget into calculator",
+      "step": "Import budget",
       "title": "Upload your budget"
     }
   },
+  "backButton": { "text": "Back" },
   "noBank": "* Can't find your bank?",
   "dnb": {
     "downloadBudget": {
@@ -22,8 +23,7 @@
       "4": "4. Select \"Rapport\" from the left menu",
       "5": "5. Click the dropdown for selecting year",
       "6": "6. Then select the previous year",
-      "7": "7. Download the report by clicking \"Lagre til fil\"",
-      "button": { "text": "Next" }
+      "7": "7. Download the report by clicking \"Lagre til fil\""
     },
     "uploadBudget": {
       "upload": "Upload the file you just downloaded to the calculator.",
