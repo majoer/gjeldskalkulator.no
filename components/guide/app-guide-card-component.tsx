@@ -29,7 +29,7 @@ export default function AppGuideCardComponent({
 
   return (
     <div className="w-full text-center">
-      <div className="w-full h-3/6 xl:mt-32">
+      <div className="w-full h-3/6 xl:mt-32 mb-10">
         <Card
           elevation={10}
           className="relative lg:w-2/3 xl:w-5/12 lg:m-auto p-6"
