@@ -4,34 +4,28 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import Box from "@mui/system/Box";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { ReactElement } from "react";
 
 interface Step {
   step: string;
-  href: string;
   title: string;
-  component: React.ReactNode;
 }
 
 export interface AppGuideCardComponentProps {
   steps: Step[];
+  currentStep: number;
+  children: ReactElement;
 }
 
 export default function AppGuideCardComponent({
   steps,
+  currentStep,
+  children,
 }: AppGuideCardComponentProps) {
+  const { t } = useTranslation();
   const router = useRouter();
-  const path = router.asPath;
-  const activeStep = useMemo(() => {
-    const fragmentIndex = path.indexOf("#");
-    if (fragmentIndex !== -1) {
-      const fragment = path.substring(fragmentIndex, path.length);
-      const index = steps.findIndex((s) => s.href === fragment);
-      return index === -1 ? 0 : index;
-    }
-    return 0;
-  }, [path]);
 
   return (
     <div className="w-full text-center">
@@ -42,18 +36,17 @@ export default function AppGuideCardComponent({
         >
           <Stepper>
             {steps.map((step, i) => (
-              <Step key={i} completed={i <= activeStep}>
-                <StepLabel>{step.step}</StepLabel>
+              <Step key={i} completed={i <= currentStep}>
+                <StepLabel>{t(step.step)}</StepLabel>
               </Step>
             ))}
           </Stepper>
           <CardHeader
-            title={steps[activeStep].title}
+            title={t(steps[currentStep].title)}
             titleTypographyProps={{ component: "h1" }}
             subheaderTypographyProps={{ component: "h2" }}
           />
-
-          {steps[activeStep].component}
+          {children}
         </Card>
       </div>
       <Box className="w-full h-2/6"></Box>
