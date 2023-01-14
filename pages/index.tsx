@@ -56,6 +56,7 @@ export default function LandingPage() {
           </CardActions>
         </Card>
       </div>
+      asd
       <Box className="w-full h-2/6"></Box>
     </div>
   );
