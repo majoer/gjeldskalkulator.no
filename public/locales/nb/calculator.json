@@ -78,7 +78,6 @@
     }
   },
   "errors": {
-    "positiveInteger": "Må være et heltall, 1 eller over",
     "positiveNumber": "Må være et tall, 1 eller over",
     "percentage": "Må være en % mellom 0 and 100",
     "naturalNumber": "Må være et heltall, 0 eller over"

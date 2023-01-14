@@ -1,13 +1,5 @@
-export const positiveInteger = (str: string) => {
-  if (isInteger(str) && isPositive(str)) {
-    return undefined;
-  }
-
-  return "errors.positiveInteger";
-};
-
-export const positiveNumber = (str: string) => {
-  if (isNumeric(str) && isPositive(str)) {
+export const positiveNumberInc0 = (str: string) => {
+  if (isNumeric(str) && isPositiveInc0(str)) {
     return undefined;
   }
 

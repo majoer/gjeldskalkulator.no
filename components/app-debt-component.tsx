@@ -11,11 +11,7 @@ import { setOpenTips, updateNavigation } from "../store/debt-insight-slice";
 import { DebtState, removeDebt, updateDebt } from "../store/debt-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import {
-  naturalNumber,
-  positiveInteger,
-  positiveNumber,
-} from "../validation/validation";
+import { naturalNumber, positiveNumberInc0 } from "../validation/validation";
 import { TAB_TIPS } from "./app-debt-insight";
 
 export interface AppLoanProps {
@@ -35,8 +31,8 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
   const errors = useMemo(
     () => ({
       name: undefined,
-      amount: positiveInteger(amount),
-      interest: positiveNumber(interest),
+      amount: naturalNumber(amount),
+      interest: positiveNumberInc0(interest),
       fee: naturalNumber(fee),
     }),
     [name, amount, interest, fee]
@@ -162,8 +158,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
               <Info className={tipIdMap[id].color} />
             </IconButton>
           </Tooltip>
-        ) : null
-        }
+        ) : null}
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <IconButton

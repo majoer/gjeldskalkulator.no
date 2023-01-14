@@ -78,7 +78,6 @@
     }
   },
   "errors": {
-    "positiveInteger": "Must be an integer, 1 or higher",
     "positiveNumber": "Must be a number, 1 or higher",
     "percentage": "Must be % between 0 and 100",
     "naturalNumber": "Must be an integer, 0 or higher"

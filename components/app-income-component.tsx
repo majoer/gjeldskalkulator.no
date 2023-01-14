@@ -1,13 +1,13 @@
 import Delete from "@mui/icons-material/Delete";
-import InputAdornment from "@mui/material/InputAdornment";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
+import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { IncomeState, removeIncome, updateIncome } from "../store/income-slice";
 import { useAppDispatch } from "../store/store";
-import { positiveInteger } from "../validation/validation";
-import { useTranslation } from "next-i18next";
+import { naturalNumber } from "../validation/validation";
 
 export interface AppIncomeProps {
   income: IncomeState;
@@ -23,7 +23,7 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
   const errors = useMemo(
     () => ({
       name: undefined,
-      amount: positiveInteger(amount),
+      amount: naturalNumber(amount),
     }),
     [name, amount]
   );

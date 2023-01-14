@@ -17,7 +17,7 @@ import {
 } from "../store/expense-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { positiveInteger } from "../validation/validation";
+import { naturalNumber } from "../validation/validation";
 import { TAB_TIPS } from "./app-debt-insight";
 
 export interface AppExpenseProps {
@@ -116,7 +116,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   const errors = useMemo(
     () => ({
       name: undefined,
-      amount: positiveInteger(amount),
+      amount: naturalNumber(amount),
     }),
     [customName, amount]
   );
