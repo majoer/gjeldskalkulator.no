@@ -1,33 +1,35 @@
 {
   "steps": {
     "selectBank": {
-      "step": "Select Bank",
+      "step": "Bank",
       "title": "Which bank do you use?"
     },
     "downloadBudget": {
-      "step": "Get budget",
+      "step": "Budget",
       "title": "Download your budget from DnB"
     },
     "uploadBudget": {
-      "step": "Import budget",
-      "title": "Upload your budget"
+      "step": "Import",
+      "title": "Import your budget"
     }
   },
   "backButton": { "text": "Back" },
   "noBank": "* Can't find your bank?",
   "dnb": {
     "downloadBudget": {
-      "1": "1. Log into your DnB online bank",
-      "2": "2. Open the main menu",
-      "3": "3. Select \"Min økonomi\" from the main menu",
-      "4": "4. Select \"Rapport\" from the left menu",
-      "5": "5. Click the dropdown for selecting year",
-      "6": "6. Then select the previous year",
-      "7": "7. Download the report by clicking \"Lagre til fil\""
+      "1": "Log into your DnB online bank",
+      "2": "Open the main menu",
+      "3": "Select \"Min økonomi\" from the menu",
+      "4": "Select \"Rapport\" from the left menu",
+      "5": "Click the dropdown for selecting year",
+      "6": "Then select the previous year",
+      "7": "Click \"Lagre til fil\"",
+      "button": { "text": "Next" }
     },
     "uploadBudget": {
-      "upload": "Upload the file you just downloaded to the calculator.",
-      "disclaimer": "Your budget never leaves your computer. No one but you can see it",
+      "disclaimer1": "Your budget never leaves your computer",
+      "disclaimer2": "and this app will not remember the contents.",
+      "githubLink": { "title": "Se the open source code" },
       "button": { "text": "Import" }
     }
   }

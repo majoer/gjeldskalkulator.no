@@ -1,15 +1,15 @@
 {
   "steps": {
     "selectBank": {
-      "step": "Velg Bank",
+      "step": "Bank",
       "title": "Hvilken bank bruker du?"
     },
     "downloadBudget": {
-      "step": "Hent budsjett",
+      "step": "Budsjett",
       "title": "Last ned ditt budsjett fra DnB"
     },
     "uploadBudget": {
-      "step": "Importer budsjett",
+      "step": "Importer",
       "title": "Importer ditt budsjett"
     }
   },
@@ -17,18 +17,19 @@
   "noBank": "* Finner du ikke din bank?",
   "dnb": {
     "downloadBudget": {
-      "1": "1. Logg in i din DnB nettbank",
-      "2": "2. Åpne hovedmenyen",
-      "3": "3. Velg \"Min økonomi\" fra hovedmenyen",
-      "4": "4. Velg \"Rapport\" fra menyen til venstre",
-      "5": "5. Velg nedtrekkslisten for å velge år",
-      "6": "6. Og så velger du forrige år",
-      "7": "7. Klikk \"Lagre til fil\" for å laste ned budsjettet",
+      "1": "Logg in i din DnB nettbank",
+      "2": "Åpne hovedmenyen",
+      "3": "Velg \"Min økonomi\" fra hovedmenyen",
+      "4": "Velg \"Rapport\" fra menyen til venstre",
+      "5": "Velg nedtrekkslisten for å velge år",
+      "6": "Og så velger du forrige år",
+      "7": "Velg \"Lagre til fil\" for å hente budsjett",
       "button": { "text": "Neste" }
     },
     "uploadBudget": {
-      "upload": "Importer budsjettet ditt i kalkulatoren.",
-      "disclaimer": "Kun du kan se budsjettet ditt. Denne nettsiden kjører på din personlige PC og sender ingenting til noen.",
+      "disclaimer1": "Budsjettet ditt forlater aldri PCen din.",
+      "disclaimer2": "og denne appen vil ikke huske innholdet.",
+      "githubLink": { "title": "Se åpen kildekode" },
       "button": { "text": "Importer" }
     }
   }

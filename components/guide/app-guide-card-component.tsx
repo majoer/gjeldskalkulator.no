@@ -36,7 +36,11 @@ export default function AppGuideCardComponent({
         >
           <Stepper>
             {steps.map((step, i) => (
-              <Step key={i} completed={i <= currentStep}>
+              <Step
+                key={i}
+                completed={i < currentStep}
+                active={i === currentStep}
+              >
                 <StepLabel>{t(step.step)}</StepLabel>
               </Step>
             ))}

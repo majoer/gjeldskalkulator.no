@@ -1,4 +1,5 @@
 import Info from "@mui/icons-material/Info";
+import { Badge } from "@mui/material";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -21,28 +22,20 @@ export default function AppGuideDnbGetBudgetPage() {
           <br />
 
           <div>
-            <div className="text-left m-auto w-1/2">
+            <div className="text-left m-auto w-full sm:w-1/2">
               <Typography>
-                <span>{t("guide:dnb.downloadBudget.1")}</span>
-              </Typography>
-              <Typography>
-                <span>{t("guide:dnb.downloadBudget.2")}</span>
-                <Tooltip
-                  title={t("guide:dnb.downloadBudget.2")}
-                  color="primary"
-                >
-                  <Info />
-                </Tooltip>
+                <Badge badgeContent={1} color="success" />
+                <span className="ml-4">{t("guide:dnb.downloadBudget.1")}</span>
               </Typography>
 
               <Typography>
-                <span>{t("guide:dnb.downloadBudget.3")}</span>
-                <Tooltip
-                  title={t("guide:dnb.downloadBudget.3")}
-                  color="secondary"
-                >
-                  <Info />
-                </Tooltip>
+                <Badge badgeContent={2} color="primary" />
+                <span className="ml-4">{t("guide:dnb.downloadBudget.2")}</span>
+              </Typography>
+
+              <Typography>
+                <Badge badgeContent={3} color="secondary" />
+                <span className="ml-4">{t("guide:dnb.downloadBudget.3")}</span>
               </Typography>
             </div>
             <br />
@@ -55,12 +48,10 @@ export default function AppGuideDnbGetBudgetPage() {
 
           <Divider className="my-14" />
 
-          <div className="text-left m-auto w-1/2">
+          <div className="text-left m-auto w-full sm:w-1/2">
             <Typography>
-              <span>{t("guide:dnb.downloadBudget.4")}</span>
-              <Tooltip title={t("guide:dnb.downloadBudget.4")} color="primary">
-                <Info />
-              </Tooltip>
+              <Badge badgeContent={4} color="primary" />
+              <span className="ml-4">{t("guide:dnb.downloadBudget.4")}</span>
             </Typography>
           </div>
           <br />
@@ -74,29 +65,20 @@ export default function AppGuideDnbGetBudgetPage() {
 
           <Divider className="my-14" />
 
-          <div className="text-left m-auto w-1/2">
+          <div className="text-left m-auto w-full sm:w-1/2">
             <Typography>
-              <span>{t("guide:dnb.downloadBudget.5")}</span>
-              <Tooltip title={t("guide:dnb.downloadBudget.5")} color="primary">
-                <Info />
-              </Tooltip>
+              <Badge badgeContent={5} color="primary" />
+              <span className="ml-4">{t("guide:dnb.downloadBudget.5")}</span>
             </Typography>
 
             <Typography>
-              <span>{t("guide:dnb.downloadBudget.6")}</span>
-              <Tooltip
-                title={t("guide:dnb.downloadBudget.6")}
-                color="secondary"
-              >
-                <Info />
-              </Tooltip>
+              <Badge badgeContent={6} color="secondary" />
+              <span className="ml-4">{t("guide:dnb.downloadBudget.6")}</span>
             </Typography>
 
             <Typography>
-              <span>{t("guide:dnb.downloadBudget.7")}</span>
-              <Tooltip title={t("guide:dnb.downloadBudget.7")} color="warning">
-                <Info />
-              </Tooltip>
+              <Badge badgeContent={7} color="warning" />
+              <span className="ml-4">{t("guide:dnb.downloadBudget.7")}</span>
             </Typography>
           </div>
           <br />
