@@ -3,11 +3,11 @@ const HttpBackend = require('i18next-http-backend/cjs')
 module.exports = {
   i18n: {
     defaultLocale: 'nb-NO',
-    locales: ['nb-NO', 'en-US',],
-    fallbackLng: {
-      'nb-NO': ['nb', 'nn'],
-      default: ['nb-NO']
-    }
+    locales: ['nb-NO', 'en-US',]
+  },
+  fallbackLng: {
+    'nb-NO': ['nb', 'nn'],
+    default: ['nb-NO']
   },
   ...(typeof window !== 'undefined'
     ? {
