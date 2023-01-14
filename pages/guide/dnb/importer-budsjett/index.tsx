@@ -28,11 +28,7 @@ export default function AppGuideDnbImportBudgetPage() {
     <AppGuideCardComponent steps={steps} currentStep={2}>
       <>
         <CardContent>
-          <Link
-            className="flex flex-row flex-nowrap justify-center"
-            href="https://github.com/majoer/gjeldskalkulator.no"
-            title={t("guide:dnb.uploadBudget.githubLink.title")}
-          >
+          <div className="flex flex-row flex-nowrap justify-center">
             <div>
               <Info color="warning" className="h-full mr-3" />
             </div>
@@ -45,7 +41,7 @@ export default function AppGuideDnbImportBudgetPage() {
                 {t("guide:dnb.uploadBudget.disclaimer2")}
               </Typography>
             </div>
-          </Link>
+          </div>
         </CardContent>
 
         <CardActions className="justify-between">

@@ -29,7 +29,6 @@
     "uploadBudget": {
       "disclaimer1": "Budsjettet ditt forlater aldri PCen din.",
       "disclaimer2": "og denne appen vil ikke huske innholdet.",
-      "githubLink": { "title": "Se åpen kildekode" },
       "button": { "text": "Importer" }
     }
   }

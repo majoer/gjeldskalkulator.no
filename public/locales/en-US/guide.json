@@ -29,7 +29,6 @@
     "uploadBudget": {
       "disclaimer1": "Your budget never leaves your computer",
       "disclaimer2": "and this app will not remember the contents.",
-      "githubLink": { "title": "Se the open source code" },
       "button": { "text": "Import" }
     }
   }
