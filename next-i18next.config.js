@@ -7,6 +7,8 @@ module.exports = {
   },
   fallbackLng: {
     'nb-NO': ['nb', 'nn'],
+    'nb': ['nb-NO'],
+    'nn': ['nb-NO'],
     default: ['nb-NO']
   },
   ...(typeof window !== 'undefined'
