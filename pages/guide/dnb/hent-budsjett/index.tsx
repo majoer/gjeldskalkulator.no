@@ -22,7 +22,7 @@ export default function AppGuideDnbGetBudgetPage() {
           <br />
 
           <div>
-            <div className="text-left m-auto w-full sm:w-1/2">
+            <div className="text-left inline-block">
               <Typography>
                 <Badge badgeContent={1} color="success" />
                 <span className="ml-4">{t("guide:dnb.downloadBudget.1")}</span>
@@ -46,9 +46,9 @@ export default function AppGuideDnbGetBudgetPage() {
             />
           </div>
 
-          <Divider className="my-14" />
+          <Divider className="my-10" />
 
-          <div className="text-left m-auto w-full sm:w-1/2">
+          <div className="text-left inline-block">
             <Typography>
               <Badge badgeContent={4} color="primary" />
               <span className="ml-4">{t("guide:dnb.downloadBudget.4")}</span>
@@ -63,9 +63,9 @@ export default function AppGuideDnbGetBudgetPage() {
             />
           </div>
 
-          <Divider className="my-14" />
+          <Divider className="my-10" />
 
-          <div className="text-left m-auto w-full sm:w-1/2">
+          <div className="text-left inline-block">
             <Typography>
               <Badge badgeContent={5} color="primary" />
               <span className="ml-4">{t("guide:dnb.downloadBudget.5")}</span>
@@ -85,10 +85,8 @@ export default function AppGuideDnbGetBudgetPage() {
           <div>
             <img src="/dnb2.png" alt="DnB third step" className="w-full" />
           </div>
-
-          <Divider className="my-14" />
         </CardContent>
-        <CardActions className="justify-between">
+        <CardActions className="justify-between mt-4">
           <Button
             variant="contained"
             color="secondary"
