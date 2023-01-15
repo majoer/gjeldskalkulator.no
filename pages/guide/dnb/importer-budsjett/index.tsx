@@ -85,25 +85,28 @@ export default function AppGuideDnbImportBudgetPage() {
                       lng: "nb-NO",
                     }).toLowerCase(),
                   }));
-                  console.log(norwegianKeys);
+
                   const budget = data.slice(1).reduce((map, line) => {
-                    if (!map[line[0]]) {
-                      map[line[0]] = {};
-                    }
-                    const post = norwegianKeys.find(
-                      ({ nb }) => line[1] && line[1].toLowerCase().includes(nb)
-                    );
+                    const category: "Inntekter" | "Utgifter" = line[0];
 
-                    if (!post) {
-                      console.error("unknown post", line[1]);
+                    if (!map[category]) {
+                      map[category] = {};
                     }
 
-                    if (!map[line[0]][post?.key || "other"]) {
-                      map[line[0]][post?.key || "other"] = 0;
+                    const budgetPost =
+                      category === "Inntekter"
+                        ? line[1]
+                        : norwegianKeys.find(
+                            ({ nb }) =>
+                              line[1] && line[1].toLowerCase().includes(nb)
+                          )?.key || "other";
+
+                    if (!map[line[0]][budgetPost]) {
+                      map[line[0]][budgetPost] = 0;
                     }
 
-                    map[line[0]][post?.key || "other"] += Math.abs(
-                      parseInt(line[4], 10)
+                    map[line[0]][budgetPost] += Math.round(
+                      Math.abs(parseInt(line[4], 10) / 12)
                     );
 
                     return map;
