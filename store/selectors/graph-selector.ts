@@ -1,7 +1,7 @@
 import { Datum } from "@nivo/line";
 import { createSelector } from "@reduxjs/toolkit";
 import * as BigNumber from "bignumber.js";
-import { selectAllDebts, selectSumDebt, DebtState } from "../debt-slice";
+import { DebtState, selectAllDebts, selectSumDebt } from "../debt-slice";
 import { selectUseTowardsDebt } from "./result-selector";
 
 export const MAX_MONTHS = 12 * 100;

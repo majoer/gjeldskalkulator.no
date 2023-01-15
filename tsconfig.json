@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/app-debt-component.tsx"  ],
+, "components/app-debt-component.tsx", "jest.config.js"  ],
   "exclude": [
     "node_modules"
   ]
