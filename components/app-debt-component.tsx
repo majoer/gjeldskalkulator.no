@@ -151,7 +151,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           }}
         />
 
-        <FormControl variant="standard" className="m-2 shrink-0 grow-0 sm:w-24">
+        <FormControl variant="standard" className="m-2 shrink-0 grow-0">
           <InputLabel id="type-label">
             {t("calculator:debt.type.label")}
           </InputLabel>
