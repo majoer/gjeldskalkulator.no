@@ -9,6 +9,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { setOpenTips, updateNavigation } from "../store/debt-insight-slice";
@@ -189,18 +192,19 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
         </FormControl>
 
         {debtType !== "credit" ? (
-          <TextField
-            id="end-date"
-            type="text"
-            label={t("calculator:debt.endDate.label")}
-            placeholder="dd/mm/yyyy"
-            variant="standard"
-            className="m-2 shrink-0 grow-0 w-auto sm:w-24"
-            value={expectedEndDate}
-            error={!!errors["expectedEndDate"]}
-            helperText={t(errors["expectedEndDate"])}
-            onChange={(e) => setExpectedEndDate(e.target.value)}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              className="m-2 shrink-0 grow-0 w-auto sm:w-32"
+              label={t("calculator:debt.endDate.label")}
+              value={expectedEndDate}
+              onChange={(newValue) => {
+                setExpectedEndDate(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} variant="standard" />
+              )}
+            />
+          </LocalizationProvider>
         ) : null}
 
         {tipIdMap[id] ? (
