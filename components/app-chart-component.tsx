@@ -27,7 +27,9 @@ export default function AppChartComponent() {
     });
 
     const today = new Date();
-    const done = new Date(today.setMonth(today.getMonth() + serie.length - 1));
+    const dataPoints = serie.length - 1;
+    const monthsLeft = resolution === "Month" ? dataPoints : dataPoints * 12;
+    const done = new Date(today.setMonth(today.getMonth() + monthsLeft));
     return formatter.format(done);
   }, [serie]);
 
