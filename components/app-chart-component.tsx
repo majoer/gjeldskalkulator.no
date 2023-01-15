@@ -30,8 +30,9 @@ export default function AppChartComponent() {
     const dataPoints = serie.length - 1;
     const monthsLeft = resolution === "Month" ? dataPoints : dataPoints * 12;
     const done = new Date(today.setMonth(today.getMonth() + monthsLeft));
+
     return formatter.format(done);
-  }, [serie]);
+  }, [serie, t]);
 
   const data: Serie[] = [
     {
