@@ -1,17 +1,30 @@
 import Delete from "@mui/icons-material/Delete";
 import Info from "@mui/icons-material/Info";
 import { debounce } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { setOpenTips, updateNavigation } from "../store/debt-insight-slice";
-import { DebtState, removeDebt, updateDebt } from "../store/debt-slice";
+import {
+  DebtState,
+  DebtType,
+  removeDebt,
+  updateDebt,
+} from "../store/debt-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { naturalNumber, positiveNumberInc0 } from "../validation/validation";
+import {
+  dateStringNb,
+  naturalNumber,
+  positiveNumberInc0,
+} from "../validation/validation";
 import { TAB_TIPS } from "./app-debt-insight";
 
 export interface AppLoanProps {
@@ -24,6 +37,8 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
   const [name, setName] = useState(debt.name);
   const [amount, setAmount] = useState("" + debt.amount);
   const [interest, setInterest] = useState(debt.interest);
+  const [debtType, setDebtType] = useState(debt.type);
+  const [expectedEndDate, setExpectedEndDate] = useState(debt.expectedEndDate);
   const [fee, setFee] = useState("" + debt.fee);
   const { id } = debt;
   const { tipIdMap } = useAppSelector(selectTips);
@@ -34,8 +49,9 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
       amount: naturalNumber(amount),
       interest: positiveNumberInc0(interest),
       fee: naturalNumber(fee),
+      expectedEndDate: dateStringNb(expectedEndDate),
     }),
-    [name, amount, interest, fee]
+    [name, amount, interest, fee, expectedEndDate]
   );
 
   const debouncedUpdate = useCallback(
@@ -134,6 +150,58 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
             ),
           }}
         />
+
+        <FormControl variant="standard" className="m-2 shrink-0 grow-0 sm:w-24">
+          <InputLabel id="type-label">
+            {t("calculator:debt.type.label")}
+          </InputLabel>
+          <Select
+            labelId="type-label"
+            id="type"
+            value={debtType}
+            label={t("calculator:debt.type.label")}
+            variant="standard"
+            MenuProps={{ disableScrollLock: true }}
+            inputProps={{ className: "w-full" }}
+            onChange={(e) => {
+              setDebtType(e.target.value as DebtType);
+            }}
+          >
+            <MenuItem
+              value={"annuity"}
+              title={t("calculator:debt.type.options.annuity.title")}
+            >
+              {t("calculator:debt.type.options.annuity.label")}
+            </MenuItem>
+            <MenuItem
+              value={"credit"}
+              title={t("calculator:debt.type.options.credit.title")}
+            >
+              {t("calculator:debt.type.options.credit.label")}
+            </MenuItem>
+            <MenuItem
+              value={"serie"}
+              title={t("calculator:debt.type.options.serie.title")}
+            >
+              {t("calculator:debt.type.options.serie.label")}
+            </MenuItem>
+          </Select>
+        </FormControl>
+
+        {debtType !== "credit" ? (
+          <TextField
+            id="end-date"
+            type="text"
+            label={t("calculator:debt.endDate.label")}
+            placeholder="dd/mm/yyyy"
+            variant="standard"
+            className="m-2 shrink-0 grow-0 w-auto sm:w-24"
+            value={expectedEndDate}
+            error={!!errors["expectedEndDate"]}
+            helperText={t(errors["expectedEndDate"])}
+            onChange={(e) => setExpectedEndDate(e.target.value)}
+          />
+        ) : null}
 
         {tipIdMap[id] ? (
           <Tooltip

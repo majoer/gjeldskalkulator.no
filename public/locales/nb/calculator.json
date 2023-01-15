@@ -68,7 +68,25 @@
     "amount": { "label": "Beløp" },
     "interest": { "label": "Rente" },
     "fee": { "label": "Gebyr" },
-    "remove": { "title": "Fjern gjeld" }
+    "remove": { "title": "Fjern gjeld" },
+    "type": {
+      "label": "Type",
+      "options": {
+        "annuity": {
+          "label": "Annuitet (beta)",
+          "title": "Lån med variable avdrag: Boliglån, billån, etc.."
+        },
+        "credit": {
+          "label": "Kreditt",
+          "title": "Lån uten frist: Kredittkort, forbrukslån, etc..."
+        },
+        "serie": {
+          "label": "Serie (beta)",
+          "title": "Lån med faste avdrag: Boliglån, billån, etc.."
+        }
+      }
+    },
+    "endDate": { "label": "Innfris dato" }
   },
   "debtInsight": {
     "tabs": {
@@ -80,7 +98,8 @@
   "errors": {
     "positiveNumber": "Må være et tall, 1 eller over",
     "percentage": "Må være en % mellom 0 and 100",
-    "naturalNumber": "Må være et heltall, 0 eller over"
+    "naturalNumber": "Må være et heltall, 0 eller over",
+    "date": "Må være en dato dd/mm/yyyy"
   },
   "chart": {
     "totalCost": {

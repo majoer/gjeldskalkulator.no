@@ -30,6 +30,7 @@ export default function AppDebtsComponent() {
               fee: 60,
               amount: 100000,
               interest: BigNumber.BigNumber(10).toJSON(),
+              type: "credit",
               name: t("calculator:debts.defaultNewDebt.name", {
                 value: debts.length + 1,
               }),

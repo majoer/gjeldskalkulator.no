@@ -6,12 +6,16 @@ import {
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store";
 
+export type DebtType = "annuity" | "credit" | "serie";
+
 export interface DebtState {
   id: string;
   fee: number;
   name: string;
   amount: number;
   interest: string;
+  type: DebtType;
+  expectedEndDate?: string;
 }
 
 export const debtAdapter = createEntityAdapter<DebtState>({

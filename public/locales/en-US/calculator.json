@@ -68,7 +68,25 @@
     "amount": { "label": "Amount" },
     "interest": { "label": "Interest" },
     "fee": { "label": "Fee" },
-    "remove": { "title": "Remove debt" }
+    "remove": { "title": "Remove debt" },
+    "type": {
+      "label": "Type",
+      "options": {
+        "annuity": {
+          "label": "Annuity (beta)",
+          "title": "Loan with variable payment: Mortgage, car loan, etc.."
+        },
+        "credit": {
+          "label": "Credit",
+          "title": "Loan with no time limit: Credit cards, consumer credit, etc..."
+        },
+        "serie": {
+          "label": "Serie (beta)",
+          "title": "Loan with fixed payment: Mortgage, car loan, etc.."
+        }
+      }
+    },
+    "endDate": { "label": "End date" }
   },
   "debtInsight": {
     "tabs": {
@@ -80,7 +98,8 @@
   "errors": {
     "positiveNumber": "Must be a number, 1 or higher",
     "percentage": "Must be % between 0 and 100",
-    "naturalNumber": "Must be an integer, 0 or higher"
+    "naturalNumber": "Must be an integer, 0 or higher",
+    "date": "Must be a date dd/mm/yyyy"
   },
   "chart": {
     "totalCost": {

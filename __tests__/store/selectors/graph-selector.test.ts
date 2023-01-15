@@ -27,8 +27,22 @@ describe("graph-selector", () => {
       debts: {
         ids: ["1", "2"],
         entities: {
-          "1": { id: "1", amount: 100000, fee: 1000, interest: "10", name: "" },
-          "2": { id: "1", amount: 200000, fee: 1000, interest: "10", name: "" },
+          "1": {
+            id: "1",
+            amount: 100000,
+            fee: 1000,
+            interest: "10",
+            name: "",
+            type: "credit",
+          },
+          "2": {
+            id: "1",
+            amount: 200000,
+            fee: 1000,
+            interest: "10",
+            name: "",
+            type: "credit",
+          },
         },
       },
       result: {
