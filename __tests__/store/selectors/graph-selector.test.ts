@@ -21,7 +21,7 @@ describe("graph-selector", () => {
     });
   });
 
-  it("Initial state - plot with a single identity data point", () => {
+  it("Two loans - expected plot", () => {
     const appState: Partial<AppState> = {
       ...store.getState(),
       debts: {
