@@ -89,7 +89,7 @@
       "infinity": "Debt will cost you: Infinity. "
     },
     "remainingTime": {
-      "result": "You can be done: {{value}}.",
+      "result": "You can be free of debt {{value}} if you stick to this budget!",
       "noData": "You can add some debt to calculate when you are done.",
       "tooMuch": "With this budget, you will use more then {{value}} years to pay back the debt.",
       "infinity": "With this budget, your debt is impossible to pay back."

@@ -89,7 +89,7 @@
       "infinity": "Din gjeld vil koste: Uendelig."
     },
     "remainingTime": {
-      "result": "Du kan bli gjeldsfri: {{value}}.",
+      "result": "Du kan bli gjeldsfri {{value}} hvis du holder deg til budsjettet!",
       "noData": "Du kan legge til gjeld, slik at vi kan regne ut når du er ferdig.",
       "tooMuch": "Slik budsjettet ditt står nå, så kommer du til å bruke mer enn {{value}} år på gjelda.",
       "infinity": "Slik budsjettet ditt står nå, så er det umulig å tilbakebetale gjelda."
