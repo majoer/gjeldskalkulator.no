@@ -31,7 +31,7 @@ export default function LandingPage() {
             sx={{ objectFit: "contain" }}
           ></CardMedia>
           <CardContent>
-            <Typography variant="subtitle1">
+            <Typography variant="subtitle1" component="h3">
               {t("landing:subsubheader")}
             </Typography>
           </CardContent>
