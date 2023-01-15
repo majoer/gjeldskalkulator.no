@@ -91,8 +91,8 @@
     "remainingTime": {
       "result": "Du kan bli gjeldsfri: {{value}}.",
       "noData": "Du kan legge til gjeld, slik at vi kan regne ut når du er ferdig.",
-      "tooMuch": "Du kommer til å bruke mer enn {{value}} år på å tilbakebetale gjelda.",
-      "infinity": "Det er umulig å tilbakebetale gjelda. Den vil fortsette å vokse til evig tid."
+      "tooMuch": "Slik budsjettet ditt står nå, så kommer du til å bruke mer enn {{value}} år på gjelda.",
+      "infinity": "Slik budsjettet ditt står nå, så er det umulig å tilbakebetale gjelda."
     },
     "legend": {
       "x": { "Month": "Måneder", "Year": "År" },
