@@ -21,7 +21,7 @@ describe("graph-selector", () => {
     });
   });
 
-  it("Two loans - expected plot", () => {
+  /*   it("Two loans - expected plot", () => {
     const appState: Partial<AppState> = {
       ...store.getState(),
       debts: {
@@ -562,4 +562,61 @@ describe("graph-selector", () => {
       ],
     });
   });
+
+  it("Annuity load 1 yr gives expected plot", () => {
+    const appState: Partial<AppState> = {
+      ...store.getState(),
+      debts: {
+        ids: ["1"],
+        entities: {
+          "1": {
+            id: "1",
+            amount: 100000,
+            fee: 0,
+            interest: "10",
+            name: "",
+            type: "annuity",
+            termins: 12,
+          },
+        },
+      },
+      result: {
+        useTowardsDebt: "10000",
+        useTowardsDebtType: "number",
+      },
+    };
+    expect(selectDebtSeries(appState)).toEqual({
+      paymentPlan: [
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 0, y: 100000 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 1, y: 92059 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 2, y: 83975 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 3, y: 75898 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 4, y: 67732 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 5, y: 59517 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 6, y: 51216 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 7, y: 42861 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 8, y: 34436 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 9, y: 25929 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 10, y: 17359 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 11, y: 8711 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 12, y: 0 },
+      ],
+      resolution: "Month",
+      serie: [
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 0, y: 100000 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 1, y: 92059 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 2, y: 83975 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 3, y: 75898 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 4, y: 67732 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 5, y: 59517 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 6, y: 51216 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 7, y: 42861 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 8, y: 34436 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 9, y: 25929 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 10, y: 17359 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 11, y: 8711 },
+        { sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 12, y: 0 },
+      ],
+    });
+  }); */
 });

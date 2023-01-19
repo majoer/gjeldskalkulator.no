@@ -1,13 +1,3 @@
-const dateRegexp = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(2)\d{3}$/;
-
-export const dateStringNb = (str: string) => {
-  if (dateRegexp.test(str)) {
-    return undefined;
-  }
-
-  return "errors.date";
-};
-
 export const positiveNumberInc0 = (str: string) => {
   if (isNumeric(str) && isPositiveInc0(str)) {
     return undefined;

@@ -15,7 +15,7 @@ export interface DebtState {
   amount: number;
   interest: string;
   type: DebtType;
-  expectedEndDate?: string;
+  termins?: number;
 }
 
 export const debtAdapter = createEntityAdapter<DebtState>({

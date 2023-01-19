@@ -8,10 +8,28 @@ export const MAX_MONTHS = 12 * 100;
 export const PLAN_TOO_LONG_TO_CALCULATE = -1;
 export const PLAN_BLOWS_TO_INFINITY = -2;
 
-interface Debt extends DebtState {
-  paidSoFar: number;
-  interestPaidSoFar: BigNumber.BigNumber;
-  interestBig: BigNumber.BigNumber;
+export interface TerminResult {
+  terminAmount: BigNumber.BigNumber;
+  interestAmount: BigNumber.BigNumber;
+  principalAmount: BigNumber.BigNumber;
+  newDebt: BigNumber.BigNumber;
+  newRest: BigNumber.BigNumber;
+}
+export type TerminFunction = (debt: Debt, moneyToDistribute: BigNumber.BigNumber) => TerminResult;
+
+interface PaymentPlanEvent {
+  time: string;
+  name: string;
+}
+
+interface Debt {
+  initial: DebtState;
+  processed: {
+    remaining: BigNumber.BigNumber;
+    paidSoFar: BigNumber.BigNumber;
+    interestPaidSoFar: BigNumber.BigNumber;
+  };
+  calculateTermin: TerminFunction;
 }
 
 export interface DebtDatum extends Datum {
@@ -38,25 +56,29 @@ export const selectDebtSeries = createSelector(
     ];
 
     let month = 1;
-    let debtSoFar: Debt[] = allDebt.map((debt) => ({
-      ...debt,
-      interestBig: BigNumber.BigNumber(debt.interest),
-      paidSoFar: 0,
-      interestPaidSoFar: BigNumber.BigNumber(0),
-    }));
-    let sumDebtSoFar = sumDebt;
-    while (sumDebtSoFar > 0 && month <= MAX_MONTHS) {
+    let sumDebtSoFar = BigNumber.BigNumber(sumDebt);
+    let debtSoFar: Debt[] = allDebt.map(toDebt);
+
+    while (sumDebtSoFar.isGreaterThan(0) && month <= MAX_MONTHS) {
       debtSoFar = advanceDebt(debtSoFar, useTowardsDebt);
-      sumDebtSoFar = debtSoFar.reduce((sum, debt) => (sum += debt.amount), 0);
-      const latestDebt = debtSoFar[debtSoFar.length - 1];
-      const sumInterestPaidSoFar = latestDebt.interestPaidSoFar;
-      const sumPaidSoFar = latestDebt.paidSoFar;
+      sumDebtSoFar = debtSoFar.reduce(
+        (sum, debt) => sum.plus(debt.processed.remaining),
+        BigNumber.BigNumber(0)
+      );
+      const sumInterestPaidSoFar = debtSoFar.reduce(
+        (sum, debt) => sum.plus(debt.processed.interestPaidSoFar),
+        BigNumber.BigNumber(0)
+      );
+      const sumPaidSoFar = debtSoFar.reduce(
+        (sum, debt) => sum.plus(debt.processed.paidSoFar),
+        BigNumber.BigNumber(0)
+      );
 
       serie.push({
         x: month,
-        y: sumDebtSoFar,
+        y: sumDebtSoFar.toNumber(),
         sumInterestPaidSoFar: sumInterestPaidSoFar.toNumber(),
-        sumPaidSoFar,
+        sumPaidSoFar: sumPaidSoFar.toNumber(),
       });
 
       month++;
@@ -85,76 +107,139 @@ export const selectDebtSeries = createSelector(
   }
 );
 
-function advanceDebt(currentDebt: Debt[], deduction: BigNumber.BigNumber) {
+function advanceDebt(currentDebt: Debt[], moneyToDistribute: BigNumber.BigNumber): Debt[] {
   if (currentDebt.length === 0) {
     return [];
   }
-
-  const debtAfterInterest = currentDebt.map((debt) => {
-    if (debt.amount === 0) {
-      return debt;
-    }
-
-    const interest = debt.interestBig
-      .dividedBy(100)
-      .multipliedBy(debt.amount)
-      .dividedBy(12);
-    const newDebt = interest.plus(debt.amount).toNumber();
-
-    return {
-      ...debt,
-      amount: newDebt,
-      interestPaidSoFar: interest.plus(debt.interestPaidSoFar),
-    };
-  });
-
-  return applyMontlyDeduction(debtAfterInterest, deduction);
-}
-
-export const selectTotalCostOfDebt = createSelector(
-  [selectDebtSeries],
-  ({ serie }) => {
-    const lastDatum = serie[serie.length - 1];
-
-    if (serie.length === 1) {
-      return lastDatum.sumPaidSoFar;
-    }
-
-    if (12 * (serie.length - 1) === MAX_MONTHS) {
-      return lastDatum.y > serie[serie.length - 2].y
-        ? PLAN_BLOWS_TO_INFINITY
-        : PLAN_TOO_LONG_TO_CALCULATE;
-    }
-
-    return Math.round(serie[serie.length - 1].sumPaidSoFar);
-  }
-);
-
-function applyMontlyDeduction(
-  currentDebt: Debt[],
-  deduction: BigNumber.BigNumber
-) {
-  let rest = deduction;
+  let rest = moneyToDistribute;
 
   return currentDebt.map((debt) => {
-    if (debt.amount === 0) {
+    if (debt.processed.remaining.isEqualTo(0)) {
       return debt;
     }
-    const deductionAfterFee = rest.minus(debt.fee);
-    const newDebt = BigNumber.BigNumber.max(
-      BigNumber.BigNumber(debt.amount).minus(deductionAfterFee),
-      0
-    ).toNumber();
-    rest = BigNumber.BigNumber.max(deductionAfterFee.minus(debt.amount), 0);
-    const paidSoFar = BigNumber.BigNumber(debt.paidSoFar)
-      .plus(deduction)
-      .minus(rest)
-      .toNumber();
+
+    const { terminAmount, interestAmount, principalAmount, newDebt, newRest } =
+      debt.calculateTermin(debt, rest);
+
+    rest = newRest;
 
     return {
       ...debt,
-      amount: newDebt,
-      paidSoFar,
+      processed: {
+        paidSoFar: debt.processed.paidSoFar.plus(terminAmount),
+        remaining: newDebt,
+        interestPaidSoFar: debt.processed.interestPaidSoFar.plus(interestAmount),
+      },
     };
   });
+}
+
+export const selectTotalCostOfDebt = createSelector([selectDebtSeries], ({ serie }) => {
+  const lastDatum = serie[serie.length - 1];
+
+  if (serie.length === 1) {
+    return lastDatum.sumPaidSoFar;
+  }
+
+  if (12 * (serie.length - 1) === MAX_MONTHS) {
+    return lastDatum.y > serie[serie.length - 2].y
+      ? PLAN_BLOWS_TO_INFINITY
+      : PLAN_TOO_LONG_TO_CALCULATE;
+  }
+
+  return Math.round(serie[serie.length - 1].sumPaidSoFar);
+});
+
+function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): TerminFunction {
+  const monthlyInterest = interest.dividedBy(12);
+  const one = BigNumber.BigNumber(1);
+
+  switch (debt.type) {
+    case "serie": {
+      const principalAmount = BigNumber.BigNumber(debt.amount).dividedBy(debt.termins);
+
+      return ({ processed: { remaining } }: Debt, moneyToDistribute: BigNumber.BigNumber) => {
+        const interestAmount = monthlyInterest.multipliedBy(remaining);
+        const terminAmount = interestAmount.plus(principalAmount);
+        const canPay = moneyToDistribute.isGreaterThanOrEqualTo(terminAmount);
+
+        if (!canPay) {
+          return {
+            terminAmount: BigNumber.BigNumber(0),
+            interestAmount: BigNumber.BigNumber(0),
+            principalAmount: BigNumber.BigNumber(0),
+            newDebt: remaining.plus(interestAmount),
+            newRest: moneyToDistribute,
+          };
+        }
+
+        return {
+          terminAmount,
+          interestAmount,
+          principalAmount,
+          newDebt: remaining.minus(principalAmount),
+          newRest: moneyToDistribute.minus(terminAmount),
+        };
+      };
+    }
+    case "annuity":
+      const terminAmount = monthlyInterest
+        .dividedBy(one.minus(one.plus(monthlyInterest).pow(-debt.termins)))
+        .multipliedBy(debt.amount);
+
+      return ({ processed: { remaining } }: Debt, moneyToDistribute: BigNumber.BigNumber) => {
+        const interestAmount = interest.dividedBy(12).multipliedBy(remaining);
+        const principalAmount = terminAmount.minus(interestAmount);
+        const canPay = moneyToDistribute.isGreaterThanOrEqualTo(terminAmount);
+
+        if (!canPay) {
+          return {
+            terminAmount: BigNumber.BigNumber(0),
+            interestAmount: BigNumber.BigNumber(0),
+            principalAmount: BigNumber.BigNumber(0),
+            newDebt: remaining.plus(interestAmount),
+            newRest: moneyToDistribute,
+          };
+        }
+
+        return {
+          terminAmount,
+          interestAmount,
+          principalAmount,
+          newDebt: remaining.minus(principalAmount),
+          newRest: moneyToDistribute.minus(terminAmount),
+        };
+      };
+    case "credit": {
+      return ({ processed: { remaining } }: Debt, moneyToDistribute: BigNumber.BigNumber) => {
+        const interestAmount = monthlyInterest.multipliedBy(remaining);
+        const terminAmount = BigNumber.BigNumber.min(
+          moneyToDistribute,
+          remaining.plus(interestAmount)
+        );
+        const principalAmount = terminAmount.minus(interestAmount);
+
+        return {
+          terminAmount,
+          interestAmount,
+          principalAmount,
+          newDebt: remaining.minus(principalAmount),
+          newRest: moneyToDistribute.minus(terminAmount),
+        };
+      };
+    }
+  }
+}
+
+function toDebt(debt: DebtState): Debt {
+  const interest = BigNumber.BigNumber(debt.interest).dividedBy(100);
+  return {
+    initial: debt,
+    processed: {
+      interestPaidSoFar: BigNumber.BigNumber(0),
+      paidSoFar: BigNumber.BigNumber(0),
+      remaining: BigNumber.BigNumber(debt.amount),
+    },
+    calculateTermin: getTerminFunction(debt, interest),
+  };
 }

@@ -73,16 +73,16 @@
       "label": "Type",
       "options": {
         "annuity": {
-          "label": "Variabelt avdrag",
-          "title": "Annuitetslån: Boliglån, billån, etc.."
+          "label": "Annuitet",
+          "title": "Fast terminbeløp: Boliglån, billån, etc.."
         },
         "credit": {
           "label": "Kreditt",
           "title": "Lån uten frist: Kredittkort, forbrukslån, etc..."
         },
         "serie": {
-          "label": "Fast avdrag",
-          "title": "Serielån: Boliglån, billån, etc.."
+          "label": "Serie",
+          "title": "Variabelt terminbeløp: Boliglån, billån, etc.."
         }
       }
     },

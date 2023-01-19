@@ -73,16 +73,16 @@
       "label": "Type",
       "options": {
         "annuity": {
-          "label": "Variable pay",
-          "title": "Annuity: Mortgage, car loan, etc.."
+          "label": "Annuity",
+          "title": "Fixed term amount: Mortgage, car loan, etc.."
         },
         "credit": {
           "label": "Credit",
           "title": "Loan with no time limit: Credit cards, consumer credit, etc..."
         },
         "serie": {
-          "label": "Fixed pay",
-          "title": "Serie: Mortgage, car loan, etc.."
+          "label": "Serie",
+          "title": "Variable term amount: Mortgage, car loan, etc.."
         }
       }
     },

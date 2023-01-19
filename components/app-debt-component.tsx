@@ -9,9 +9,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from "dayjs";
 import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { setOpenTips, updateNavigation } from "../store/debt-insight-slice";
@@ -23,11 +24,8 @@ import {
 } from "../store/debt-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import {
-  dateStringNb,
-  naturalNumber,
-  positiveNumberInc0,
-} from "../validation/validation";
+import { nowPlusMonths } from "../utils/time";
+import { naturalNumber, positiveNumberInc0 } from "../validation/validation";
 import { TAB_TIPS } from "./app-debt-insight";
 
 export interface AppLoanProps {
@@ -41,7 +39,9 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
   const [amount, setAmount] = useState("" + debt.amount);
   const [interest, setInterest] = useState(debt.interest);
   const [debtType, setDebtType] = useState(debt.type);
-  const [expectedEndDate, setExpectedEndDate] = useState(debt.expectedEndDate);
+  const [expectedEndDate, setExpectedEndDate] = useState<Dayjs | null>(
+    debt.termins ? nowPlusMonths(debt.termins) : null
+  );
   const [fee, setFee] = useState("" + debt.fee);
   const { id } = debt;
   const { tipIdMap } = useAppSelector(selectTips);
@@ -52,35 +52,51 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
       amount: naturalNumber(amount),
       interest: positiveNumberInc0(interest),
       fee: naturalNumber(fee),
-      expectedEndDate: dateStringNb(expectedEndDate),
+      type: undefined,
+      termins: undefined,
     }),
-    [name, amount, interest, fee, expectedEndDate]
+    [amount, interest, fee]
   );
 
   const debouncedUpdate = useCallback(
-    debounce(({ name, amount, interest, fee, errors }) => {
-      const fullUpdate: Partial<DebtState> = {
-        name,
-        amount: parseInt(amount, 10),
-        interest,
-        fee: parseInt(fee, 10),
-      };
+    debounce(
+      ({ name, amount, interest, fee, debtType, expectedEndDate, errors }) => {
+        const fullUpdate: Partial<DebtState> = {
+          name,
+          amount: parseInt(amount, 10),
+          interest,
+          fee: parseInt(fee, 10),
+          type: debtType,
+          termins: expectedEndDate
+            ? Math.abs(dayjs().diff(expectedEndDate, "month"))
+            : undefined,
+        };
 
-      const changes: Partial<DebtState> = Object.keys(errors)
-        .filter((field) => !errors[field])
-        .reduce((update, field) => {
-          update[field] = fullUpdate[field];
-          return update;
-        }, {});
+        const changes: Partial<DebtState> = Object.keys(errors)
+          .filter((field) => !errors[field])
+          .reduce((update, field) => {
+            update[field] = fullUpdate[field];
+            return update;
+          }, {});
 
-      dispatch(updateDebt({ id, changes }));
-    }, 600),
+        dispatch(updateDebt({ id, changes }));
+      },
+      600
+    ),
     []
   );
 
   useEffect(() => {
-    debouncedUpdate({ name, amount, interest, fee, errors });
-  }, [name, amount, interest, fee, errors]);
+    debouncedUpdate({
+      name,
+      amount,
+      interest,
+      fee,
+      debtType,
+      expectedEndDate,
+      errors,
+    });
+  }, [name, amount, interest, fee, debtType, expectedEndDate, errors]);
 
   return (
     <div className="relative py-4 sm:py-1">
@@ -167,7 +183,11 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
             MenuProps={{ disableScrollLock: true }}
             inputProps={{ className: "w-full" }}
             onChange={(e) => {
-              setDebtType(e.target.value as DebtType);
+              const newDebtType = e.target.value as DebtType;
+              setDebtType(newDebtType);
+              if (newDebtType !== "credit") {
+                setExpectedEndDate(dayjs().add(10, "years"));
+              }
             }}
           >
             <MenuItem
