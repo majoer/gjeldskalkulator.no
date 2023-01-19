@@ -76,9 +76,9 @@ export const selectDebtSeries = createSelector(
 
       serie.push({
         x: month,
-        y: sumDebtSoFar.toNumber(),
-        sumInterestPaidSoFar: sumInterestPaidSoFar.toNumber(),
-        sumPaidSoFar: sumPaidSoFar.toNumber(),
+        y: sumDebtSoFar.integerValue().toNumber(),
+        sumInterestPaidSoFar: sumInterestPaidSoFar.integerValue().toNumber(),
+        sumPaidSoFar: sumPaidSoFar.integerValue().toNumber(),
       });
 
       month++;

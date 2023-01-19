@@ -48,7 +48,7 @@ describe("graph-selector", () => {
       selectDebtSeries(appState);
       const end = performance.now();
 
-      expect(end - start).toBeLessThan(500);
+      expect(end - start).toBeLessThan(300);
     });
   });
 
