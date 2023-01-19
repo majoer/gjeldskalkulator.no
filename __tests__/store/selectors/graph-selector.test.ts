@@ -21,6 +21,37 @@ describe("graph-selector", () => {
     });
   });
 
+  describe("Performance", () => {
+    it("Debt that quickly explodes to infinity - 500ms", () => {
+      const appState: Partial<AppState> = {
+        ...store.getState(),
+        debts: {
+          ids: ["1"],
+          entities: {
+            "1": {
+              id: "1",
+              amount: 100000,
+              fee: 1000,
+              interest: "50",
+              name: "",
+              type: "credit",
+            },
+          },
+        },
+        result: {
+          useTowardsDebt: "0",
+          useTowardsDebtType: "number",
+        },
+      };
+
+      const start = performance.now();
+      selectDebtSeries(appState);
+      const end = performance.now();
+
+      expect(end - start).toBeLessThan(500);
+    });
+  });
+
   /*   it("Two loans - expected plot", () => {
     const appState: Partial<AppState> = {
       ...store.getState(),
