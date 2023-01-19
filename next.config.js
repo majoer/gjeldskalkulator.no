@@ -54,7 +54,7 @@ module.exports = {
             value: `
             default-src 'self';
             connect-src 'self' https://vitals.vercel-insights.com/;
-            script-src 'self' ${localhost ? "'unsafe-eval'" : ""};
+            script-src 'self' https://cdn.vercel-insights.com/v1/script.debug.js ${localhost ? "'unsafe-eval'" : ""};
             style-src 'self' 'unsafe-inline';
             font-src 'self';
           `.replace(/\s{2,}/g, ' ').trim()

@@ -29,6 +29,7 @@ import { Provider } from "react-redux";
 import nextI18NextConfig from "../next-i18next.config";
 import { store, wrapper } from "../store/store";
 import "../styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 if (process.env.NODE_ENV !== "production") {
   if (typeof window !== "undefined") {
@@ -42,8 +43,7 @@ if (process.env.NODE_ENV !== "production") {
 
 let rootElement = undefined;
 if (typeof window === "object") {
-  rootElement =
-    document != null ? document.getElementById("__next") : undefined;
+  rootElement = document != null ? document.getElementById("__next") : undefined;
 }
 
 const theme = createTheme({
@@ -146,12 +146,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               >
                 <MenuIcon />
               </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={closeMenu}
-                disableScrollLock={true}
-              >
+              <Menu anchorEl={anchorEl} open={open} onClose={closeMenu} disableScrollLock={true}>
                 {menuItems.map(({ group, links }, i) => (
                   <div key={i}>
                     <Divider textAlign="left">
@@ -161,9 +156,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                       <MenuItem
                         key={j}
                         sx={{
-                          backgroundColor: selected
-                            ? theme.palette.warning.light
-                            : "inherit",
+                          backgroundColor: selected ? theme.palette.warning.light : "inherit",
                         }}
                         disabled={selected}
                         component={Link}
@@ -182,6 +175,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </AppBar>
           <main className="relative pt-20 min-h-screen">
             <Component {...pageProps} />
+            <Analytics />
           </main>
         </Provider>
       </ThemeProvider>

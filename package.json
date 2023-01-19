@@ -28,6 +28,7 @@
     "@testing-library/react": "^13.4.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
+    "@vercel/analytics": "^0.1.8",
     "autoprefixer": "^10.4.13",
     "bignumber.js": "^9.1.1",
     "dayjs": "^1.11.7",
