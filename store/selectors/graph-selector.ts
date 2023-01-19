@@ -90,7 +90,7 @@ export const selectDebtSeries = createSelector(
         paymentPlan: serie,
         serie: serie
           .filter((_, i) => {
-            return i % 12 === 0;
+            return i % 12 === 0 || i === serie.length - 1;
           })
           .map((datum, i) => ({
             ...datum,
