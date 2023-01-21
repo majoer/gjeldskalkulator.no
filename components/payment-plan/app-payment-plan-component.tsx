@@ -28,7 +28,7 @@ export default function AppPaymentPlanComponent() {
     [events]
   );
 
-  if (relevantEvents.length === 0) {
+  if (relevantEvents.length !== allDebts.length) {
     return (
       <div>
         <Typography>{t("calculator:paymentPlan.noEvents.default")}</Typography>
