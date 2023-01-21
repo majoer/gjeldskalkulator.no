@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useTranslation } from "next-i18next";
 import AppChartComponent from "../components/app-chart-component";
-import AppPaymentPlanComponent from "../components/app-payment-plan-component";
+import AppPaymentPlanComponent from "./payment-plan/app-payment-plan-component";
 import AppTipsComponent from "../components/app-tips-component";
 import { selectActiveTab, updateNavigation } from "../store/debt-insight-slice";
 import { selectTips } from "../store/selectors/tips-selector";
@@ -32,14 +32,10 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      className={`xl:h-full h-96 w-full grow-1 ${
-        scrollable ? "overflow-y-auto" : ""
-      }`}
+      className={`xl:h-full h-96 w-full grow-1 ${scrollable ? "overflow-y-auto" : ""}`}
       {...other}
     >
-      {value === index && (
-        <div className="h-full w-full pt-4 p-2">{children}</div>
-      )}
+      {value === index && <div className="h-full w-full pt-4 p-2">{children}</div>}
     </div>
   );
 }
@@ -54,18 +50,10 @@ export default function AppDebtInsightComponent() {
     <div className="h-full flex flex-col">
       <Tabs
         value={activeTab}
-        onChange={(_, newTab) =>
-          dispatch(updateNavigation({ activeTab: newTab }))
-        }
+        onChange={(_, newTab) => dispatch(updateNavigation({ activeTab: newTab }))}
       >
-        <Tab
-          label={t("calculator:debtInsight.tabs.chart.label")}
-          icon={<ShowChart />}
-        ></Tab>
-        <Tab
-          label={t("calculator:debtInsight.tabs.paymentPlan.label")}
-          icon={<CreditCard />}
-        ></Tab>
+        <Tab label={t("calculator:debtInsight.tabs.chart.label")} icon={<ShowChart />}></Tab>
+        <Tab label={t("calculator:debtInsight.tabs.paymentPlan.label")} icon={<CreditCard />}></Tab>
         <Tab
           label={t("calculator:debtInsight.tabs.tips.label")}
           icon={

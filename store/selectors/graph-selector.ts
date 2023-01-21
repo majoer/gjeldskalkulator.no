@@ -17,13 +17,26 @@ export interface TerminResult {
 }
 export type TerminFunction = (debt: Debt, moneyToDistribute: BigNumber.BigNumber) => TerminResult;
 
+export type PaymentPlanEventType = "UNABLE_TO_PAY" | "DEBT_PAID_OFF";
+
 interface PaymentPlanEvent {
-  time: string;
-  name: string;
+  type: PaymentPlanEventType;
+  debt: Debt;
+  month: number;
 }
 
-interface Debt {
+export interface DebtHistory {
+  month: number;
+  remaining: BigNumber.BigNumber;
+  paidSoFar: BigNumber.BigNumber;
+  interestPaidSoFar: BigNumber.BigNumber;
+  terminResult: TerminResult;
+}
+
+export interface Debt {
   initial: DebtState;
+  events: PaymentPlanEvent[];
+  history: DebtHistory[];
   processed: {
     remaining: BigNumber.BigNumber;
     paidSoFar: BigNumber.BigNumber;
@@ -41,6 +54,7 @@ export interface DebtSerieSelectorResult {
   resolution: "Month" | "Year";
   serie: DebtDatum[];
   paymentPlan: DebtDatum[];
+  events: PaymentPlanEvent[];
 }
 
 export const selectDebtSeries = createSelector(
@@ -58,9 +72,12 @@ export const selectDebtSeries = createSelector(
     let month = 1;
     let sumDebtSoFar = BigNumber.BigNumber(sumDebt);
     let debtSoFar: Debt[] = allDebt.map(toDebt);
+    let allEvents: PaymentPlanEvent[] = [];
 
     while (sumDebtSoFar.isGreaterThan(0) && month <= MAX_MONTHS) {
-      debtSoFar = advanceDebt(debtSoFar, useTowardsDebt);
+      const { newDebt, events } = advanceDebt(debtSoFar, useTowardsDebt, month);
+      debtSoFar = newDebt;
+      allEvents = [...allEvents, ...events];
       sumDebtSoFar = debtSoFar.reduce(
         (sum, debt) => sum.plus(debt.processed.remaining),
         BigNumber.BigNumber(0)
@@ -88,6 +105,7 @@ export const selectDebtSeries = createSelector(
       return {
         resolution: "Year",
         paymentPlan: serie,
+        events: allEvents,
         serie: serie
           .filter((_, i) => {
             return i % 12 === 0 || i === serie.length - 1;
@@ -101,37 +119,63 @@ export const selectDebtSeries = createSelector(
 
     return {
       resolution: "Month",
-      serie,
       paymentPlan: serie,
+      events: allEvents,
+      serie,
     };
   }
 );
 
-function advanceDebt(currentDebt: Debt[], moneyToDistribute: BigNumber.BigNumber): Debt[] {
+function advanceDebt(
+  currentDebt: Debt[],
+  moneyToDistribute: BigNumber.BigNumber,
+  month: number
+): {
+  events: PaymentPlanEvent[];
+  newDebt: Debt[];
+} {
   if (currentDebt.length === 0) {
-    return [];
+    return {
+      events: [],
+      newDebt: [],
+    };
   }
   let rest = moneyToDistribute;
+  const events: PaymentPlanEvent[] = [];
 
-  return currentDebt.map((debt) => {
-    if (debt.processed.remaining.isEqualTo(0)) {
-      return debt;
-    }
+  return {
+    newDebt: currentDebt.map((debt) => {
+      if (debt.processed.remaining.isEqualTo(0)) {
+        return debt;
+      }
 
-    const { terminAmount, interestAmount, principalAmount, newDebt, newRest } =
-      debt.calculateTermin(debt, rest);
+      const terminResult = debt.calculateTermin(debt, rest);
+      const { terminAmount, interestAmount, newDebt, newRest } = terminResult;
 
-    rest = newRest;
-
-    return {
-      ...debt,
-      processed: {
+      const processed = {
         paidSoFar: debt.processed.paidSoFar.plus(terminAmount),
         remaining: newDebt,
         interestPaidSoFar: debt.processed.interestPaidSoFar.plus(interestAmount),
-      },
-    };
-  });
+      };
+
+      const updatedDebt: Debt = {
+        ...debt,
+        events,
+        history: [...debt.history, { ...processed, month, terminResult }],
+        processed,
+      };
+
+      rest = newRest;
+      if (terminAmount.isZero()) {
+        events.push({ type: "UNABLE_TO_PAY", debt: updatedDebt, month });
+      } else if (newDebt.isZero()) {
+        events.push({ type: "DEBT_PAID_OFF", debt: updatedDebt, month });
+      }
+
+      return updatedDebt;
+    }),
+    events,
+  };
 }
 
 export const selectTotalCostOfDebt = createSelector([selectDebtSeries], ({ serie }) => {
@@ -156,10 +200,16 @@ function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): Term
 
   switch (debt.type) {
     case "serie": {
-      const principalAmount = BigNumber.BigNumber(debt.amount).dividedBy(debt.termins);
+      const targetPrincipalAmount = BigNumber.BigNumber(debt.amount)
+        .dividedBy(debt.termins)
+        .integerValue(BigNumber.BigNumber.ROUND_UP);
 
-      return ({ processed: { remaining } }: Debt, moneyToDistribute: BigNumber.BigNumber) => {
+      return (
+        { processed: { remaining }, events }: Debt,
+        moneyToDistribute: BigNumber.BigNumber
+      ) => {
         const interestAmount = monthlyInterest.multipliedBy(remaining);
+        const principalAmount = BigNumber.BigNumber.min(targetPrincipalAmount, remaining);
         const terminAmount = interestAmount.plus(principalAmount);
         const canPay = moneyToDistribute.isGreaterThanOrEqualTo(terminAmount);
 
@@ -172,23 +222,31 @@ function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): Term
             newRest: moneyToDistribute,
           };
         }
+        const newDebt = remaining.minus(principalAmount);
+        const newRest = moneyToDistribute.minus(terminAmount);
 
         return {
           terminAmount,
           interestAmount,
           principalAmount,
-          newDebt: remaining.minus(principalAmount),
-          newRest: moneyToDistribute.minus(terminAmount),
+          newDebt,
+          newRest,
+          events,
         };
       };
     }
     case "annuity":
-      const terminAmount = monthlyInterest
+      const targetTerminAmount = monthlyInterest
         .dividedBy(one.minus(one.plus(monthlyInterest).pow(-debt.termins)))
-        .multipliedBy(debt.amount);
+        .multipliedBy(debt.amount)
+        .integerValue(BigNumber.BigNumber.ROUND_UP);
 
       return ({ processed: { remaining } }: Debt, moneyToDistribute: BigNumber.BigNumber) => {
         const interestAmount = interest.dividedBy(12).multipliedBy(remaining);
+        const terminAmount = BigNumber.BigNumber.min(
+          targetTerminAmount,
+          remaining.plus(interestAmount)
+        );
         const principalAmount = terminAmount.minus(interestAmount);
         const canPay = moneyToDistribute.isGreaterThanOrEqualTo(terminAmount);
 
@@ -202,12 +260,15 @@ function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): Term
           };
         }
 
+        const newDebt = remaining.minus(principalAmount);
+        const newRest = moneyToDistribute.minus(terminAmount);
+
         return {
           terminAmount,
           interestAmount,
           principalAmount,
-          newDebt: remaining.minus(principalAmount),
-          newRest: moneyToDistribute.minus(terminAmount),
+          newDebt,
+          newRest,
         };
       };
     case "credit": {
@@ -218,13 +279,15 @@ function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): Term
           remaining.plus(interestAmount)
         );
         const principalAmount = terminAmount.minus(interestAmount);
+        const newDebt = remaining.minus(principalAmount);
+        const newRest = moneyToDistribute.minus(terminAmount);
 
         return {
           terminAmount,
           interestAmount,
-          principalAmount,
-          newDebt: remaining.minus(principalAmount),
-          newRest: moneyToDistribute.minus(terminAmount),
+          principalAmount: BigNumber.BigNumber.max(principalAmount, 0),
+          newDebt,
+          newRest,
         };
       };
     }
@@ -235,6 +298,8 @@ function toDebt(debt: DebtState): Debt {
   const interest = BigNumber.BigNumber(debt.interest).dividedBy(100);
   return {
     initial: debt,
+    events: [],
+    history: [],
     processed: {
       interestPaidSoFar: BigNumber.BigNumber(0),
       paidSoFar: BigNumber.BigNumber(0),

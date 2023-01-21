@@ -8,22 +8,14 @@ import Typography from "@mui/material/Typography";
 import * as BigNumber from "bignumber.js";
 import { useTranslation } from "next-i18next";
 import React from "react";
-import {
-  selectOpenTips,
-  setOpenTips,
-  updateNavigation,
-} from "../store/debt-insight-slice";
+import { selectOpenTips, setOpenTips, updateNavigation } from "../store/debt-insight-slice";
 import { DebtState } from "../store/debt-slice";
 import { ExpenseState } from "../store/expense-slice";
 import { IncomeState } from "../store/income-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import AppExpandingPaperComponent from "./app-expanding-paper-component";
-import {
-  allOptions,
-  ExpenseOptionName,
-  ExpenseOptionNames,
-} from "./app-expense-component";
+import { allOptions, ExpenseOptionName, ExpenseOptionNames } from "./app-expense-component";
 
 export interface TipConditionArgs {
   incomeMap: any;
@@ -74,8 +66,7 @@ export const allTips: UnresolvedTip[] = [
   ({ expenseMap, incomeMap, result, totalCostOfDebt, useTowardsDebt }) => {
     const expensesOverLimit = ExpenseOptionNames.filter(
       (post) =>
-        expenseLimits[post].limit !== -1 &&
-        expenseMap.get(post)?.amount > expenseLimits[post].limit
+        expenseLimits[post].limit !== -1 && expenseMap.get(post)?.amount > expenseLimits[post].limit
     );
 
     return {
@@ -149,9 +140,7 @@ export const allTips: UnresolvedTip[] = [
   }),
   ({ expenseMap, useTowardsDebt, result }) => ({
     tipId: "saveMoreMoney",
-    active:
-      !expenseMap.get("savings") &&
-      useTowardsDebt.isGreaterThanOrEqualTo(result),
+    active: !expenseMap.get("savings") && useTowardsDebt.isGreaterThanOrEqualTo(result),
     color: "",
     targetId: [],
     DetailsComponent: () => (
@@ -249,6 +238,10 @@ export default function AppTipsComponent() {
   const { allRelevantTips } = useAppSelector(selectTips);
   const openTips = useAppSelector(selectOpenTips);
 
+  if (allRelevantTips.length === 0) {
+    return <Typography>{t("calculator:tips.noTips")}</Typography>;
+  }
+
   return (
     <div>
       {allRelevantTips.map(({ tipId, DetailsComponent, active, color }, i) => (
@@ -266,16 +259,11 @@ export default function AppTipsComponent() {
             )
           }
         >
-          <AccordionSummary
-            className="flex-row-reverse"
-            expandIcon={<ExpandMore />}
-          >
+          <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
             <div className="ml-3 relative flex justify-between w-full">
               <div>{t(`calculator:tips.${tipId}.summary`)}</div>
               <div className="ml-3 relative">
-                <Info
-                  className={`absolute right-1 top-1/2 -translate-y-1/2 ${color}`}
-                />
+                <Info className={`absolute right-1 top-1/2 -translate-y-1/2 ${color}`} />
               </div>
             </div>
           </AccordionSummary>

@@ -60,7 +60,7 @@
     }
   },
   "debts": {
-    "defaultNewDebt": { "name": "Creditor {{value}}" },
+    "defaultNewDebt": { "name": "Loan {{value}}" },
     "add": { "title": "Add debt" }
   },
   "debt": {
@@ -129,12 +129,21 @@
     }
   },
   "paymentPlan": {
+    "noEvents": {
+      "default": "We can't make a payment plan yet:",
+      "reason": {
+        "addIncome": "Add income to your budget",
+        "addDebt": "Add debt",
+        "impossible": "We couldn't pay off any debt, check the tips for help"
+      }
+    },
     "tableHeader": {
       "month": "Month",
       "paymentAmount": "Payment Amount",
       "principalAmount": "Principal Amount",
       "interestAmount": "Interest Amount",
-      "paidSoFar": "Paid so far"
+      "paidSoFar": "Paid so far",
+      "remaining": "Remaining"
     }
   },
   "tipsPanel": {
@@ -142,6 +151,7 @@
     "beta": "* We're working on creating more and better tips. Please consult a professional before acting on our tips."
   },
   "tips": {
+    "noTips": "We can't find any tips for you, good job!",
     "reduceSpending": {
       "summary": "Reduce Spending",
       "content": ""

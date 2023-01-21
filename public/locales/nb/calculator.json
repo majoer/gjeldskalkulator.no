@@ -60,7 +60,7 @@
     }
   },
   "debts": {
-    "defaultNewDebt": { "name": "Kreditor {{value}}" },
+    "defaultNewDebt": { "name": "Lån {{value}}" },
     "add": { "title": "Legg til gjeld" }
   },
   "debt": {
@@ -129,12 +129,21 @@
     }
   },
   "paymentPlan": {
+    "noEvents": {
+      "default": "Vi kan ikke lage en betalingsplan enda. Først må du gjøre noen justeringer:",
+      "reason": {
+        "addIncome": "Legg til inntekt i budsjettet ditt",
+        "addDebt": "Legg til gjeld",
+        "impossible": "Du har gjeld som vokser, klikk for hjelp"
+      }
+    },
     "tableHeader": {
       "month": "Måned",
       "paymentAmount": "Å betale",
       "principalAmount": "Avdrag",
       "interestAmount": "Rente",
-      "paidSoFar": "Betalt så langt"
+      "paidSoFar": "Betalt så langt",
+      "remaining": "Igjen"
     }
   },
   "tipsPanel": {
@@ -142,6 +151,7 @@
     "beta": "* Vi jobber med å lage flere og bedre tips. Vennligst konsulter en profesjonell før du eventuelt tar til deg disse tipsene."
   },
   "tips": {
+    "noTips": "Vi kan ikke finne noen tips til deg, bra jobbet!",
     "reduceSpending": {
       "summary": "Prøv å redusere forbruket ditt",
       "content": ""

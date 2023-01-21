@@ -17,6 +17,7 @@ describe("graph-selector", () => {
     expect(selectDebtSeries(appState)).toEqual({
       paymentPlan: [{ sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 0, y: 0 }],
       resolution: "Month",
+      events: [],
       serie: [{ sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 0, y: 0 }],
     });
   });
