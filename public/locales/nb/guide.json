@@ -14,6 +14,7 @@
     }
   },
   "backButton": { "text": "Tilbake" },
+  "skipButton": { "text": "Hopp over" },
   "noBank": "* Finner du ikke din bank?",
   "dnb": {
     "downloadBudget": {
@@ -29,7 +30,7 @@
     "uploadBudget": {
       "disclaimer1": "Budsjettet ditt forlater aldri PCen din.",
       "disclaimer2": "og denne appen vil ikke huske innholdet.",
-      "button": { "text": "Importer" }
+      "importButton": { "text": "Importer" }
     }
   }
 }

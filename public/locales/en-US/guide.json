@@ -14,6 +14,7 @@
     }
   },
   "backButton": { "text": "Back" },
+  "skipButton": { "text": "Skip" },
   "noBank": "* Can't find your bank?",
   "dnb": {
     "downloadBudget": {
@@ -29,7 +30,7 @@
     "uploadBudget": {
       "disclaimer1": "Your budget never leaves your computer",
       "disclaimer2": "and this app will not remember the contents.",
-      "button": { "text": "Import" }
+      "importButton": { "text": "Import" }
     }
   }
 }

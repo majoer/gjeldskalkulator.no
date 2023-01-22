@@ -64,7 +64,7 @@
     "add": { "title": "Legg til gjeld" }
   },
   "debt": {
-    "name": { "label": "Creditor" },
+    "name": { "label": "Navn" },
     "amount": { "label": "Beløp" },
     "interest": { "label": "Rente" },
     "fee": { "label": "Gebyr" },

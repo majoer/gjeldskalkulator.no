@@ -64,7 +64,7 @@
     "add": { "title": "Add debt" }
   },
   "debt": {
-    "name": { "label": "Creditor" },
+    "name": { "label": "Name" },
     "amount": { "label": "Amount" },
     "interest": { "label": "Interest" },
     "fee": { "label": "Fee" },

@@ -50,10 +50,19 @@ export default function AppGuideDnbImportBudgetPage() {
              {t("guide:backButton.text")}
           </AppLoadingButton>
 
+          <AppLoadingButton
+            variant="contained"
+            color="warning"
+            LinkComponent={Link}
+            href="/kalkulator"
+          >
+             {t("guide:skipButton.text")}
+          </AppLoadingButton>
+
           <AppLoadingButton variant="contained" component="label" className="relative">
             {({ setLoading }) => (
               <div>
-                {t("guide:dnb.uploadBudget.button.text")}
+                {t("guide:dnb.uploadBudget.importButton.text")}
                 <input
                   hidden
                   accept=".txt"
