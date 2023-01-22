@@ -137,6 +137,9 @@
         "impossible": "Du har gjeld som vokser, klikk for hjelp"
       }
     },
+    "eventHeader": {
+      "loanCompleted": "{{value}} er tilbakebetalt"
+    },
     "tableHeader": {
       "month": "Måned",
       "paymentAmount": "Å betale",

@@ -61,11 +61,13 @@ export default function AppPaymentPlanComponent() {
         <Accordion key={i}>
           <AccordionSummary expandIcon={<ExpandMore />} className="flex-row-reverse">
             <div className="flex flex-row justify-between w-full ml-3">
-              <div>
-                {dayjs().add(event.month, "months").format("YYYY.MM")} ({event.debt.initial.name})
-              </div>
-              <div></div>
-              <div>{event.debt.processed.paidSoFar.integerValue().toNumber()},-</div>
+              <span>
+                {dayjs().add(event.month, "months").format("YYYY.MM")} -{" "}
+                {t("calculator:paymentPlan.eventHeader.loanCompleted", {
+                  value: event.debt.initial.name,
+                })}
+              </span>
+              <span>{event.debt.processed.paidSoFar.integerValue().toNumber()},-</span>
             </div>
           </AccordionSummary>
           <AccordionDetails>

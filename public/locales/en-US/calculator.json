@@ -137,6 +137,9 @@
         "impossible": "We couldn't pay off any debt, check the tips for help"
       }
     },
+    "eventHeader": {
+      "loanCompleted": "{{value}} is paid back"
+    },
     "tableHeader": {
       "month": "Month",
       "paymentAmount": "Payment Amount",
