@@ -190,13 +190,13 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
         {debtType !== "credit" ? (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-              className="m-2 shrink-0 grow-0 w-auto sm:w-32"
+              className="m-2 shrink-0 grow-0 w-auto sm:w-40"
               label={t("calculator:debt.endDate.label")}
               value={expectedEndDate}
               onChange={(newValue) => {
                 setExpectedEndDate(newValue);
               }}
-              renderInput={(params) => <TextField {...params} variant="standard" />}
+              renderInput={(params) => <TextField {...params} variant="outlined" />}
             />
           </LocalizationProvider>
         ) : null}
