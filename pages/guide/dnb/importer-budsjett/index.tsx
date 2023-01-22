@@ -30,7 +30,7 @@ export default function AppGuideDnbImportBudgetPage() {
         <CardContent>
           <div className="flex flex-row flex-nowrap justify-center">
             <div>
-              <Info color="warning" className="h-full mr-3" />
+              <Info color="info" className="h-full mr-3" />
             </div>
             <div className="text-left">
               <Typography variant="caption">{t("guide:dnb.uploadBudget.disclaimer1")}</Typography>
