@@ -17,10 +17,10 @@ import { ExpenseState, setAllExpenses } from "../../../../store/expense-slice";
 import { IncomeState, setAllIncomes } from "../../../../store/income-slice";
 import { useAppDispatch } from "../../../../store/store";
 import { steps } from "../../index";
+import AppLoadingButton from "../../../../components/io/app-loading-button";
 
 export default function AppGuideDnbImportBudgetPage() {
   const { t } = useTranslation(["guide", "calculator"]);
-  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -33,109 +33,95 @@ export default function AppGuideDnbImportBudgetPage() {
               <Info color="warning" className="h-full mr-3" />
             </div>
             <div className="text-left">
-              <Typography variant="caption">
-                {t("guide:dnb.uploadBudget.disclaimer1")}
-              </Typography>
+              <Typography variant="caption">{t("guide:dnb.uploadBudget.disclaimer1")}</Typography>
               <br />
-              <Typography variant="caption">
-                {t("guide:dnb.uploadBudget.disclaimer2")}
-              </Typography>
+              <Typography variant="caption">{t("guide:dnb.uploadBudget.disclaimer2")}</Typography>
             </div>
           </div>
         </CardContent>
 
         <CardActions className="justify-between">
-          <Button
+          <AppLoadingButton
             variant="contained"
             color="secondary"
             LinkComponent={Link}
             href="/guide/dnb/hent-budsjett"
           >
              {t("guide:backButton.text")}
-          </Button>
-          <Button variant="contained" component="label" className="relative">
-            <span className={` ${loading ? "invisible" : "visible"}`}>
-              {t("guide:dnb.uploadBudget.button.text")}
-            </span>
+          </AppLoadingButton>
 
-            {loading ? (
-              <CircularProgress
-                color="inherit"
-                size={20}
-                className="absolute"
-              />
-            ) : null}
-            <input
-              hidden
-              accept=".txt"
-              multiple
-              type="file"
-              onChange={async (event) => {
-                setLoading(true);
-                try {
-                  const file = event.target.files.item(0);
-                  const text = await file.text();
-                  const { data } = Papa.parse(text, {
-                    delimiter: "\t",
-                  });
+          <AppLoadingButton variant="contained" component="label" className="relative">
+            {({ setLoading }) => (
+              <div>
+                {t("guide:dnb.uploadBudget.button.text")}
+                <input
+                  hidden
+                  accept=".txt"
+                  multiple
+                  type="file"
+                  onChange={async (event) => {
+                    setLoading(true);
+                    try {
+                      const file = event.target.files.item(0);
+                      const text = await file.text();
+                      const { data } = Papa.parse(text, {
+                        delimiter: "\t",
+                      });
 
-                  const norwegianKeys = ExpenseOptionNames.map((key) => ({
-                    key,
-                    nb: t(`calculator:expense.options.${key}`, {
-                      lng: "nb-NO",
-                    }).toLowerCase(),
-                  }));
+                      const norwegianKeys = ExpenseOptionNames.map((key) => ({
+                        key,
+                        nb: t(`calculator:expense.options.${key}`, {
+                          lng: "nb-NO",
+                        }).toLowerCase(),
+                      }));
 
-                  const budget = data.slice(1).reduce((map, line) => {
-                    const category: "Inntekter" | "Utgifter" = line[0];
+                      const budget = data.slice(1).reduce((map, line) => {
+                        const category: "Inntekter" | "Utgifter" = line[0];
 
-                    if (!map[category]) {
-                      map[category] = {};
+                        if (!map[category]) {
+                          map[category] = {};
+                        }
+
+                        const budgetPost =
+                          category === "Inntekter"
+                            ? line[1]
+                            : norwegianKeys.find(
+                                ({ nb }) => line[1] && line[1].toLowerCase().includes(nb)
+                              )?.key || "other";
+
+                        if (!map[line[0]][budgetPost]) {
+                          map[line[0]][budgetPost] = 0;
+                        }
+
+                        map[line[0]][budgetPost] += Math.round(
+                          Math.abs(parseInt(line[4], 10) / 12)
+                        );
+
+                        return map;
+                      }, {});
+
+                      const incomes: IncomeState[] = Object.keys(budget.Inntekter).map((post) => ({
+                        id: nanoid(),
+                        name: post,
+                        amount: budget.Inntekter[post],
+                      }));
+
+                      const expenses: ExpenseState[] = Object.keys(budget.Utgifter).map((post) => ({
+                        id: nanoid(),
+                        name: post,
+                        amount: budget.Utgifter[post],
+                      }));
+
+                      dispatch(setAllIncomes(incomes));
+                      dispatch(setAllExpenses(expenses));
+                    } finally {
+                      router.push("/kalkulator");
                     }
-
-                    const budgetPost =
-                      category === "Inntekter"
-                        ? line[1]
-                        : norwegianKeys.find(
-                            ({ nb }) =>
-                              line[1] && line[1].toLowerCase().includes(nb)
-                          )?.key || "other";
-
-                    if (!map[line[0]][budgetPost]) {
-                      map[line[0]][budgetPost] = 0;
-                    }
-
-                    map[line[0]][budgetPost] += Math.round(
-                      Math.abs(parseInt(line[4], 10) / 12)
-                    );
-
-                    return map;
-                  }, {});
-
-                  const incomes: IncomeState[] = Object.keys(
-                    budget.Inntekter
-                  ).map((post) => ({
-                    id: nanoid(),
-                    name: post,
-                    amount: budget.Inntekter[post],
-                  }));
-
-                  const expenses: ExpenseState[] = Object.keys(
-                    budget.Utgifter
-                  ).map((post) => ({
-                    id: nanoid(),
-                    name: post,
-                    amount: budget.Utgifter[post],
-                  }));
-
-                  dispatch(setAllIncomes(incomes));
-                  dispatch(setAllExpenses(expenses));
-                } finally {
-                  router.push("/kalkulator");
-                }
-              }}
-            />
-          </Button>
+                  }}
+                />
+              </div>
+            )}
+          </AppLoadingButton>
         </CardActions>
       </>
     </AppGuideCardComponent>
@@ -145,11 +131,7 @@ export default function AppGuideDnbImportBudgetPage() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, [
-        "common",
-        "guide",
-        "calculator",
-      ])),
+      ...(await serverSideTranslations(locale, ["common", "guide", "calculator"])),
     },
   };
 }

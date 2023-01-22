@@ -1,5 +1,5 @@
-import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
+import Badge from "@mui/material/Badge";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
@@ -8,6 +8,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import AppGuideCardComponent from "../../../../components/guide/app-guide-card-component";
+import AppLoadingButton from "../../../../components/io/app-loading-button";
 import { steps } from "../../index";
 
 export default function AppGuideDnbGetBudgetPage() {
@@ -37,11 +38,7 @@ export default function AppGuideDnbGetBudgetPage() {
               </Typography>
             </div>
             <br />
-            <img
-              src="/dnb0.png"
-              alt="DnB first step"
-              className="w-full sm:w-2/3"
-            />
+            <img src="/dnb0.png" alt="DnB first step" className="w-full sm:w-2/3" />
           </div>
 
           <Divider className="my-10" />
@@ -54,11 +51,7 @@ export default function AppGuideDnbGetBudgetPage() {
           </div>
           <br />
           <div>
-            <img
-              src="/dnb1.png"
-              alt="DnB second step"
-              className="w-full sm:w-2/3"
-            />
+            <img src="/dnb1.png" alt="DnB second step" className="w-full sm:w-2/3" />
           </div>
 
           <Divider className="my-10" />
@@ -85,22 +78,22 @@ export default function AppGuideDnbGetBudgetPage() {
           </div>
         </CardContent>
         <CardActions className="justify-between mt-4">
-          <Button
+          <AppLoadingButton
             variant="contained"
             color="secondary"
             LinkComponent={Link}
             href="/guide"
           >
              {t("guide:backButton.text")}
-          </Button>
+          </AppLoadingButton>
 
-          <Button
+          <AppLoadingButton
             variant="contained"
             LinkComponent={Link}
             href="/guide/dnb/importer-budsjett"
           >
             {t("guide:dnb.downloadBudget.button.text")}
-          </Button>
+          </AppLoadingButton>
         </CardActions>
       </>
     </AppGuideCardComponent>
@@ -110,11 +103,7 @@ export default function AppGuideDnbGetBudgetPage() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, [
-        "common",
-        "guide",
-        "calculator",
-      ])),
+      ...(await serverSideTranslations(locale, ["common", "guide", "calculator"])),
     },
   };
 }
