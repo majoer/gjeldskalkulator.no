@@ -284,7 +284,7 @@ function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): Term
 
         return {
           terminAmount,
-          interestAmount,
+          interestAmount: terminAmount.isZero() ? BigNumber.BigNumber(0) : interestAmount,
           principalAmount: BigNumber.BigNumber.max(principalAmount, 0),
           newDebt,
           newRest,
