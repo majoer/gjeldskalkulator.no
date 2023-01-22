@@ -16,7 +16,7 @@ export default function AppPaymentPlanTableComponent({ debtHistory }: AppPayment
   const { t } = useTranslation(["calculator"]);
 
   return (
-    <Table>
+    <Table stickyHeader>
       <TableHead>
         <TableRow>
           <TableCell align="left">{t("calculator:paymentPlan.tableHeader.month")}</TableCell>
