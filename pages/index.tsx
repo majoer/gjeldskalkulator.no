@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -9,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import AppLoadingButton from "../components/io/app-loading-button";
+import AppLoadingButton from "../components/io/app-loading-button-component";
 
 export default function LandingPage() {
   const { t } = useTranslation(["common", "landing"]);

@@ -19,6 +19,7 @@ import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { naturalNumber } from "../validation/validation";
 import { TAB_TIPS } from "./app-debt-insight";
+import AppTextFieldComponent from "./io/app-text-field-component";
 
 export interface AppExpenseProps {
   expense: ExpenseState;
@@ -45,9 +46,7 @@ export const allOptions = {
 };
 
 export type ExpenseOptionName = keyof typeof allOptions;
-export const ExpenseOptionNames = Object.keys(
-  allOptions
-) as ExpenseOptionName[];
+export const ExpenseOptionNames = Object.keys(allOptions) as ExpenseOptionName[];
 
 interface ExpenseOption {
   id: string;
@@ -57,9 +56,7 @@ interface ExpenseOption {
 export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   const { t } = useTranslation(["calculator"]);
   const dispatch = useAppDispatch();
-  const [customName, setCustomName] = useState(
-    allOptions[expense.name] ? "" : expense.name
-  );
+  const [customName, setCustomName] = useState(allOptions[expense.name] ? "" : expense.name);
   const [knownName, setKnownName] = useState<ExpenseOption | null>(
     allOptions[expense.name]
       ? {
@@ -106,10 +103,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
   }, [t]);
 
   const options: ExpenseOption[] = useMemo(
-    () =>
-      resolvedOptions
-        .filter(({ id }) => !allExpenses.find((e) => e.name === id))
-        .sort(),
+    () => resolvedOptions.filter(({ id }) => !allExpenses.find((e) => e.name === id)).sort(),
     [allExpenses, resolvedOptions]
   );
 
@@ -151,14 +145,14 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
           id="expenseName"
           multiple={false}
           freeSolo={true}
-          className="m-2 shrink-0 grow-0 inline-flex pr-0"
+          className="m-2 shrink-0 grow-0 inline-flex"
           options={options}
           value={knownName}
           inputValue={customName}
           onInputChange={(_, newName) => setCustomName(newName)}
           sx={{
             "& .MuiFormControl-root .MuiInputBase-root": {
-              paddingRight: 0,
+              padding: 0,
             },
           }}
           ChipProps={{ className: "pr-0" }}
@@ -170,26 +164,27 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
             }
           }}
           renderInput={(params) => (
-            <TextField
+            <AppTextFieldComponent
               {...params}
-              inputProps={{ ...params.inputProps, className: "w-full" }}
-              variant="standard"
+              inputProps={{
+                ...params.inputProps,
+                className: "w-full",
+              }}
               label={t("calculator:expense.name.label")}
             />
           )}
         />
-        <TextField
+        <AppTextFieldComponent
           id="amount"
           type="text"
           label={t("calculator:expense.amount.label")}
-          variant="standard"
           className="m-2 shrink-0 grow-0"
           value={amount}
           error={!!errors["amount"]}
           helperText={t(errors["amount"])}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end" className="absolute right-0">
+              <InputAdornment position="end" className="absolute right-2">
                 {tipIdMap[id] ? (
                   <Tooltip
                     title={t("calculator:tipsPanel.tooltip.title", {
@@ -208,8 +203,7 @@ export default function AppExpenseComponent({ expense }: AppExpenseProps) {
                             [tipIdMap[id].tipId]: true,
                             ...(knownName
                               ? {
-                                  [`${tipIdMap[id].tipId}-${knownName.id}`]:
-                                    true,
+                                  [`${tipIdMap[id].tipId}-${knownName.id}`]: true,
                                 }
                               : {}),
                           })

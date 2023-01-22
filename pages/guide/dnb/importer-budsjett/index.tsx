@@ -1,6 +1,4 @@
 import Info from "@mui/icons-material/Info";
-import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -10,14 +8,13 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Papa from "papaparse";
-import { useState } from "react";
 import { ExpenseOptionNames } from "../../../../components/app-expense-component";
 import AppGuideCardComponent from "../../../../components/guide/app-guide-card-component";
+import AppLoadingButton from "../../../../components/io/app-loading-button-component";
 import { ExpenseState, setAllExpenses } from "../../../../store/expense-slice";
 import { IncomeState, setAllIncomes } from "../../../../store/income-slice";
 import { useAppDispatch } from "../../../../store/store";
 import { steps } from "../../index";
-import AppLoadingButton from "../../../../components/io/app-loading-button";
 
 export default function AppGuideDnbImportBudgetPage() {
   const { t } = useTranslation(["guide", "calculator"]);

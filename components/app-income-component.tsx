@@ -2,12 +2,12 @@ import Delete from "@mui/icons-material/Delete";
 import { debounce } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
 import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { IncomeState, removeIncome, updateIncome } from "../store/income-slice";
 import { useAppDispatch } from "../store/store";
 import { naturalNumber } from "../validation/validation";
+import AppTextFieldComponent from "./io/app-text-field-component";
 
 export interface AppIncomeProps {
   income: IncomeState;
@@ -54,19 +54,17 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
   return (
     <div className="relative py-4 sm:py-1">
       <div className="sm:m-2 w-3/4 flex flex-col sm:flex-row flex-wrap">
-        <TextField
+        <AppTextFieldComponent
           id="name"
           className="m-2 shrink-0 grow-0"
           label={t("calculator:income.name.label")}
-          variant="standard"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <TextField
+        <AppTextFieldComponent
           id="amount"
           type="text"
           label={t("calculator:income.amount.label")}
-          variant="standard"
           className="m-2 shrink-0 grow-0"
           value={amount}
           error={!!errors["amount"]}
@@ -74,7 +72,7 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
           onChange={(e) => setAmount(e.target.value)}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end" className="absolute right-0">
+              <InputAdornment position="end" className="absolute right-2">
                 <div>kr</div>
               </InputAdornment>
             ),
