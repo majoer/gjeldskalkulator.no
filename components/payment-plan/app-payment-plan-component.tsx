@@ -58,7 +58,7 @@ export default function AppPaymentPlanComponent() {
   return (
     <div>
       {relevantEvents.map((event, i) => (
-        <Accordion key={i}>
+        <Accordion key={i} TransitionProps={{ unmountOnExit: true }}>
           <AccordionSummary expandIcon={<ExpandMore />} className="flex-row-reverse">
             <div className="flex flex-row justify-between w-full ml-3">
               <span>
