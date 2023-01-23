@@ -128,7 +128,7 @@ export const allTips: UnresolvedTip[] = [
     tipId: "refinanceDebt",
     active: allDebts.length > 1,
     color: "text-purple-500",
-    targetId: allDebts.map((d) => d.id),
+    targetId: ["refinanceDebt"],
     DetailsComponent: () => {
       const { t } = useTranslation("calculator");
       return (

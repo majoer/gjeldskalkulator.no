@@ -24,7 +24,8 @@ export default function AppTipButtonComponent({ id }: AppTipButtonComponentProps
       })}
     >
       <IconButton
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           dispatch(
             updateNavigation({
               activeTab: TAB_TIPS,

@@ -1,4 +1,4 @@
-import { createSelector, nanoid } from "@reduxjs/toolkit";
+import { createSelector } from "@reduxjs/toolkit";
 import { allTips, ResolvedTip } from "../../components/app-tips-component";
 import { selectAllDebts } from "../debt-slice";
 import { selectAllExpenses } from "../expense-slice";
@@ -37,15 +37,9 @@ export const selectTips = createSelector(
       };
     }
 
-    const incomeMap = allIncomes.reduce(
-      (map, i) => map.set(i.name, i),
-      new Map()
-    );
+    const incomeMap = allIncomes.reduce((map, i) => map.set(i.name, i), new Map());
 
-    const expenseMap = allExpenses.reduce(
-      (map, e) => map.set(e.name, e),
-      new Map()
-    );
+    const expenseMap = allExpenses.reduce((map, e) => map.set(e.name, e), new Map());
 
     const debtMap = allDebts.reduce((map, e) => map.set(e.name, e), new Map());
 

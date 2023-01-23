@@ -1,5 +1,5 @@
-import Settings from "@mui/icons-material/Settings";
 import Delete from "@mui/icons-material/Delete";
+import Settings from "@mui/icons-material/Settings";
 import { debounce } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
@@ -15,12 +15,10 @@ import dayjs, { Dayjs } from "dayjs";
 import { useTranslation } from "next-i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DebtState, DebtType, removeDebt, updateDebt } from "../store/debt-slice";
-import { selectTips } from "../store/selectors/tips-selector";
-import { useAppDispatch, useAppSelector } from "../store/store";
+import { useAppDispatch } from "../store/store";
 import { nowPlusMonths } from "../utils/time";
 import { naturalNumber, positiveNumberInc0 } from "../validation/validation";
 import AppTextFieldComponent from "./io/app-text-field-component";
-import AppTipButtonComponent from "./tip/app-tip-button-component";
 
 export interface AppLoanProps {
   debt: DebtState;
@@ -39,7 +37,6 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
   );
   const [fee, setFee] = useState("" + debt.fee);
   const { id } = debt;
-  const { tipIdMap } = useAppSelector(selectTips);
 
   const errors = useMemo(
     () => ({
@@ -148,9 +145,6 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
           >
             <Settings></Settings>
           </IconButton>
-          {/* <div className="absolute top-0 -left-20">
-            {tipIdMap[id] ? <AppTipButtonComponent id={id} /> : null}
-          </div> */}
         </div>
       </div>
       {advanced ? (

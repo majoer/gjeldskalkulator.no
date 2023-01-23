@@ -13,6 +13,8 @@ import AppResultSpendingComponent from "./app-result-spending-component";
 import { selectResult } from "../store/selectors/result-selector";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useTranslation } from "next-i18next";
+import AppTipButtonComponent from "./tip/app-tip-button-component";
+import { selectTips } from "../store/selectors/tips-selector";
 
 export default function AppUserInputComponent() {
   const { t } = useTranslation(["calculator"]);
@@ -20,24 +22,17 @@ export default function AppUserInputComponent() {
   const sumExpense = useAppSelector(selectSumExpense);
   const sumDebt = useAppSelector(selectSumDebt);
   const result = useAppSelector(selectResult);
+  const { tipIdMap } = useAppSelector(selectTips);
 
   const resultClassName = useMemo(
-    () =>
-      result >= 2000
-        ? "bg-blue-50"
-        : result >= 0
-        ? "bg-yellow-50"
-        : "bg-red-50",
+    () => (result >= 2000 ? "bg-blue-50" : result >= 0 ? "bg-yellow-50" : "bg-red-50"),
     [result]
   );
 
   return (
     <div>
       <Accordion defaultExpanded={true}>
-        <AccordionSummary
-          className="flex-row-reverse"
-          expandIcon={<ExpandMore />}
-        >
+        <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
           <div className="flex justify-between ml-3 w-full">
             <div>{t("calculator:userInput.income")}</div>
             <div>{sumIncome},-</div>
@@ -48,10 +43,7 @@ export default function AppUserInputComponent() {
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={true}>
-        <AccordionSummary
-          className="flex-row-reverse"
-          expandIcon={<ExpandMore />}
-        >
+        <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
           <div className="flex justify-between ml-3 w-full">
             <div>{t("calculator:userInput.expense")}</div>
             <div>{sumExpense},-</div>
@@ -62,10 +54,7 @@ export default function AppUserInputComponent() {
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={false} className={resultClassName}>
-        <AccordionSummary
-          className="flex-row-reverse"
-          expandIcon={<ExpandMore />}
-        >
+        <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
           <div className="flex justify-between ml-3 w-full">
             <div>{t("calculator:userInput.result")}</div>
             <div>{result},-</div>
@@ -76,12 +65,12 @@ export default function AppUserInputComponent() {
         </AccordionDetails>
       </Accordion>
       <Accordion defaultExpanded={true}>
-        <AccordionSummary
-          className="flex-row-reverse"
-          expandIcon={<ExpandMore />}
-        >
+        <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
           <div className="flex justify-between ml-3 w-full">
-            <div>{t("calculator:userInput.debt")}</div>
+            <div>
+              {t("calculator:userInput.debt")}
+              {tipIdMap["refinanceDebt"] ? <AppTipButtonComponent id={"refinanceDebt"} /> : null}
+            </div>
             <div>{sumDebt},-</div>
           </div>
         </AccordionSummary>
