@@ -69,6 +69,10 @@
     "interest": { "label": "Interest" },
     "fee": { "label": "Fee" },
     "remove": { "title": "Remove debt" },
+    "advancedSettings": {
+      "more": { "title": "Show advanced settings" },
+      "less": { "title": "Hide advanced settings" }
+    },
     "type": {
       "label": "Type",
       "options": {

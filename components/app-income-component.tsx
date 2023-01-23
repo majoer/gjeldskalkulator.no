@@ -68,7 +68,7 @@ export default function AppIncomeComponent({ income }: AppIncomeProps) {
           className="m-2 shrink-0 grow-0"
           value={amount}
           error={!!errors["amount"]}
-          helperText={errors["amount"]}
+          helperText={t(errors["amount"])}
           onChange={(e) => setAmount(e.target.value)}
           InputProps={{
             endAdornment: (

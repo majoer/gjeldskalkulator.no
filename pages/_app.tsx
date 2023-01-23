@@ -47,6 +47,16 @@ if (typeof window === "object") {
 }
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      // https://tailwindcss.com/docs/responsive-design
+      xs: 0,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+    },
+  },
   components: {
     MuiPopover: {
       defaultProps: {

@@ -69,6 +69,10 @@
     "interest": { "label": "Rente" },
     "fee": { "label": "Gebyr" },
     "remove": { "title": "Fjern gjeld" },
+    "advancedSettings": {
+      "more": { "title": "Vis avanserte innstillinger" },
+      "less": { "title": "Skjul avanserte innstillinger" }
+    },
     "type": {
       "label": "Type",
       "options": {
@@ -98,7 +102,7 @@
   "errors": {
     "positiveNumber": "Må være et tall, 1 eller over",
     "percentage": "Må være en % mellom 0 and 100",
-    "naturalNumber": "Må være et heltall, 0 eller over",
+    "naturalNumber": "Må være et positivtheltall",
     "date": "Må være en dato dd/mm/yyyy"
   },
   "chart": {
