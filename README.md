@@ -1,5 +1,7 @@
 # https://www.gjeldskalkulator.no
 
+The Best Debt Calculator
+
 ## How do I report issues or make new suggestions?
 
 1. Go to https://github.com/majoer/gjeldskalkulator.no/issues
