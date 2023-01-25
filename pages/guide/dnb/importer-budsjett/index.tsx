@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import { nanoid } from "@reduxjs/toolkit";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Papa from "papaparse";
@@ -23,6 +24,10 @@ export default function AppGuideDnbImportBudgetPage() {
 
   return (
     <AppGuideCardComponent steps={steps} currentStep={2}>
+      <Head>
+        <title>Importer et budsjett fra din bank</title>
+        <meta name="description" content="Importer et budsjett fra din bank inn til kalkulatoren." />
+      </Head>
       <>
         <CardContent>
           <div className="flex flex-row flex-nowrap justify-center">
@@ -44,7 +49,7 @@ export default function AppGuideDnbImportBudgetPage() {
             LinkComponent={Link}
             href="/guide/dnb/hent-budsjett"
           >
-             {t("guide:backButton.text")}
+            {t("guide:backButton.text")}
           </AppLoadingButton>
 
           <AppLoadingButton
@@ -53,7 +58,7 @@ export default function AppGuideDnbImportBudgetPage() {
             LinkComponent={Link}
             href="/kalkulator"
           >
-             {t("guide:skipButton.text")}
+            {t("guide:skipButton.text")}
           </AppLoadingButton>
 
           <AppLoadingButton variant="contained" component="label" className="relative">
@@ -92,8 +97,8 @@ export default function AppGuideDnbImportBudgetPage() {
                           category === "Inntekter"
                             ? line[1]
                             : norwegianKeys.find(
-                                ({ nb }) => line[1] && line[1].toLowerCase().includes(nb)
-                              )?.key || "other";
+                              ({ nb }) => line[1] && line[1].toLowerCase().includes(nb)
+                            )?.key || "other";
 
                         if (!map[line[0]][budgetPost]) {
                           map[line[0]][budgetPost] = 0;

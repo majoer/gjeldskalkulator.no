@@ -9,12 +9,17 @@ import Link from "next/link";
 import AppGuideCardComponent from "../../../../components/guide/app-guide-card-component";
 import AppLoadingButton from "../../../../components/io/app-loading-button-component";
 import { steps } from "../../index";
+import Head from "next/head";
 
 export default function AppGuideDnbGetBudgetPage() {
   const { t } = useTranslation(["guide", "calculator"]);
 
   return (
     <AppGuideCardComponent steps={steps} currentStep={1}>
+      <Head>
+        <title>Hvordan laste ned et budsjett fra din bank?</title>
+        <meta name="description" content="En kort guide til hvordan du laster ned et budsjett over ditt forbruk fra din bank." />
+      </Head>
       <>
         <CardContent>
           <br />
@@ -83,7 +88,7 @@ export default function AppGuideDnbGetBudgetPage() {
             LinkComponent={Link}
             href="/guide"
           >
-             {t("guide:backButton.text")}
+            {t("guide:backButton.text")}
           </AppLoadingButton>
 
           <AppLoadingButton

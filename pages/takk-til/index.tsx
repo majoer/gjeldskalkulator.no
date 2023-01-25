@@ -9,12 +9,17 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
+import Head from "next/head";
 
 export default function AppContributionsPage() {
   const { t } = useTranslation(["common", "contributions"]);
 
   return (
     <Container className="m-auto text-center">
+      <Head>
+        <title>Takk til</title>
+        <meta name="description" content="Takk til alle som har bidratt i utviklingen av den beste gjeldskalkulatoren!" />
+      </Head>
       <Typography variant="h2" className="mb-10">
         {t("contributions:header")}
       </Typography>

@@ -16,7 +16,7 @@ interface Step {
 export interface AppGuideCardComponentProps {
   steps: Step[];
   currentStep: number;
-  children: ReactElement;
+  children: ReactElement[];
 }
 
 export default function AppGuideCardComponent({

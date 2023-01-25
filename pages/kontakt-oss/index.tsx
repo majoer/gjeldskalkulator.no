@@ -6,12 +6,17 @@ import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
+import Head from "next/head";
 
 export default function AppKontaktOssPage() {
   const { t } = useTranslation(["common", "contact-us"]);
 
   return (
     <Container className="m-auto text-center">
+      <Head>
+        <title>Kontakt oss</title>
+        <meta name="description" content="Vi tar gjerne imot ønsker og forslag til forbedringer av kalkulatoren!" />
+      </Head>
       <Typography variant="h2" className="mb-10">
         {t("contact-us:header")}
       </Typography>

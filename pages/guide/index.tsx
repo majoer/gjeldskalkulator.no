@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import AppGuideCardComponent from "../../components/guide/app-guide-card-component";
+import Head from "next/head";
 
 export const steps = [
   {
@@ -27,6 +28,10 @@ export default function GuidePage() {
 
   return (
     <AppGuideCardComponent steps={steps} currentStep={0}>
+      <Head>
+        <title>Hvordan setter jeg opp et budsjett?</title>
+        <meta name="description" content="Svar på noen enkle spørsmål, så setter vi opp et månedsbudsjett for deg." />
+      </Head>
       <CardActions className="justify-center">
         <IconButton
           className="w-full sm:w-3/12"

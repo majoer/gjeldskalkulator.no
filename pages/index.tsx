@@ -9,12 +9,18 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import AppLoadingButton from "../components/io/app-loading-button-component";
+import Head from "next/head";
 
 export default function LandingPage() {
   const { t } = useTranslation(["common", "landing"]);
 
   return (
     <div className="w-full text-center">
+
+      <Head>
+        <title>Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt</title>
+        <meta name="description" content="Har du lite oversikt over økonomien, men vet ikke hvor du skal starte? Prøv vår lånekalkulator for å se når du kan bli gjeldsfri." />
+      </Head>
       <div className="w-full h-3/6 xl:mt-32">
         <Card elevation={10} className="lg:w-2/3 xl:w-5/12 lg:m-auto p-6">
           <CardHeader

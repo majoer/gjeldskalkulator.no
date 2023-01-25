@@ -15,10 +15,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { createTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { createTheme } from "@mui/material/styles";
 import ThemeProvider from "@mui/system/ThemeProvider";
+import { Analytics } from "@vercel/analytics/react";
 import { appWithTranslation, i18n, useTranslation } from "next-i18next";
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -29,7 +30,6 @@ import { Provider } from "react-redux";
 import nextI18NextConfig from "../next-i18next.config";
 import { store, wrapper } from "../store/store";
 import "../styles/globals.css";
-import { Analytics } from "@vercel/analytics/react";
 
 if (process.env.NODE_ENV !== "production") {
   if (typeof window !== "undefined") {
@@ -136,10 +136,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>{t("meta.title")}</title>
-        <meta name="description" content={t("meta.description")} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
