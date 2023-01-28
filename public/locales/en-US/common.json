@@ -10,5 +10,8 @@
       "contributions": "Contributions",
       "feedback": "Got feedback?"
     }
+  },
+  "footer": {
+    "feedback": "We would love to hear from you!"
   }
 }

@@ -8,6 +8,7 @@ import Handshake from "@mui/icons-material/Handshake";
 import Home from "@mui/icons-material/Home";
 import Language from "@mui/icons-material/Language";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Button } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -15,9 +16,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { createTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { createTheme } from "@mui/material/styles";
 import ThemeProvider from "@mui/system/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react";
 import { appWithTranslation, i18n, useTranslation } from "next-i18next";
@@ -47,6 +48,16 @@ if (typeof window === "object") {
 }
 
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(12 74 110)",
+    },
+  },
+  typography: {
+    h1: {
+      fontSize: "4rem",
+    },
+  },
   breakpoints: {
     values: {
       // https://tailwindcss.com/docs/responsive-design
@@ -136,17 +147,23 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
+        <title>Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt</title>
+        <meta
+          name="description"
+          content="Har du lite oversikt over økonomien? Prøv vår lånekalkulator for å se når du kan bli gjeldsfri."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <AppBar>
+          <AppBar color="primary" elevation={0}>
             <Toolbar>
               <IconButton
                 size="large"
                 edge="start"
+                className="text-white"
                 color="inherit"
                 aria-label="open drawer"
                 onClick={(e) => setAnchorEl(e.currentTarget)}
@@ -180,10 +197,27 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Menu>
             </Toolbar>
           </AppBar>
-          <main className="relative pt-20 min-h-screen">
-            <Component {...pageProps} />
-            <Analytics />
-          </main>
+          <div className="min-h-screen flex flex-col justify-between">
+            <main className="relative pt-20 flex-grow">
+              <Component {...pageProps} />
+              <Analytics />
+            </main>
+            <AppBar
+              component="footer"
+              color="primary"
+              position="static"
+              elevation={0}
+              className="text-white z-0"
+            >
+              <Toolbar>
+                <div className="text-center w-full">
+                  <Button LinkComponent={Link} href="/kontakt-oss" className="text-white">
+                    {t("common:footer.feedback")}
+                  </Button>
+                </div>
+              </Toolbar>
+            </AppBar>
+          </div>
         </Provider>
       </ThemeProvider>
     </>

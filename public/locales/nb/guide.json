@@ -1,4 +1,55 @@
 {
+  "car": {
+    "title": "Hva koster et billån?",
+    "description": "Billån er normalt sett annuitetslån med et fast beløp som du må betale hver måned",
+    "examples": {
+      "common": {
+        "time": "Tid: {{value}} år",
+        "price": "Kjøpesum: {{value}},-",
+        "equity": "Egenkapital: {{value}},-",
+        "interest": "Rente: {{value}}%",
+        "fee": "Gebyr: {{value}},-",
+        "toCalculatorButton": { "text": "Prøv i kalkulatoren" }
+      },
+      "newCar": { "title": "Lån til nybil" },
+      "usedCar": { "title": "Lån til bruktbil" }
+    }
+  },
+  "house": {
+    "title": "Hva koster et huslån?",
+    "description": "Det finnes normalt sett to typer boliglån: Annuitetslån og serielån.",
+    "examples": {
+      "common": {
+        "time": "Tid: {{value}} år",
+        "price": "Kjøpesum: {{value}},-",
+        "equity": "Egenkapital: {{value}},-",
+        "type": {
+          "annuity": "Type: Annuitet",
+          "serie": "Type: Serie"
+        },
+        "fee": "Gebyr: {{value}},-",
+        "interest": "Rente: {{value}}%",
+        "toCalculatorButton": { "text": "Prøv i kalkulatoren" }
+      },
+      "apartment": { "title": "Lån til leilighet" },
+      "house": { "title": "Lån til hus" }
+    }
+  },
+  "budget": {
+    "title": "Hvordan lager jeg et budsjett?",
+    "description": "Vi jobber med budsjettguiden. I mellomtiden kan du prøve ut kalkulatoren selv!",
+    "toCalculatorButton": { "text": "Test kalkulatoren" }
+  },
+  "credit": {
+    "title": "Hva koster mine kredittlån?",
+    "description": "Vi jobber med kredittlånguiden. I mellomtiden kan du prøve ut kalkulatoren selv!",
+    "toCalculatorButton": { "text": "Test kalkulatoren" }
+  },
+  "refinance": {
+    "title": "Hvordan refinansiere lån?",
+    "description": "Vi jobber med en guide for refinansiering. I mellomtiden kan du prøve ut kalkulatoren selv!",
+    "toCalculatorButton": { "text": "Test kalkulatoren" }
+  },
   "steps": {
     "selectBank": {
       "step": "Bank",

@@ -1,8 +1,4 @@
-import {
-  createEntityAdapter,
-  createSelector,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store";
 
@@ -31,6 +27,7 @@ export const debtSlice = createSlice({
     addDebt: debtAdapter.addOne,
     updateDebt: debtAdapter.updateOne,
     removeDebt: debtAdapter.removeOne,
+    setAllDebt: debtAdapter.setAll,
   },
   extraReducers: {
     [HYDRATE]: (state: any, action: any): any => {
@@ -42,7 +39,7 @@ export const debtSlice = createSlice({
   },
 });
 
-export const { addDebt, updateDebt, removeDebt } = debtSlice.actions;
+export const { addDebt, updateDebt, removeDebt, setAllDebt } = debtSlice.actions;
 
 export const { selectAll: selectAllDebts } = debtAdapter.getSelectors<AppState>(
   (state) => state.debts

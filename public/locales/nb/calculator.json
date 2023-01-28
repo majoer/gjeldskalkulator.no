@@ -2,7 +2,8 @@
   "userInput": {
     "income": "Inntekter",
     "expense": "Utgifter",
-    "result": "Resultat",
+    "resultBeforeDebt": "Til gode før gjeld",
+    "summary": "Oppsummering",
     "debt": "Gjeld"
   },
   "incomes": {

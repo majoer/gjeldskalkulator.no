@@ -1,4 +1,59 @@
 {
+  "car": {
+    "title": "How much does a car loan cost?",
+    "description": "Car loans are usually annuity loans. This means you pay a fixed sum every month for a pre-determined time.",
+    "examples": {
+      "common": {
+        "time": "Time: {{value}} år",
+        "price": "Price of car: {{value}},-",
+        "equity": "Equity: {{value}},-",
+        "interest": "Interest: {{value}}%",
+        "fee": "Fee: {{value}},-",
+        "toCalculatorButton": { "text": "Check it out in the calculator" }
+      },
+      "newCar": { "title": "Loan for a brand new car" },
+      "usedCar": { "title": "Loan for a used car" }
+    }
+  },
+  "house": {
+    "title": "How much does a mortgage cost?",
+    "description": "Car loans are usually annuity loans. This means you pay a fixed sum every month for a pre-determined time.",
+    "examples": {
+      "common": {
+        "time": "Time: {{value}} år",
+        "price": "Price of car: {{value}},-",
+        "equity": "Equity: {{value}},-",
+        "type": {
+          "annuity": "Type: Annuity",
+          "serie": "Type: Serie"
+        },
+        "types": {
+          "annuity": "Annuitetslån",
+          "serie": "Serie"
+        },
+        "fee": "Fee: {{value}},-",
+        "interest": "Interest: {{value}}%",
+        "toCalculatorButton": { "text": "Check it out in the calculator" }
+      },
+      "apartment": { "title": "Loan for an apartment" },
+      "house": { "title": "Loan for a house" }
+    }
+  },
+  "budget": {
+    "title": "How do I make a budget?",
+    "description": "We're working on the guide for budgeting. In the mean time, you should check out the calculator!",
+    "toCalculatorButton": { "text": "Test the calculator" }
+  },
+  "credit": {
+    "title": "How much does my loans cost?",
+    "description": "We're working on the guide for credit cards. In the mean time, you should check out the calculator!",
+    "toCalculatorButton": { "text": "Test the calculator" }
+  },
+  "refinance": {
+    "title": "How do I refinance debt?",
+    "description": "We're working on the guide for refinancing. In the mean time, you should check out the calculator!",
+    "toCalculatorButton": { "text": "Test the calculator" }
+  },
   "steps": {
     "selectBank": {
       "step": "Bank",

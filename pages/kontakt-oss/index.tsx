@@ -29,19 +29,7 @@ export default function AppKontaktOssPage() {
       >
         <ListItem className="inline-block">
           <div className="text-center">
-            <Link href="https://discord.com">
-              <img src="/discord.svg" alt="Discord" width="240" />
-            </Link>
-
-            <Typography variant="body2" color="text.secondary">
-              {t("contact-us:discord")}
-            </Typography>
-          </div>
-        </ListItem>
-        <Divider component="li" />
-        <ListItem className="inline-block">
-          <div className="text-center">
-            <Link href="https://github.com/majoer/gjeldskalkulator.no">
+            <Link href="https://github.com/majoer/gjeldskalkulator.no/issues">
               <img src="/github.png" alt="Github - Majoer" width="200" />
             </Link>
             <Typography variant="body2" color="text.secondary">

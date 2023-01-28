@@ -15,6 +15,8 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useTranslation } from "next-i18next";
 import AppTipButtonComponent from "./tip/app-tip-button-component";
 import { selectTips } from "../store/selectors/tips-selector";
+import AppAfterDebtResultComponent from "./app-after-debt-result-component";
+import { PLAN_BLOWS_TO_INFINITY, selectTotalCostOfDebt } from "../store/selectors/graph-selector";
 
 export default function AppUserInputComponent() {
   const { t } = useTranslation(["calculator"]);
@@ -23,11 +25,14 @@ export default function AppUserInputComponent() {
   const sumDebt = useAppSelector(selectSumDebt);
   const result = useAppSelector(selectResult);
   const { tipIdMap } = useAppSelector(selectTips);
+  const totalCost = useAppSelector(selectTotalCostOfDebt);
 
   const resultClassName = useMemo(
     () => (result >= 2000 ? "bg-blue-50" : result >= 0 ? "bg-yellow-50" : "bg-red-50"),
     [result]
   );
+
+  const summaryClassName = useMemo(() => (totalCost < 0 ? "bg-red-50" : "bg-blue-50"), [totalCost]);
 
   return (
     <div>
@@ -56,7 +61,7 @@ export default function AppUserInputComponent() {
       <Accordion defaultExpanded={false} className={resultClassName}>
         <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
           <div className="flex justify-between ml-3 w-full">
-            <div>{t("calculator:userInput.result")}</div>
+            <div>{t("calculator:userInput.resultBeforeDebt")}</div>
             <div>{result},-</div>
           </div>
         </AccordionSummary>
@@ -76,6 +81,16 @@ export default function AppUserInputComponent() {
         </AccordionSummary>
         <AccordionDetails>
           <AppDebtsComponent />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion defaultExpanded={true} className={summaryClassName}>
+        <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
+          <div className="flex justify-between ml-3 w-full">
+            <div>{t("calculator:userInput.summary")}</div>
+          </div>
+        </AccordionSummary>
+        <AccordionDetails>
+          <AppAfterDebtResultComponent />
         </AccordionDetails>
       </Accordion>
       <div className="h-2"></div>

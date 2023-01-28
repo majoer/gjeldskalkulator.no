@@ -57,7 +57,7 @@ export default function AppDebtInsightComponent() {
         <Tab
           label={t("calculator:debtInsight.tabs.tips.label")}
           icon={
-            <Badge badgeContent={allRelevantTips.length} color="primary">
+            <Badge badgeContent={allRelevantTips.length} color="secondary">
               <TipsAndUpdates />
             </Badge>
           }

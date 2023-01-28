@@ -2,7 +2,8 @@
   "userInput": {
     "income": "Income",
     "expense": "Expense",
-    "result": "Result",
+    "resultBeforeDebt": "Remaining before debt",
+    "summary": "Summary",
     "debt": "Debt"
   },
   "incomes": {
