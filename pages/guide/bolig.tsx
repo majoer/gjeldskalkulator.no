@@ -51,7 +51,7 @@ export default function AppBoliglaanPage() {
                 {
                   id: nanoid(),
                   name: "Huslån",
-                  amount: 2500000,
+                  amount: 2125000,
                   fee: 60,
                   interest: "4",
                   type: "annuity",
@@ -97,7 +97,7 @@ export default function AppBoliglaanPage() {
                 {
                   id: nanoid(),
                   name: "Huslån",
-                  amount: 4000000,
+                  amount: 3400000,
                   fee: 60,
                   interest: "4",
                   type: "annuity",
