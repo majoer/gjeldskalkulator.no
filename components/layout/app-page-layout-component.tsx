@@ -8,6 +8,7 @@ export interface AppPageLayoutProps {
   description: string;
   children: ReactNode | ReactNode[];
   showH1?: boolean;
+  align?: "text-left" | "text-center";
 }
 
 export default function AppPageLayoutComponent({
@@ -15,9 +16,10 @@ export default function AppPageLayoutComponent({
   description,
   children,
   showH1 = true,
+  align = "text-center",
 }: AppPageLayoutProps) {
   return (
-    <div className="m-auto text-center">
+    <div className={`m-auto ${align}`}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description}></meta>

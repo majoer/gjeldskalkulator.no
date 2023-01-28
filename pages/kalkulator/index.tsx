@@ -12,6 +12,7 @@ export default function CalculatorPage() {
       title={t("calculator:title")}
       description={t("calculator:description")}
       showH1={false}
+      align="text-left"
     >
       <div className="w-full xl:w-1/2 mb-4 xl:mb-0 bg-slate-100">
         <AppUserInputComponent />
