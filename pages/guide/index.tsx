@@ -2,10 +2,9 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import AppGuideCardComponent from "../../components/guide/app-guide-card-component";
 import Head from "next/head";
+import Link from "next/link";
+import AppGuideCardComponent from "../../components/guide/app-guide-card-component";
 
 export const steps = [
   {
@@ -24,13 +23,15 @@ export const steps = [
 
 export default function GuidePage() {
   const { t } = useTranslation(["guide"]);
-  const router = useRouter();
 
   return (
     <AppGuideCardComponent steps={steps} currentStep={0}>
       <Head>
         <title>Hvordan setter jeg opp et budsjett?</title>
-        <meta name="description" content="Svar på noen enkle spørsmål, så setter vi opp et månedsbudsjett for deg." />
+        <meta
+          name="description"
+          content="Svar på noen enkle spørsmål, så setter vi opp et månedsbudsjett for deg."
+        />
       </Head>
       <CardActions className="justify-center">
         <IconButton
@@ -38,12 +39,7 @@ export default function GuidePage() {
           LinkComponent={Link}
           href="/guide/dnb/hent-budsjett"
         >
-          <svg
-            viewBox="0 0 93.0362 64"
-            width="290.73812499999997"
-            height="200"
-            fill="#007272"
-          >
+          <svg viewBox="0 0 93.0362 64" width="290.73812499999997" height="200" fill="#007272">
             <title>DNB Logo</title>
             <path d="M89.668 31.9442a10.6487 10.6487 0 0 0-1.8465-1.2184l-.178-.0887.1554-.1337a8.7063 8.7063 0 0 0 2.7652-6.848c-.006-3.3331-1.1437-5.82-3.413-7.3936-1.9135-1.3528-4.5588-2.0142-8.092-2.0079l-10.1326.0182a1.081 1.081 0 0 0-1.0645 1.0685l.0597 33.2203a1.0667 1.0667 0 0 0 1.0685 1.0646l11.577-.0208c3.644-.0065 6.5758-.7897 8.684-2.3266a8.6558 8.6558 0 0 0 2.7937-3.4054 11.2675 11.2675 0 0 0 .9913-4.868 8.967 8.967 0 0 0-3.3681-7.0605zM71.1547 17.5795l7.9106-.0142q4.1997-.0076 6.202 1.3885c.8454.5985 2.003 1.752 2.0083 4.7074.0095 5.2883-4.1672 5.7179-5.4338 5.7201l-10.6659.0192zm9.4066 28.7366l-9.355.0168-.0244-13.6438 10.6659-.0191c4.6219-.0083 7.8707 2.6072 7.8774 6.3407.0033 1.8.0131 7.289-9.1639 7.3054z"></path>
             <path d="M22.4948 19.6221a14.0642 14.0642 0 0 0-5.5848-4.101 16.8443 16.8443 0 0 0-6.2238-1.1443l-9.6215.0173A1.086 1.086 0 0 0 0 15.4853L.0597 48.683a1.0668 1.0668 0 0 0 1.0686 1.0646l9.6214-.0173a16.3939 16.3939 0 0 0 6.2197-1.1667 13.8015 13.8015 0 0 0 5.57-4.0994c3.3924-4.1833 3.894-9.4508 3.889-12.2284-.0043-2.3544-.3927-8.2876-3.9336-12.6136zm-2.5144 22.758a11.615 11.615 0 0 1-9.2366 4.0615l-7.3773.0133-.0516-28.7535 7.3772-.0132a11.5412 11.5412 0 0 1 9.2512 4.0271c2.9396 3.5948 3.1714 8.9716 3.1742 10.5264.0042 2.3338-.3878 6.7559-3.137 10.1384z"></path>

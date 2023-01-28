@@ -5,27 +5,17 @@ import House from "@mui/icons-material/House";
 import Savings from "@mui/icons-material/Savings";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Head from "next/head";
 import AppClickableCardComponent from "../components/io/app-clickable-card-component";
+import AppPageLayoutComponent from "../components/layout/app-page-layout-component";
 
 export default function LandingPage() {
   const { t } = useTranslation(["common", "landing", "guide"]);
 
   return (
-    <div className="w-full text-center m-auto">
-      <Head>
-        <title>Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt</title>
-        <meta
-          name="description"
-          content="Har du lite oversikt over økonomien, men vet ikke hvor du skal starte? Prøv vår lånekalkulator for å se når du kan bli gjeldsfri."
-        />
-      </Head>
-      <Typography variant="h1" className="py-10">
-        {t("landing:title")}
-      </Typography>
+    <AppPageLayoutComponent title={t("landing:header")} description={t("contact-us:description")}>
+      {/* <title>Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt</title> */}
       <div className="inline-grid gap-3 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         <AppClickableCardComponent href="/guide/bil">
           <CardHeader title={t("guide:car.title")} />
@@ -64,7 +54,7 @@ export default function LandingPage() {
           </CardMedia>
         </AppClickableCardComponent>
       </div>
-    </div>
+    </AppPageLayoutComponent>
   );
 }
 

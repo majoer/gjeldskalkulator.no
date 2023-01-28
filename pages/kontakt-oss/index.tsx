@@ -1,4 +1,3 @@
-import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import List from "@mui/material/List";
@@ -6,20 +5,16 @@ import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
-import Head from "next/head";
+import AppPageLayoutComponent from "../../components/layout/app-page-layout-component";
 
 export default function AppKontaktOssPage() {
   const { t } = useTranslation(["common", "contact-us"]);
 
   return (
-    <Container className="m-auto text-center">
-      <Head>
-        <title>Kontakt oss</title>
-        <meta name="description" content="Vi tar gjerne imot ønsker og forslag til forbedringer av kalkulatoren!" />
-      </Head>
-      <Typography variant="h2" className="mb-10">
-        {t("contact-us:header")}
-      </Typography>
+    <AppPageLayoutComponent
+      title={t("contact-us:header")}
+      description={t("contact-us:description")}
+    >
       <List
         sx={{
           width: "280px",
@@ -39,7 +34,7 @@ export default function AppKontaktOssPage() {
         </ListItem>
         <Divider component="li" />
       </List>
-    </Container>
+    </AppPageLayoutComponent>
   );
 }
 

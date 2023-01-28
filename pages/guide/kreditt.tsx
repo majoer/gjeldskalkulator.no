@@ -3,14 +3,15 @@ import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
 import Link from "next/link";
+import AppPageLayoutComponent from "../../components/layout/app-page-layout-component";
 
 export default function AppKredittPage() {
   const { t } = useTranslation(["guide"]);
   return (
-    <div className="text-center m-auto">
-      <Typography variant="h1" className="py-10">
-        {t("guide:credit.title")}
-      </Typography>
+    <AppPageLayoutComponent
+      title={t("guide:credit.title")}
+      description={t("guide:credit.description")}
+    >
       <Typography>{t("guide:credit.description")}</Typography>
 
       <br />
@@ -26,7 +27,7 @@ export default function AppKredittPage() {
         </Button>
       </div>
       <br />
-    </div>
+    </AppPageLayoutComponent>
   );
 }
 

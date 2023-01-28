@@ -3,17 +3,17 @@ import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
 import Link from "next/link";
+import AppPageLayoutComponent from "../../components/layout/app-page-layout-component";
 
 export default function AppBudsjettPage() {
   const { t } = useTranslation(["guide"]);
 
   return (
-    <div className="text-center m-auto">
-      <Typography variant="h1" className="py-10">
-        {t("guide:budget.title")}
-      </Typography>
+    <AppPageLayoutComponent
+      title={t("guide:budget.title")}
+      description={t("guide:budget.description")}
+    >
       <Typography>{t("guide:budget.description")}</Typography>
-
       <br />
       <div>
         <Button
@@ -27,7 +27,7 @@ export default function AppBudsjettPage() {
         </Button>
       </div>
       <br />
-    </div>
+    </AppPageLayoutComponent>
   );
 }
 

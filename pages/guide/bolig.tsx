@@ -8,6 +8,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
 import { useRouter } from "next/router";
 import AppClickableCardComponent from "../../components/io/app-clickable-card-component";
+import AppPageLayoutComponent from "../../components/layout/app-page-layout-component";
 import { setAllDebt } from "../../store/debt-slice";
 import { setAllExpenses } from "../../store/expense-slice";
 import { setAllIncomes } from "../../store/income-slice";
@@ -18,10 +19,10 @@ export default function AppBoliglaanPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   return (
-    <div className="text-center m-auto">
-      <Typography variant="h1" className="py-10">
-        {t("guide:house.title")}
-      </Typography>
+    <AppPageLayoutComponent
+      title={t("guide:house.title")}
+      description={t("guide:house.description")}
+    >
       <Typography>{t("guide:house.description")}</Typography>
       <br />
       {/* <Typography>Hvor mye må jeg betale for en leilighet i et boretslag?</Typography>
@@ -123,7 +124,7 @@ export default function AppBoliglaanPage() {
           </CardActions>
         </AppClickableCardComponent>
       </div>
-    </div>
+    </AppPageLayoutComponent>
   );
 }
 

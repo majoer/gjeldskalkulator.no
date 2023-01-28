@@ -8,6 +8,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
 import { useRouter } from "next/router.js";
 import AppClickableCardComponent from "../../components/io/app-clickable-card-component";
+import AppPageLayoutComponent from "../../components/layout/app-page-layout-component";
 import { setAllDebt } from "../../store/debt-slice";
 import { setAllExpenses } from "../../store/expense-slice";
 import { setAllIncomes } from "../../store/income-slice";
@@ -19,10 +20,7 @@ export default function AppBoliglaanPage() {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="text-center m-auto">
-      <Typography variant="h1" className="py-10">
-        {t("guide:car.title")}
-      </Typography>
+    <AppPageLayoutComponent title={t("guide:car.title")} description={t("guide:car.description")}>
       <Typography>{t("guide:car.description")}</Typography>
       <br />
 
@@ -113,7 +111,7 @@ export default function AppBoliglaanPage() {
           </CardActions>
         </AppClickableCardComponent>
       </div>
-    </div>
+    </AppPageLayoutComponent>
   );
 }
 

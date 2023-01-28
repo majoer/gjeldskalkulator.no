@@ -8,7 +8,7 @@ import Handshake from "@mui/icons-material/Handshake";
 import Home from "@mui/icons-material/Home";
 import Language from "@mui/icons-material/Language";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import AppBar from "@mui/material/AppBar";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";

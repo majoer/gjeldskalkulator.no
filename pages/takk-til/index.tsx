@@ -1,5 +1,4 @@
 import Avatar from "@mui/material/Avatar";
-import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import List from "@mui/material/List";
@@ -9,20 +8,16 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
-import Head from "next/head";
+import AppPageLayoutComponent from "../../components/layout/app-page-layout-component";
 
 export default function AppContributionsPage() {
   const { t } = useTranslation(["common", "contributions"]);
 
   return (
-    <Container className="m-auto text-center">
-      <Head>
-        <title>Takk til</title>
-        <meta name="description" content="Takk til alle som har bidratt i utviklingen av den beste gjeldskalkulatoren!" />
-      </Head>
-      <Typography variant="h2" className="mb-10">
-        {t("contributions:header")}
-      </Typography>
+    <AppPageLayoutComponent
+      title={t("contributions:header")}
+      description={t("contributions:description")}
+    >
       <List
         sx={{
           width: "100%",
@@ -45,10 +40,7 @@ export default function AppContributionsPage() {
                   variant="body2"
                   color="text.primary"
                 >
-                  <Link
-                    href="https://www.flaticon.com/free-icons/debt"
-                    title="Page icon"
-                  >
+                  <Link href="https://www.flaticon.com/free-icons/debt" title="Page icon">
                     {t("contributions:logo-attribution")}
                   </Link>
                 </Typography>
@@ -58,7 +50,7 @@ export default function AppContributionsPage() {
         </ListItem>
         <Divider variant="inset" component="li" />
       </List>
-    </Container>
+    </AppPageLayoutComponent>
   );
 }
 
