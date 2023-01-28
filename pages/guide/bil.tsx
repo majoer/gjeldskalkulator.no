@@ -9,6 +9,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations.js";
 import { useRouter } from "next/router.js";
 import AppClickableCardComponent from "../../components/io/app-clickable-card-component";
 import { setAllDebt } from "../../store/debt-slice";
+import { setAllExpenses } from "../../store/expense-slice";
 import { setAllIncomes } from "../../store/income-slice";
 import { useAppDispatch } from "../../store/store";
 
@@ -39,6 +40,7 @@ export default function AppBoliglaanPage() {
                 },
               ])
             );
+            dispatch(setAllExpenses([]));
             dispatch(
               setAllDebt([
                 {
@@ -81,6 +83,7 @@ export default function AppBoliglaanPage() {
                 },
               ])
             );
+            dispatch(setAllExpenses([]));
             dispatch(
               setAllDebt([
                 {
