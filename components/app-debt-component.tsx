@@ -186,7 +186,7 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
               onChange={(e) => {
                 const newDebtType = e.target.value as DebtType;
                 setDebtType(newDebtType);
-                if (newDebtType !== "credit") {
+                if (newDebtType !== "credit" && !expectedEndDate) {
                   setExpectedEndDate(dayjs().add(10, "years"));
                 }
               }}
