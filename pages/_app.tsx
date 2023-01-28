@@ -207,7 +207,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               color="primary"
               position="static"
               elevation={0}
-              className="text-white z-0"
+              className="text-white"
             >
               <Toolbar>
                 <div className="text-center w-full">
