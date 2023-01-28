@@ -55,7 +55,7 @@ const theme = createTheme({
   },
   typography: {
     h1: {
-      fontSize: "4rem",
+      fontSize: "2.4rem",
     },
   },
   breakpoints: {
@@ -81,6 +81,13 @@ const theme = createTheme({
     },
   },
 });
+
+theme.typography.h1 = {
+  ...theme.typography.h1,
+  [theme.breakpoints.up("md")]: {
+    fontSize: "4rem",
+  },
+};
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
