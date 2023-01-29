@@ -54,9 +54,9 @@
     }
   },
   "resultSpending": {
-    "useTowardsDebt": { "label": "Use for debt payments" },
+    "useTowardsDebt": { "label": "Use for debt" },
     "useTowardsDebtType": {
-      "label": "Use for debt payments",
+      "label": "Unit",
       "options": {
         "percentage": "Percent",
         "number": "NOK"

@@ -12,12 +12,10 @@ import {
   selectResultSpending,
   updateResultSpending,
 } from "../store/result-spending-slice";
-import {
-  selectResult,
-  selectUseTowardsDebt,
-} from "../store/selectors/result-selector";
+import { selectResult, selectUseTowardsDebt } from "../store/selectors/result-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { naturalNumber, percentage } from "../validation/validation";
+import AppTextFieldComponent from "./io/app-text-field-component";
 
 export default function AppResultSpendingComponent() {
   const { t } = useTranslation(["calculator"]);
@@ -25,12 +23,8 @@ export default function AppResultSpendingComponent() {
   const result = useAppSelector(selectResult);
   const resultSpendingValue = useAppSelector(selectUseTowardsDebt);
   const resultSpending = useAppSelector(selectResultSpending);
-  const [useTowardsDebt, setUseTowardsDebt] = useState(
-    resultSpending.useTowardsDebt.toString()
-  );
-  const [useTowardsDebtType, setUseTowardsDebtType] = useState(
-    resultSpending.useTowardsDebtType
-  );
+  const [useTowardsDebt, setUseTowardsDebt] = useState(resultSpending.useTowardsDebt.toString());
+  const [useTowardsDebtType, setUseTowardsDebtType] = useState(resultSpending.useTowardsDebtType);
 
   const errors = useMemo(
     () => ({
@@ -68,24 +62,23 @@ export default function AppResultSpendingComponent() {
 
   return (
     <div>
-      <TextField
+      <AppTextFieldComponent
         id="useTowardsDebt"
-        className="m-2"
         label={t("calculator:resultSpending.useTowardsDebt.label")}
-        variant="standard"
         value={useTowardsDebt}
+        className="m-2"
         error={!!errors["useTowardsDebt"]}
         helperText={t(errors["useTowardsDebt"])}
         onChange={(e) => setUseTowardsDebt(e.target.value)}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end" className="absolute right-0">
+            <InputAdornment position="end" className="absolute right-2">
               <div>{useTowardsDebtType === "number" ? "kr" : "%"}</div>
             </InputAdornment>
           ),
         }}
       />
-      <FormControl variant="standard" className="m-2">
+      <FormControl variant="outlined" className="m-2">
         <InputLabel id="type-label">
           {t("calculator:resultSpending.useTowardsDebtType.label")}
         </InputLabel>
@@ -94,15 +87,13 @@ export default function AppResultSpendingComponent() {
           id="type"
           value={useTowardsDebtType}
           label={t("calculator:resultSpending.useTowardsDebtType.label")}
-          variant="standard"
+          variant="outlined"
           MenuProps={{ disableScrollLock: true }}
           onChange={(e) => {
             setUseTowardsDebtType(e.target.value as "percentage" | "number");
 
             if (e.target.value === "number") {
-              setUseTowardsDebt(
-                resultSpendingValue.decimalPlaces(0).toString()
-              );
+              setUseTowardsDebt(resultSpendingValue.decimalPlaces(0).toString());
             } else {
               setUseTowardsDebt(
                 "" +
@@ -116,26 +107,13 @@ export default function AppResultSpendingComponent() {
           }}
         >
           <MenuItem value={"percentage"}>
-            {t(
-              "calculator:resultSpending.useTowardsDebtType.options.percentage"
-            )}
+            {t("calculator:resultSpending.useTowardsDebtType.options.percentage")}
           </MenuItem>
           <MenuItem value={"number"}>
             {t("calculator:resultSpending.useTowardsDebtType.options.number")}
           </MenuItem>
         </Select>
       </FormControl>
-
-      {useTowardsDebtType === "percentage" ? (
-        <TextField
-          id="result"
-          disabled={true}
-          className="m-2"
-          label={`${useTowardsDebt}% of ${result} =`}
-          variant="standard"
-          value={"" + resultSpendingValue.decimalPlaces(0).toNumber()}
-        />
-      ) : null}
     </div>
   );
 }

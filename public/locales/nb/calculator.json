@@ -54,7 +54,7 @@
     }
   },
   "resultSpending": {
-    "useTowardsDebt": { "label": "Bruk til nedbetaling av gjeld" },
+    "useTowardsDebt": { "label": "Bruk til gjeld" },
     "useTowardsDebtType": {
       "label": "Benevning",
       "options": {
