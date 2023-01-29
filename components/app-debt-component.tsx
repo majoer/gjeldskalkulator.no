@@ -209,6 +209,8 @@ export default function AppDebtComponent({ debt }: AppLoanProps) {
                 className="m-2 shrink-0 grow-0 w-auto sm:w-40"
                 label={t("calculator:debt.endDate.label")}
                 value={expectedEndDate}
+                disablePast={true}
+                openTo="year"
                 onChange={(newValue) => {
                   setExpectedEndDate(newValue);
                 }}
