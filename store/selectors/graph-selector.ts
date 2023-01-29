@@ -55,6 +55,7 @@ export interface DebtSerieSelectorResult {
   restSerie: Datum[];
   restSerieNotAggregated: Datum[];
   serie: DebtDatum[];
+  debtRestIntersection: number;
   paymentPlan: DebtDatum[];
   events: PaymentPlanEvent[];
 }
@@ -78,6 +79,7 @@ export const selectDebtSeries = createSelector(
     let debtSoFar: Debt[] = allDebt.map(toDebt);
     let sumRestSoFar = BigNumber.BigNumber(0);
     let allEvents: PaymentPlanEvent[] = [];
+    let debtRestIntersection = -1;
 
     while (sumDebtSoFar.isGreaterThan(0) && month <= MAX_MONTHS) {
       const { newDebt, events, rest } = advanceDebt(debtSoFar, useTowardsDebt, month);
@@ -97,6 +99,10 @@ export const selectDebtSeries = createSelector(
         BigNumber.BigNumber(0)
       );
 
+      if (debtRestIntersection === -1 && sumRestSoFar.isGreaterThan(sumDebtSoFar)) {
+        debtRestIntersection = month;
+      }
+
       serie.push({
         x: month,
         y: sumDebtSoFar.integerValue().toNumber(),
@@ -114,6 +120,7 @@ export const selectDebtSeries = createSelector(
         resolution: "Year",
         paymentPlan: serie,
         events: allEvents,
+        debtRestIntersection,
         restSerieNotAggregated: restSerie,
         restSerie: restSerie
           .filter((_, i) => {
@@ -138,6 +145,7 @@ export const selectDebtSeries = createSelector(
       resolution: "Month",
       paymentPlan: serie,
       events: allEvents,
+      debtRestIntersection,
       restSerieNotAggregated: restSerie,
       restSerie,
       serie,

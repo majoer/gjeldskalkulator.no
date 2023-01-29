@@ -29,9 +29,10 @@ export default function AppChartComponent() {
   return (
     <div className="h-5/6">
       <ResponsiveLine
+        theme={{ legends: { text: { fontSize: "1rem" } } }}
         data={data}
         colors={(d) => d.color}
-        margin={{ top: 20, right: 20, bottom: 50, left: 70 }}
+        margin={{ top: 20, right: 20, bottom: 80, left: 70 }}
         xScale={{
           type: "linear",
         }}
@@ -83,9 +84,9 @@ export default function AppChartComponent() {
         useMesh={true}
         legends={[
           {
-            anchor: "top",
+            anchor: "bottom-left",
             direction: "row",
-            itemHeight: -20,
+            itemHeight: -100,
             itemWidth: 80,
           },
         ]}

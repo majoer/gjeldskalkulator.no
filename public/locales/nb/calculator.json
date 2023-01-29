@@ -116,14 +116,15 @@
       "infinity": "Din gjeld vil koste: Uendelig."
     },
     "remainingTime": {
-      "result": "Du kan bli gjeldsfri {{value}} hvis du holder deg til budsjettet!",
+      "result": "Du kan bli gjeldsfri {{value}} hvis du holder deg til planen!",
+      "repayEarly": "Du kan muligens innfri lånet ditt {{value}} hvis du sparer alle pengene som blir til overs!",
       "noData": "Du kan legge til gjeld, slik at vi kan regne ut når du er ferdig.",
       "tooMuch": "Slik budsjettet ditt står nå, så kommer du til å bruke mer enn {{value}} år på gjelda.",
       "infinity": "Slik budsjettet ditt står nå, så er det umulig å tilbakebetale gjelda."
     },
     "legend": {
       "debt": "Gjeld",
-      "rest": "Til gode etter gjeld",
+      "rest": "Ubrukte penger",
       "x": { "Month": "Måneder", "Year": "År" },
       "y": "Gjeld"
     },

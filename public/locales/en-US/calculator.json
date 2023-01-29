@@ -116,14 +116,15 @@
       "infinity": "Debt will cost you: Infinity. "
     },
     "remainingTime": {
-      "result": "You can be free of debt {{value}} if you stick to this budget!",
+      "result": "You can be free of debt {{value}} if you stick to this plan!",
+      "repayEarly": "You can probably repay your loans X if you save all the money you dont spend!",
       "noData": "You can add some debt to calculate when you are done.",
       "tooMuch": "With this budget, you will use more then {{value}} years to pay back the debt.",
       "infinity": "With this budget, your debt is impossible to pay back."
     },
     "legend": {
       "debt": "Debt",
-      "rest": "Remaining after debt",
+      "rest": "Unspent money",
       "x": { "Month": "Months", "Year": "Years" },
       "y": "Debt"
     },
