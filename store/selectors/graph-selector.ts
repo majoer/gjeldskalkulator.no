@@ -52,6 +52,7 @@ export interface DebtDatum extends Datum {
 
 export interface DebtSerieSelectorResult {
   resolution: "Month" | "Year";
+  restSerie: Datum[];
   serie: DebtDatum[];
   paymentPlan: DebtDatum[];
   events: PaymentPlanEvent[];
@@ -69,15 +70,19 @@ export const selectDebtSeries = createSelector(
       },
     ];
 
+    const restSerie: Datum[] = [{ x: 0, y: 0 }];
+
     let month = 1;
     let sumDebtSoFar = BigNumber.BigNumber(sumDebt);
     let debtSoFar: Debt[] = allDebt.map(toDebt);
+    let sumRestSoFar = BigNumber.BigNumber(0);
     let allEvents: PaymentPlanEvent[] = [];
 
     while (sumDebtSoFar.isGreaterThan(0) && month <= MAX_MONTHS) {
-      const { newDebt, events } = advanceDebt(debtSoFar, useTowardsDebt, month);
+      const { newDebt, events, rest } = advanceDebt(debtSoFar, useTowardsDebt, month);
       debtSoFar = newDebt;
       allEvents = [...allEvents, ...events];
+      sumRestSoFar = sumRestSoFar.plus(rest);
       sumDebtSoFar = debtSoFar.reduce(
         (sum, debt) => sum.plus(debt.processed.remaining),
         BigNumber.BigNumber(0)
@@ -98,6 +103,8 @@ export const selectDebtSeries = createSelector(
         sumPaidSoFar: sumPaidSoFar.integerValue().toNumber(),
       });
 
+      restSerie.push({ x: month, y: sumRestSoFar.integerValue().toNumber() });
+
       month++;
     }
 
@@ -106,6 +113,14 @@ export const selectDebtSeries = createSelector(
         resolution: "Year",
         paymentPlan: serie,
         events: allEvents,
+        restSerie: restSerie
+          .filter((_, i) => {
+            return i % 12 === 0 || i === serie.length - 1;
+          })
+          .map((datum, i) => ({
+            ...datum,
+            x: i,
+          })),
         serie: serie
           .filter((_, i) => {
             return i % 12 === 0 || i === serie.length - 1;
@@ -121,6 +136,7 @@ export const selectDebtSeries = createSelector(
       resolution: "Month",
       paymentPlan: serie,
       events: allEvents,
+      restSerie,
       serie,
     };
   }
@@ -133,11 +149,13 @@ function advanceDebt(
 ): {
   events: PaymentPlanEvent[];
   newDebt: Debt[];
+  rest: BigNumber.BigNumber;
 } {
   if (currentDebt.length === 0) {
     return {
       events: [],
       newDebt: [],
+      rest: moneyToDistribute,
     };
   }
   let rest = moneyToDistribute;
@@ -175,6 +193,7 @@ function advanceDebt(
       return updatedDebt;
     }),
     events,
+    rest,
   };
 }
 

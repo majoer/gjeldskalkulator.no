@@ -1,18 +1,27 @@
 import { ResponsiveLine, Serie } from "@nivo/line";
 import { useTranslation } from "next-i18next";
-import { selectDebtSeries, selectTotalCostOfDebt } from "../store/selectors/graph-selector";
-import { useAppSelector } from "../store/store";
-import AppChartTooltipComponent from "./app-chart-tooltip-component";
+import { THEME_PRIMARY, THEME_SECONDARY } from "../../pages/_app";
+import { selectDebtSeries, selectTotalCostOfDebt } from "../../store/selectors/graph-selector";
+import { useAppSelector } from "../../store/store";
+import AppChartTooltipComponent from "./app-graph-tooltip-component";
+import AppChartTooltipRestComponent from "./app-graph-tooltip-rest-component";
 
 export default function AppChartComponent() {
   const { t } = useTranslation(["calculator"]);
-  const { serie, resolution } = useAppSelector(selectDebtSeries);
+  const { serie, resolution, restSerie } = useAppSelector(selectDebtSeries);
   const totalCost = useAppSelector(selectTotalCostOfDebt);
+  const restId = t("calculator:chart.legend.rest");
+  const debtId = t("calculator:chart.legend.debt");
 
   const data: Serie[] = [
     {
-      id: "debt",
-      color: "hsl(112, 70%, 50%)",
+      id: restId,
+      color: THEME_PRIMARY,
+      data: restSerie,
+    },
+    {
+      id: debtId,
+      color: THEME_SECONDARY,
       data: serie,
     },
   ];
@@ -21,6 +30,7 @@ export default function AppChartComponent() {
     <div className="h-5/6">
       <ResponsiveLine
         data={data}
+        colors={(d) => d.color}
         margin={{ top: 20, right: 20, bottom: 50, left: 70 }}
         xScale={{
           type: "linear",
@@ -29,7 +39,7 @@ export default function AppChartComponent() {
           type: "linear",
           min: "auto",
           max: "auto",
-          stacked: true,
+          stacked: false,
           reverse: false,
         }}
         yFormat=" >-.2f"
@@ -56,15 +66,29 @@ export default function AppChartComponent() {
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
-        tooltip={({ point }) => (
-          <AppChartTooltipComponent
-            datum={serie[point.data.x as number]}
-            resolution={resolution}
-            totalCost={totalCost}
-          />
-        )}
+        tooltip={({ point }) =>
+          point.serieId === debtId ? (
+            <AppChartTooltipComponent
+              datum={serie[point.data.x as number]}
+              resolution={resolution}
+              totalCost={totalCost}
+            />
+          ) : (
+            <AppChartTooltipRestComponent
+              datum={restSerie[point.data.x as number]}
+              resolution={resolution}
+            />
+          )
+        }
         useMesh={true}
-        legends={[]}
+        legends={[
+          {
+            anchor: "top",
+            direction: "row",
+            itemHeight: -20,
+            itemWidth: 80,
+          },
+        ]}
       />
     </div>
   );

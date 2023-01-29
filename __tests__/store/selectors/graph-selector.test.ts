@@ -19,6 +19,7 @@ describe("graph-selector", () => {
       resolution: "Month",
       events: [],
       serie: [{ sumInterestPaidSoFar: 0, sumPaidSoFar: 0, x: 0, y: 0 }],
+      restSerie: [{ x: 0, y: 0 }],
     });
   });
 

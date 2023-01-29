@@ -16,7 +16,11 @@ import { useTranslation } from "next-i18next";
 import AppTipButtonComponent from "./tip/app-tip-button-component";
 import { selectTips } from "../store/selectors/tips-selector";
 import AppAfterDebtResultComponent from "./app-after-debt-result-component";
-import { PLAN_BLOWS_TO_INFINITY, selectTotalCostOfDebt } from "../store/selectors/graph-selector";
+import {
+  PLAN_BLOWS_TO_INFINITY,
+  selectDebtSeries,
+  selectTotalCostOfDebt,
+} from "../store/selectors/graph-selector";
 
 export default function AppUserInputComponent() {
   const { t } = useTranslation(["calculator"]);
@@ -26,6 +30,7 @@ export default function AppUserInputComponent() {
   const result = useAppSelector(selectResult);
   const { tipIdMap } = useAppSelector(selectTips);
   const totalCost = useAppSelector(selectTotalCostOfDebt);
+  const { restSerie } = useAppSelector(selectDebtSeries);
 
   const resultClassName = useMemo(
     () => (result >= 2000 ? "bg-blue-50" : result >= 0 ? "bg-yellow-50" : "bg-red-50"),
@@ -86,7 +91,8 @@ export default function AppUserInputComponent() {
       <Accordion defaultExpanded={true} className={summaryClassName}>
         <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
           <div className="flex justify-between ml-3 w-full">
-            <div>{t("calculator:userInput.summary")}</div>
+            <div>{t("calculator:userInput.unspent")}</div>
+            <div>{restSerie[restSerie.length - 1].y as number},-</div>
           </div>
         </AccordionSummary>
         <AccordionDetails>

@@ -47,10 +47,16 @@ if (typeof window === "object") {
   rootElement = document != null ? document.getElementById("__next") : undefined;
 }
 
+export const THEME_PRIMARY = "rgb(12 74 110)";
+export const THEME_SECONDARY = "rgb(156 39 176)";
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: "rgb(12 74 110)",
+      main: THEME_PRIMARY,
+    },
+    secondary: {
+      main: THEME_SECONDARY,
     },
   },
   typography: {

@@ -5,7 +5,7 @@ import Badge from "@mui/material/Badge";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useTranslation } from "next-i18next";
-import AppChartComponent from "../components/app-chart-component";
+import AppChartComponent from "./graph/app-graph-component";
 import AppPaymentPlanComponent from "./payment-plan/app-payment-plan-component";
 import AppTipsComponent from "../components/app-tips-component";
 import { selectActiveTab, updateNavigation } from "../store/debt-insight-slice";

@@ -1,7 +1,7 @@
 import Paper from "@mui/material/Paper";
-import { DebtDatum } from "../store/selectors/graph-selector";
-import { useMemo } from "react";
 import { useTranslation } from "next-i18next";
+import { useMemo } from "react";
+import { DebtDatum } from "../../store/selectors/graph-selector";
 
 export interface AppChartTooltipComponentProps {
   datum: DebtDatum;

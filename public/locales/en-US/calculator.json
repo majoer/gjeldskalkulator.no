@@ -5,7 +5,7 @@
     "income": "Income",
     "expense": "Expense",
     "resultBeforeDebt": "Remaining before debt",
-    "summary": "Summary",
+    "unspent": "Total unspent money",
     "debt": "Debt"
   },
   "incomes": {
@@ -121,6 +121,8 @@
       "infinity": "With this budget, your debt is impossible to pay back."
     },
     "legend": {
+      "debt": "Debt",
+      "rest": "Remaining after debt",
       "x": { "Month": "Months", "Year": "Years" },
       "y": "Debt"
     },
@@ -132,7 +134,8 @@
       "principalAmount": "Principal: {{value}}",
       "interestAmount": "Interest: {{value}}",
       "paymentAmount": "Payment: {{value}}",
-      "remainingDebt": "Remaining Debt: {{value}}"
+      "remainingDebt": "Remaining Debt: {{value}}",
+      "rest": "Money left: {{value}},-"
     }
   },
   "paymentPlan": {

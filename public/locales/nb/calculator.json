@@ -5,7 +5,7 @@
     "income": "Inntekter",
     "expense": "Utgifter",
     "resultBeforeDebt": "Til gode før gjeld",
-    "summary": "Oppsummering",
+    "unspent": "Totalt ubrukte penger",
     "debt": "Gjeld"
   },
   "incomes": {
@@ -121,6 +121,8 @@
       "infinity": "Slik budsjettet ditt står nå, så er det umulig å tilbakebetale gjelda."
     },
     "legend": {
+      "debt": "Gjeld",
+      "rest": "Til gode etter gjeld",
       "x": { "Month": "Måneder", "Year": "År" },
       "y": "Gjeld"
     },
@@ -132,7 +134,8 @@
       "principalAmount": "Avdrag: {{value}}",
       "interestAmount": "Rente: {{value}}",
       "paymentAmount": "Å betale: {{value}}",
-      "remainingDebt": "Gjenstående: {{value}}"
+      "remainingDebt": "Gjenstående: {{value}}",
+      "rest": "Til gode: {{value}},-"
     }
   },
   "paymentPlan": {
