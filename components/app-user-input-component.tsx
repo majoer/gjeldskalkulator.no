@@ -10,7 +10,7 @@ import AppDebtsComponent from "./app-debts-component";
 import AppExpensesComponent from "./app-expenses-component";
 import AppIncomesComponent from "./app-incomes-component";
 import AppResultSpendingComponent from "./app-result-spending-component";
-import { selectResult } from "../store/selectors/result-selector";
+import { selectResult, selectUseTowardsDebt } from "../store/selectors/result-selector";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useTranslation } from "next-i18next";
 import AppTipButtonComponent from "./tip/app-tip-button-component";
@@ -28,9 +28,10 @@ export default function AppUserInputComponent() {
   const sumExpense = useAppSelector(selectSumExpense);
   const sumDebt = useAppSelector(selectSumDebt);
   const result = useAppSelector(selectResult);
+  const useTowardsDebt = useAppSelector(selectUseTowardsDebt);
   const { tipIdMap } = useAppSelector(selectTips);
   const totalCost = useAppSelector(selectTotalCostOfDebt);
-  const { restSerie } = useAppSelector(selectDebtSeries);
+  const { restSerieNotAggregated: restSerie } = useAppSelector(selectDebtSeries);
 
   const resultClassName = useMemo(
     () => (result >= 2000 ? "bg-blue-50" : result >= 0 ? "bg-yellow-50" : "bg-red-50"),
@@ -67,7 +68,9 @@ export default function AppUserInputComponent() {
         <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
           <div className="flex justify-between ml-3 w-full">
             <div>{t("calculator:userInput.resultBeforeDebt")}</div>
-            <div>{result},-</div>
+            <div>
+              {useTowardsDebt.integerValue().toNumber()},- {t("calculator:userInput.of")} {result},-
+            </div>
           </div>
         </AccordionSummary>
         <AccordionDetails>
@@ -92,7 +95,7 @@ export default function AppUserInputComponent() {
         <AccordionSummary className="flex-row-reverse" expandIcon={<ExpandMore />}>
           <div className="flex justify-between ml-3 w-full">
             <div>{t("calculator:userInput.unspent")}</div>
-            <div>{restSerie[restSerie.length - 1].y as number},-</div>
+            <div>{(restSerie[1]?.y as number) || 0},-</div>
           </div>
         </AccordionSummary>
         <AccordionDetails>

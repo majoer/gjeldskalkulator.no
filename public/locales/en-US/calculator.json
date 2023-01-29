@@ -2,10 +2,11 @@
   "title": "Når blir jeg gjeldsfri? Hvor mye koster min gjeld?",
   "description": "Prøv den beste gjeldskalkulatoren! Sett opp et budsjett helt enkelt og se hvordan det påvirker hvor mye du kan betale på lån",
   "userInput": {
-    "income": "Income",
-    "expense": "Expense",
-    "resultBeforeDebt": "Remaining before debt",
-    "unspent": "Total unspent money",
+    "income": "Incomes every month",
+    "expense": "Expenses every month",
+    "resultBeforeDebt": "Use for debt",
+    "of": "of",
+    "unspent": "Unspent money first month",
     "debt": "Debt"
   },
   "incomes": {
