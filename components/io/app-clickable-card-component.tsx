@@ -1,6 +1,6 @@
 import { CardProps } from "@mui/material";
 import Card from "@mui/material/Card";
-import Link from "next/link.js";
+import Link from "next/link";
 
 export interface AppClickableCardComponentProps {
   href: string;
