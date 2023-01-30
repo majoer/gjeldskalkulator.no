@@ -60,12 +60,6 @@ export default function LandingPage() {
 
 export async function getServerSideProps(context) {
   return {
-    props: {},
-  };
-}
-
-export async function getStaticProps({ locale }) {
-  return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "landing", "guide"])),
     },
