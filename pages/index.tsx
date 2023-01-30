@@ -56,6 +56,12 @@ export default function LandingPage() {
       </div>
     </AppPageLayoutComponent>
   );
+
+
+export async function getServerSideProps(context) {
+  return {
+    props: {},
+  };
 }
 
 export async function getStaticProps({ locale }) {
