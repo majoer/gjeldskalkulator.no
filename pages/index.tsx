@@ -58,7 +58,7 @@ export default function LandingPage() {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({ locale }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "landing", "guide"])),
