@@ -4,9 +4,9 @@ const path = require('path')
 module.exports = {
   i18n: {
     defaultLocale: 'nb',
-    locales: ['nb', 'en-US',],
-    localePath: path.resolve('./public/locales')
+    locales: ['nb', 'en-US',]
   },
+  localePath: path.resolve('./public/locales'),
   ...(typeof window !== 'undefined'
     ? {
       backend: {
