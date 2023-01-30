@@ -56,7 +56,7 @@ export default function LandingPage() {
       </div>
     </AppPageLayoutComponent>
   );
-
+}
 
 export async function getServerSideProps(context) {
   return {
