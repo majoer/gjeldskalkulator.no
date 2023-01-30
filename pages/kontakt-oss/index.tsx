@@ -11,10 +11,7 @@ export default function AppKontaktOssPage() {
   const { t } = useTranslation(["common", "contact-us"]);
 
   return (
-    <AppPageLayoutComponent
-      title={t("contact-us:header")}
-      description={t("contact-us:description")}
-    >
+    <AppPageLayoutComponent title={t("contact-us:title")} description={t("contact-us:description")}>
       <List
         sx={{
           width: "280px",

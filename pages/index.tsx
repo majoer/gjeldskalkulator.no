@@ -14,7 +14,7 @@ export default function LandingPage() {
   const { t } = useTranslation(["common", "landing", "guide"]);
 
   return (
-    <AppPageLayoutComponent title={t("landing:header")} description={t("contact-us:description")}>
+    <AppPageLayoutComponent title={t("landing:title")} description={t("contact-us:description")}>
       {/* <title>Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt</title> */}
       <div className="inline-grid gap-3 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         <AppClickableCardComponent href="/guide/bil">

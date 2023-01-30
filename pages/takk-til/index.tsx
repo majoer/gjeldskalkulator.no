@@ -15,7 +15,7 @@ export default function AppContributionsPage() {
 
   return (
     <AppPageLayoutComponent
-      title={t("contributions:header")}
+      title={t("contributions:title")}
       description={t("contributions:description")}
     >
       <List
