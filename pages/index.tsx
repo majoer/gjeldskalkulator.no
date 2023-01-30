@@ -58,10 +58,10 @@ export default function LandingPage() {
   );
 }
 
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "contact-us"])),
+      ...(await serverSideTranslations(locale, ["common", "landing", "guide"])),
     },
   };
 }
