@@ -52,16 +52,28 @@ export default function AppDebtInsightComponent() {
         value={activeTab}
         onChange={(_, newTab) => dispatch(updateNavigation({ activeTab: newTab }))}
       >
-        <Tab label={t("calculator:debtInsight.tabs.chart.label")} icon={<ShowChart />}></Tab>
-        <Tab label={t("calculator:debtInsight.tabs.paymentPlan.label")} icon={<CreditCard />}></Tab>
         <Tab
+          id="simple-tab-1"
+          aria-controls="simple-tabpanel-1"
+          label={t("calculator:debtInsight.tabs.chart.label")}
+          icon={<ShowChart />}
+        />
+        <Tab
+          id="simple-tab-2"
+          aria-controls="simple-tabpanel-2"
+          label={t("calculator:debtInsight.tabs.paymentPlan.label")}
+          icon={<CreditCard />}
+        />
+        <Tab
+          id="simple-tab-3"
+          aria-controls="simple-tabpanel-3"
           label={t("calculator:debtInsight.tabs.tips.label")}
           icon={
             <Badge badgeContent={allRelevantTips.length} color="secondary">
               <TipsAndUpdates />
             </Badge>
           }
-        ></Tab>
+        />
       </Tabs>
       <TabPanel value={activeTab} index={TAB_GRAPH} scrollable={false}>
         <AppChartComponent />
