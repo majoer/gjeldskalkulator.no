@@ -1,10 +1,12 @@
 import * as React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Html, Head, Main, NextScript, DocumentInitialProps } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import theme, { roboto } from "../common/theme";
 import createEmotionCache from "../common/createEmotionCache";
+import { AppProps, AppType } from "next/app.js";
+import { EmotionCache } from "@emotion/react";
 
-export default class MyDocument extends Document {
+export default class MyDocument extends Document<{ emotionStyleTags: JSX.Element[] }> {
   render() {
     return (
       <Html className={roboto.className}>
@@ -26,7 +28,9 @@ export default class MyDocument extends Document {
 
 // `getInitialProps` belongs to `_document` (instead of `_app`),
 // it's compatible with static-site generation (SSG).
-MyDocument.getInitialProps = async (ctx) => {
+MyDocument.getInitialProps = async (
+  ctx
+): Promise<DocumentInitialProps & { emotionStyleTags: JSX.Element[] }> => {
   // Resolution order
   //
   // On the server:
@@ -58,9 +62,9 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) =>
+      enhanceApp: (App: AppType) =>
         function EnhanceApp(props) {
-          return <App emotionCache={cache} {...props} />;
+          return <App {...props} pageProps={{ ...props.pageProps, emotionCache: cache }} />;
         },
     });
 

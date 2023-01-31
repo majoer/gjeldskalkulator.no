@@ -1,8 +1,8 @@
+import { CacheProvider, EmotionCache } from "@emotion/react";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { CacheProvider } from "@emotion/react";
 import Calculate from "@mui/icons-material/Calculate";
 import Chat from "@mui/icons-material/Chat";
 import Handshake from "@mui/icons-material/Handshake";
@@ -28,9 +28,9 @@ import Link from "next/link";
 import { useRouter } from "next/router.js";
 import { useState } from "react";
 import { Provider } from "react-redux";
-import nextI18NextConfig from "../next-i18next.config";
 import createEmotionCache from "../common/createEmotionCache";
 import theme from "../common/theme";
+import nextI18NextConfig from "../next-i18next.config";
 import { store, wrapper } from "../store/store";
 import "../styles/globals.css";
 
@@ -45,13 +45,13 @@ if (process.env.NODE_ENV !== "production") {
 }
 const clientSideEmotionCache = createEmotionCache();
 
-function MyApp({ Component, pageProps, emotionCache = clientSideEmotionCache }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps<{ emotionCache: EmotionCache }>) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { t } = useTranslation(["common"]);
   const closeMenu = () => setAnchorEl(null);
-
+  const { emotionCache = clientSideEmotionCache } = pageProps;
   const menuItems = [
     {
       group: t("menu.groups.sites"),
