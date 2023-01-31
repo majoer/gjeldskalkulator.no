@@ -1,8 +1,8 @@
 import { ResponsiveLine, Serie } from "@nivo/line";
 import { useTranslation } from "next-i18next";
-import { THEME_PRIMARY, THEME_SECONDARY } from "../../pages/_app";
 import { selectDebtSeries, selectTotalCostOfDebt } from "../../store/selectors/graph-selector";
 import { useAppSelector } from "../../store/store";
+import { THEME_PRIMARY, THEME_SECONDARY } from "../../common/theme";
 import AppChartTooltipComponent from "./app-graph-tooltip-component";
 import AppChartTooltipRestComponent from "./app-graph-tooltip-rest-component";
 
@@ -86,8 +86,9 @@ export default function AppChartComponent() {
           {
             anchor: "bottom-left",
             direction: "row",
-            itemHeight: -100,
-            itemWidth: 80,
+            itemHeight: 30,
+            itemWidth: 100,
+            translateY: 80,
           },
         ]}
       />

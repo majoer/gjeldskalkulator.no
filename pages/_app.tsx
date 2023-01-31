@@ -2,21 +2,21 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { CacheProvider } from "@emotion/react";
 import Calculate from "@mui/icons-material/Calculate";
 import Chat from "@mui/icons-material/Chat";
 import Handshake from "@mui/icons-material/Handshake";
 import Home from "@mui/icons-material/Home";
 import Language from "@mui/icons-material/Language";
 import MenuIcon from "@mui/icons-material/Menu";
-import Button from "@mui/material/Button";
 import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { createTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import ThemeProvider from "@mui/system/ThemeProvider";
@@ -29,6 +29,8 @@ import { useRouter } from "next/router.js";
 import { useState } from "react";
 import { Provider } from "react-redux";
 import nextI18NextConfig from "../next-i18next.config";
+import createEmotionCache from "../common/createEmotionCache";
+import theme from "../common/theme";
 import { store, wrapper } from "../store/store";
 import "../styles/globals.css";
 
@@ -41,61 +43,9 @@ if (process.env.NODE_ENV !== "production") {
     applyServerHMR(() => i18n);
   }
 }
+const clientSideEmotionCache = createEmotionCache();
 
-let rootElement = undefined;
-if (typeof window === "object") {
-  rootElement = document != null ? document.getElementById("__next") : undefined;
-}
-
-export const THEME_PRIMARY = "rgb(12 74 110)";
-export const THEME_SECONDARY = "rgb(156 39 176)";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: THEME_PRIMARY,
-    },
-    secondary: {
-      main: THEME_SECONDARY,
-    },
-  },
-  typography: {
-    h1: {
-      fontSize: "2.4rem",
-    },
-  },
-  breakpoints: {
-    values: {
-      // https://tailwindcss.com/docs/responsive-design
-      xs: 0,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-    },
-  },
-  components: {
-    MuiPopover: {
-      defaultProps: {
-        container: rootElement,
-      },
-    },
-    MuiPopper: {
-      defaultProps: {
-        container: rootElement,
-      },
-    },
-  },
-});
-
-theme.typography.h1 = {
-  ...theme.typography.h1,
-  [theme.breakpoints.up("md")]: {
-    fontSize: "4rem",
-  },
-};
-
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, emotionCache = clientSideEmotionCache }: AppProps) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -158,7 +108,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   ];
 
   return (
-    <>
+    <CacheProvider value={emotionCache}>
       <Head>
         <title>Lånekalkulator, budsjetthjelp og tips til refinansiering av kreditt</title>
         <meta
@@ -233,7 +183,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </div>
         </Provider>
       </ThemeProvider>
-    </>
+    </CacheProvider>
   );
 }
 

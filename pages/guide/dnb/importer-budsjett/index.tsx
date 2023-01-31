@@ -26,7 +26,10 @@ export default function AppGuideDnbImportBudgetPage() {
     <AppGuideCardComponent steps={steps} currentStep={2}>
       <Head>
         <title>Importer et budsjett fra din bank</title>
-        <meta name="description" content="Importer et budsjett fra din bank inn til kalkulatoren." />
+        <meta
+          name="description"
+          content="Importer et budsjett fra din bank inn til kalkulatoren."
+        />
       </Head>
       <>
         <CardContent>
@@ -97,8 +100,8 @@ export default function AppGuideDnbImportBudgetPage() {
                           category === "Inntekter"
                             ? line[1]
                             : norwegianKeys.find(
-                              ({ nb }) => line[1] && line[1].toLowerCase().includes(nb)
-                            )?.key || "other";
+                                ({ nb }) => line[1] && line[1].toLowerCase().includes(nb)
+                              )?.key || "other";
 
                         if (!map[line[0]][budgetPost]) {
                           map[line[0]][budgetPost] = 0;

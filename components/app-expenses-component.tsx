@@ -17,9 +17,7 @@ export default function AppExpensesComponent() {
 
   const nextOptionKey: string = useMemo(
     () =>
-      Object.keys(allOptions).filter(
-        (key) => !allExpenses.find((e) => e.name === key)
-      )[0] || "",
+      Object.keys(allOptions).filter((key) => !allExpenses.find((e) => e.name === key))[0] || "",
     [allExpenses]
   );
 
@@ -36,9 +34,7 @@ export default function AppExpensesComponent() {
             addExpense({
               id: nanoid(),
               name: nextOptionKey,
-              amount: nextOptionKey
-                ? allOptions[nextOptionKey].defaultAmount
-                : 0,
+              amount: nextOptionKey ? allOptions[nextOptionKey].defaultAmount : 0,
             })
           );
         }}

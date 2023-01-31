@@ -18,7 +18,10 @@ export default function AppGuideDnbGetBudgetPage() {
     <AppGuideCardComponent steps={steps} currentStep={1}>
       <Head>
         <title>Hvordan laste ned et budsjett fra din bank?</title>
-        <meta name="description" content="En kort guide til hvordan du laster ned et budsjett over ditt forbruk fra din bank." />
+        <meta
+          name="description"
+          content="En kort guide til hvordan du laster ned et budsjett over ditt forbruk fra din bank."
+        />
       </Head>
       <>
         <CardContent>
