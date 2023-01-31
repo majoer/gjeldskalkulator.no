@@ -1,5 +1,5 @@
 import { Roboto } from "@next/font/google";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, Theme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
 export const roboto = Roboto({
@@ -14,16 +14,16 @@ if (typeof window === "object") {
   rootElement = document != null ? document.getElementById("__next") : undefined;
 }
 
-export const THEME_PRIMARY = "rgb(12 74 110)";
-export const THEME_SECONDARY = "rgb(156 39 176)";
+export const THEME_PRIMARY = "#0c4a6e";
+export const THEME_SECONDARY = "#9c27b0";
 
-const theme = createTheme({
+const theme: Theme = createTheme({
   palette: {
     primary: {
       main: THEME_PRIMARY,
     },
     secondary: {
-      main: THEME_SECONDARY,
+      main: THEME_PRIMARY,
     },
   },
   typography: {

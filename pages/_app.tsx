@@ -10,7 +10,6 @@ import Home from "@mui/icons-material/Home";
 import Language from "@mui/icons-material/Language";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -30,6 +29,7 @@ import { useState } from "react";
 import { Provider } from "react-redux";
 import createEmotionCache from "../common/createEmotionCache";
 import theme from "../common/theme";
+import AppLoadingButton from "../components/io/app-loading-button-component";
 import nextI18NextConfig from "../next-i18next.config";
 import { store, wrapper } from "../store/store";
 import "../styles/globals.css";
@@ -174,9 +174,9 @@ function MyApp({ Component, pageProps }: AppProps<{ emotionCache: EmotionCache }
             >
               <Toolbar>
                 <div className="text-center w-full">
-                  <Button LinkComponent={Link} href="/kontakt-oss" className="text-white">
+                  <AppLoadingButton LinkComponent={Link} href="/kontakt-oss" className="text-white">
                     {t("common:footer.feedback")}
-                  </Button>
+                  </AppLoadingButton>
                 </div>
               </Toolbar>
             </AppBar>
