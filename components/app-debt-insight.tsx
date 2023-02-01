@@ -5,12 +5,12 @@ import Badge from "@mui/material/Badge";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useTranslation } from "next-i18next";
-import AppChartComponent from "./graph/app-graph-component";
-import AppPaymentPlanComponent from "./payment-plan/app-payment-plan-component";
-import AppTipsComponent from "./app-tips-component";
 import { selectActiveTab, updateNavigation } from "../store/debt-insight-slice";
 import { selectTips } from "../store/selectors/tips-selector";
 import { useAppDispatch, useAppSelector } from "../store/store";
+import AppTipsComponent from "./app-tips-component";
+import AppChartComponent from "./graph/app-graph-component";
+import AppPaymentPlanComponent from "./payment-plan/app-payment-plan-component";
 
 export const TAB_GRAPH = 0;
 export const TAB_PLAN = 1;
@@ -53,20 +53,20 @@ export default function AppDebtInsightComponent() {
         onChange={(_, newTab) => dispatch(updateNavigation({ activeTab: newTab }))}
       >
         <Tab
-          id="simple-tab-1"
-          aria-controls="simple-tabpanel-1"
+          id={`simple-tab-${TAB_GRAPH}`}
+          aria-controls={`simple-tabpanel-${TAB_GRAPH}`}
           label={t("calculator:debtInsight.tabs.chart.label")}
           icon={<ShowChart />}
         />
         <Tab
-          id="simple-tab-2"
-          aria-controls="simple-tabpanel-2"
+          id={`simple-tab-${TAB_PLAN}`}
+          aria-controls={`simple-tabpanel-${TAB_PLAN}`}
           label={t("calculator:debtInsight.tabs.paymentPlan.label")}
           icon={<CreditCard />}
         />
         <Tab
-          id="simple-tab-3"
-          aria-controls="simple-tabpanel-3"
+          id={`simple-tab-${TAB_TIPS}`}
+          aria-controls={`simple-tabpanel-${TAB_TIPS}`}
           label={t("calculator:debtInsight.tabs.tips.label")}
           icon={
             <Badge badgeContent={allRelevantTips.length} color="secondary">
