@@ -74,7 +74,7 @@ export default function AppBoliglaanPage() {
             <Typography>{t("guide:house.examples.common.interest", { value: "4" })}</Typography>
           </CardContent>
           <CardActions className="justify-center">
-            <Button>Prøv i kalkulatoren</Button>
+            <Typography color="primary">Prøv i kalkulatoren</Typography>
           </CardActions>
         </AppClickableCardComponent>
         <AppClickableCardComponent
@@ -120,7 +120,9 @@ export default function AppBoliglaanPage() {
             <Typography>{t("guide:house.examples.common.interest", { value: "4" })}</Typography>
           </CardContent>
           <CardActions className="justify-center">
-            <Button>{t("guide:car.examples.common.toCalculatorButton.text")}</Button>
+            <Typography color="primary">
+              {t("guide:car.examples.common.toCalculatorButton.text")}
+            </Typography>
           </CardActions>
         </AppClickableCardComponent>
       </div>

@@ -64,7 +64,9 @@ export default function AppBoliglaanPage() {
             <Typography>{t("guide:car.examples.common.fee", { value: "50" })}</Typography>
           </CardContent>
           <CardActions className="justify-center">
-            <Button>{t("guide:car.examples.common.toCalculatorButton.text")}</Button>
+            <Typography color="primary">
+              {t("guide:car.examples.common.toCalculatorButton.text")}
+            </Typography>
           </CardActions>
         </AppClickableCardComponent>
         <AppClickableCardComponent
@@ -107,7 +109,9 @@ export default function AppBoliglaanPage() {
             <Typography>{t("guide:car.examples.common.fee", { value: "50" })}</Typography>
           </CardContent>
           <CardActions className="justify-center">
-            <Button>{t("guide:car.examples.common.toCalculatorButton.text")}</Button>
+            <Typography color="primary">
+              {t("guide:car.examples.common.toCalculatorButton.text")}
+            </Typography>
           </CardActions>
         </AppClickableCardComponent>
       </div>
