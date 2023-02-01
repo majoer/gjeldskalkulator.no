@@ -1,4 +1,3 @@
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Head from "next/head.js";
 import { ReactNode } from "react";
@@ -25,11 +24,9 @@ export default function AppPageLayoutComponent({
         <meta name="description" content={description}></meta>
       </Head>
 
-      {showH1 ? (
-        <Typography variant="h1" className="py-10">
-          {title}
-        </Typography>
-      ) : null}
+      <Typography variant="h1" className={`py-10 ${showH1 ? "block" : "hidden"}`}>
+        {title}
+      </Typography>
       {children}
     </div>
   );
