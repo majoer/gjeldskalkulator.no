@@ -17,7 +17,7 @@ import AppPaymentPlanTableComponent from "./app-payment-plan-table-component";
 
 export default function AppPaymentPlanComponent() {
   const { t } = useTranslation(["calculator"]);
-  const { paymentPlan, events } = useAppSelector(selectDebtSeries);
+  const { events } = useAppSelector(selectDebtSeries);
   const dispatch = useAppDispatch();
   const allDebts = useAppSelector(selectAllDebts);
   const allIncomes = useAppSelector(selectAllIncomes);
