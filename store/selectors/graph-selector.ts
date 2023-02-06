@@ -236,13 +236,12 @@ function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): Term
     case "serie": {
       const targetPrincipalAmount = BigNumber.BigNumber(debt.amount)
         .dividedBy(debt.termins)
-        .plus(debt.fee)
         .integerValue(BigNumber.BigNumber.ROUND_UP);
 
       return ({ processed: { remaining } }: Debt, moneyToDistribute: BigNumber.BigNumber) => {
-        const interestAmount = monthlyInterest.multipliedBy(remaining);
+        const interestAmount = monthlyInterest.multipliedBy(remaining).decimalPlaces(2);
         const principalAmount = BigNumber.BigNumber.min(targetPrincipalAmount, remaining);
-        const terminAmount = interestAmount.plus(principalAmount);
+        const terminAmount = interestAmount.plus(principalAmount).plus(debt.fee);
         const canPay = moneyToDistribute.isGreaterThanOrEqualTo(terminAmount);
 
         if (!canPay) {
@@ -250,7 +249,7 @@ function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): Term
             terminAmount: BigNumber.BigNumber(0),
             interestAmount: BigNumber.BigNumber(0),
             principalAmount: BigNumber.BigNumber(0),
-            newDebt: remaining.plus(interestAmount),
+            newDebt: remaining.plus(interestAmount).plus(debt.fee),
             newRest: moneyToDistribute,
           };
         }

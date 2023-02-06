@@ -157,6 +157,7 @@
       "paymentAmount": "Å betale",
       "principalAmount": "Avdrag",
       "interestAmount": "Rente",
+      "fee": "Gebyr",
       "paidSoFar": "Betalt så langt",
       "remaining": "Igjen"
     }

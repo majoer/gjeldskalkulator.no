@@ -157,6 +157,7 @@
       "paymentAmount": "Payment Amount",
       "principalAmount": "Principal Amount",
       "interestAmount": "Interest Amount",
+      "fee": "Fee",
       "paidSoFar": "Paid so far",
       "remaining": "Remaining"
     }

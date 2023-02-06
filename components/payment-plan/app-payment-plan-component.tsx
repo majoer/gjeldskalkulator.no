@@ -71,7 +71,7 @@ export default function AppPaymentPlanComponent() {
             </div>
           </AccordionSummary>
           <AccordionDetails>
-            <AppPaymentPlanTableComponent debtHistory={event.debt.history} />
+            <AppPaymentPlanTableComponent debt={event.debt} />
           </AccordionDetails>
         </Accordion>
       ))}
