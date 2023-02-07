@@ -1,3 +1,4 @@
+import Facebook from "@mui/icons-material/Facebook";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import List from "@mui/material/List";
@@ -26,6 +27,16 @@ export default function AppKontaktOssPage() {
             </Link>
             <Typography variant="body2" color="text.secondary">
               {t("contact-us:github")}
+            </Typography>
+          </div>
+        </ListItem>
+        <ListItem className="inline-block">
+          <div className="text-center">
+            <Link href="https://www.facebook.com/profile.php?id=100089905545069">
+              <Facebook sx={{ width: "4rem", height: "4rem" }} />
+            </Link>
+            <Typography variant="body2" color="text.secondary">
+              {t("contact-us:facebook")}
             </Typography>
           </div>
         </ListItem>
