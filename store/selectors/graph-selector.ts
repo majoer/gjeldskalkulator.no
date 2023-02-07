@@ -304,12 +304,12 @@ function getTerminFunction(debt: DebtState, interest: BigNumber.BigNumber): Term
       };
     case "credit": {
       return ({ processed: { remaining } }: Debt, moneyToDistribute: BigNumber.BigNumber) => {
-        const interestAmount = monthlyInterest.multipliedBy(remaining);
+        const interestAmount = monthlyInterest.multipliedBy(remaining).decimalPlaces(2);
         const terminAmount = BigNumber.BigNumber.min(
           moneyToDistribute,
-          remaining.plus(interestAmount)
+          remaining.plus(interestAmount).plus(debt.fee)
         );
-        const principalAmount = terminAmount.minus(interestAmount);
+        const principalAmount = terminAmount.minus(interestAmount).minus(debt.fee);
         const newDebt = remaining.minus(principalAmount);
         const newRest = moneyToDistribute.minus(terminAmount);
 
