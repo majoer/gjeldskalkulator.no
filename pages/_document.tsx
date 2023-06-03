@@ -1,10 +1,8 @@
-import * as React from "react";
-import Document, { Html, Head, Main, NextScript, DocumentInitialProps } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme, { roboto } from "../common/theme";
+import { AppType } from "next/app.js";
+import Document, { DocumentInitialProps, Head, Html, Main, NextScript } from "next/document";
 import createEmotionCache from "../common/createEmotionCache";
-import { AppProps, AppType } from "next/app.js";
-import { EmotionCache } from "@emotion/react";
+import theme, { roboto } from "../common/theme";
 
 export default class MyDocument extends Document<{ emotionStyleTags: JSX.Element[] }> {
   render() {
@@ -13,6 +11,7 @@ export default class MyDocument extends Document<{ emotionStyleTags: JSX.Element
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="robots" content="noodp,noydir" />
           <link rel="shortcut icon" href="/favicon.ico" />
           <meta name="emotion-insertion-point" content="" />
           {this.props.emotionStyleTags}
