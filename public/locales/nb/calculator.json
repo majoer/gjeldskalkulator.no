@@ -6,7 +6,7 @@
     "expense": "Utgifter hver måned",
     "resultBeforeDebt": "Bruk på gjeld",
     "of": "av",
-    "unspent": "Ubrukte penger første måned",
+    "unspent": "Penger til overs første måned",
     "debt": "Gjeld"
   },
   "incomes": {
@@ -124,7 +124,7 @@
     },
     "legend": {
       "debt": "Gjeld",
-      "rest": "Ubrukte penger",
+      "rest": "Penger til overs",
       "x": { "Month": "Måneder", "Year": "År" },
       "y": "Gjeld"
     },
