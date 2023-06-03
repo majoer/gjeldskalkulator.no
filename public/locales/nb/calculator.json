@@ -4,27 +4,45 @@
   "userInput": {
     "income": "Inntekter hver måned",
     "expense": "Utgifter hver måned",
-    "resultBeforeDebt": "Bruk på gjeld",
+    "resultBeforeDebt": "Maks bruk til gjeld",
     "of": "av",
     "unspent": "Penger til overs første måned",
     "debt": "Gjeld"
   },
   "incomes": {
-    "defaultNewDebt": { "name": "Jobb {{value}}" },
-    "add": { "title": "Legg til Jobb" }
+    "defaultNewDebt": {
+      "name": "Jobb {{value}}"
+    },
+    "add": {
+      "title": "Legg til Jobb"
+    }
   },
   "income": {
-    "name": { "label": "Inntekt" },
-    "amount": { "label": "Beløp" },
-    "remove": { "title": "Fjern jobb" }
+    "name": {
+      "label": "Inntekt"
+    },
+    "amount": {
+      "label": "Beløp"
+    },
+    "remove": {
+      "title": "Fjern jobb"
+    }
   },
   "expenses": {
-    "add": { "title": "Legg til utgift" }
+    "add": {
+      "title": "Legg til utgift"
+    }
   },
   "expense": {
-    "name": { "label": "Utgift" },
-    "amount": { "label": "Beløp" },
-    "remove": { "title": "Fjern utgift" },
+    "name": {
+      "label": "Utgift"
+    },
+    "amount": {
+      "label": "Beløp"
+    },
+    "remove": {
+      "title": "Fjern utgift"
+    },
     "options": {
       "rent": "Husleie",
       "electricity": "Strøm",
@@ -34,27 +52,24 @@
       "internet": "Internett",
       "phone": "Mobiltelefon",
       "streaming": "Strømmetjenester",
-
       "medicine": "Medisin",
       "alcohol": "Alkohol",
       "childSupport": "Barnebidrag",
       "children": "Barn",
       "other": "Annet",
-
       "household": "Hus og hjem",
       "living": "Bokostnader",
-
       "hobby": "Hobby",
-
       "savings": "Sparing",
       "stocks": "Aksjer",
-
       "vacation": "Ferie",
       "travel": "Reise"
     }
   },
   "resultSpending": {
-    "useTowardsDebt": { "label": "Bruk til gjeld" },
+    "useTowardsDebt": {
+      "label": "Bruk til gjeld"
+    },
     "useTowardsDebtType": {
       "label": "Benevning",
       "options": {
@@ -64,18 +79,36 @@
     }
   },
   "debts": {
-    "defaultNewDebt": { "name": "Lån {{value}}" },
-    "add": { "title": "Legg til gjeld" }
+    "defaultNewDebt": {
+      "name": "Lån {{value}}"
+    },
+    "add": {
+      "title": "Legg til gjeld"
+    }
   },
   "debt": {
-    "name": { "label": "Navn" },
-    "amount": { "label": "Beløp" },
-    "interest": { "label": "Rente" },
-    "fee": { "label": "Gebyr" },
-    "remove": { "title": "Fjern gjeld" },
+    "name": {
+      "label": "Navn"
+    },
+    "amount": {
+      "label": "Beløp"
+    },
+    "interest": {
+      "label": "Rente"
+    },
+    "fee": {
+      "label": "Gebyr"
+    },
+    "remove": {
+      "title": "Fjern gjeld"
+    },
     "advancedSettings": {
-      "more": { "title": "Vis avanserte innstillinger" },
-      "less": { "title": "Skjul avanserte innstillinger" }
+      "more": {
+        "title": "Vis avanserte innstillinger"
+      },
+      "less": {
+        "title": "Skjul avanserte innstillinger"
+      }
     },
     "type": {
       "label": "Type",
@@ -94,13 +127,21 @@
         }
       }
     },
-    "endDate": { "label": "Innfris dato" }
+    "endDate": {
+      "label": "Innfris dato"
+    }
   },
   "debtInsight": {
     "tabs": {
-      "chart": { "label": "Graf" },
-      "paymentPlan": { "label": "Betalingsplan" },
-      "tips": { "label": "Tips" }
+      "chart": {
+        "label": "Graf"
+      },
+      "paymentPlan": {
+        "label": "Betalingsplan"
+      },
+      "tips": {
+        "label": "Tips"
+      }
     }
   },
   "errors": {
@@ -125,7 +166,10 @@
     "legend": {
       "debt": "Gjeld",
       "rest": "Penger til overs",
-      "x": { "Month": "Måneder", "Year": "År" },
+      "x": {
+        "Month": "Måneder",
+        "Year": "År"
+      },
       "y": "Gjeld"
     },
     "tooltip": {
@@ -163,7 +207,9 @@
     }
   },
   "tipsPanel": {
-    "tooltip": { "title": "Tips: {{value}}" },
+    "tooltip": {
+      "title": "Tips: {{value}}"
+    },
     "beta": "* Vi jobber med å lage flere og bedre tips. Vennligst konsulter en profesjonell før du eventuelt tar til deg disse tipsene."
   },
   "tips": {
@@ -192,8 +238,14 @@
       "summary": "Prioriter gjeld med høy rente først",
       "content": ""
     },
-    "takeAnExtraJob": { "summary": "Ta en ektra jobb", "content": "" },
-    "contactNav": { "summary": "Snakk med NAV", "content": "" },
+    "takeAnExtraJob": {
+      "summary": "Ta en ektra jobb",
+      "content": ""
+    },
+    "contactNav": {
+      "summary": "Snakk med NAV",
+      "content": ""
+    },
     "classifyExpenses": {
       "summary": "Kategoriser utgiftene dine",
       "content": {

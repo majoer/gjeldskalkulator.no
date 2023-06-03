@@ -9,15 +9,24 @@
         "equity": "Egenkapital: {{value}},-",
         "interest": "Rente: {{value}}%",
         "fee": "Gebyr: {{value}},-",
-        "toCalculatorButton": { "text": "Prøv i kalkulatoren" }
+        "toCalculatorButton": {
+          "text": "Prøv i kalkulatoren"
+        }
       },
-      "newCar": { "title": "Lån til nybil" },
-      "usedCar": { "title": "Lån til bruktbil" }
+      "newCar": {
+        "title": "Lån til nybil"
+      },
+      "usedCar": {
+        "title": "Lån til bruktbil"
+      }
     }
   },
   "house": {
     "title": "Hva koster et huslån?",
-    "description": "Det finnes normalt sett to typer boliglån: Annuitetslån og serielån.",
+    "description": "Finn ut nøyaktig hva et huslån vil koste deg og beregn når du kan bli gjeldsfri. Vår brukervennlige kalkulator gir deg et realistisk likviditetsbudsjett og sluttdato for gjelden din.",
+    "p1": "Det er mye som spiller inn på hvor mye du kan låne og hva lånet vil koste deg.",
+    "p2": "På denne siden finner du eksempler på de mest vanlige type boliglån.",
+    "p3": "Velg situasjonen som passer deg best, og endre resten i kalkulatoren.",
     "examples": {
       "common": {
         "time": "Tid: {{value}} år",
@@ -29,26 +38,42 @@
         },
         "fee": "Gebyr: {{value}},-",
         "interest": "Rente: {{value}}%",
-        "toCalculatorButton": { "text": "Prøv i kalkulatoren" }
+        "toCalculatorButton": {
+          "text": "Prøv i kalkulatoren"
+        }
       },
-      "apartment": { "title": "Lån til leilighet" },
-      "house": { "title": "Lån til hus" }
+      "apartment": {
+        "title": "Lån til leilighet"
+      },
+      "house": {
+        "title": "Lån til hus"
+      },
+      "housingAssociation": {
+        "title": "Lån til bolig i boretslag",
+        "sharedDebt": "Fellesgjeld: {{value}},-"
+      }
     }
   },
   "budget": {
     "title": "Hvordan lager jeg et budsjett?",
     "description": "Vi jobber med budsjettguiden. I mellomtiden kan du prøve ut kalkulatoren selv!",
-    "toCalculatorButton": { "text": "Test kalkulatoren" }
+    "toCalculatorButton": {
+      "text": "Test kalkulatoren"
+    }
   },
   "credit": {
     "title": "Hva koster mine kredittlån?",
     "description": "Vi jobber med kredittlånguiden. I mellomtiden kan du prøve ut kalkulatoren selv!",
-    "toCalculatorButton": { "text": "Test kalkulatoren" }
+    "toCalculatorButton": {
+      "text": "Test kalkulatoren"
+    }
   },
   "refinance": {
     "title": "Hvordan refinansiere lån?",
     "description": "Vi jobber med en guide for refinansiering. I mellomtiden kan du prøve ut kalkulatoren selv!",
-    "toCalculatorButton": { "text": "Test kalkulatoren" }
+    "toCalculatorButton": {
+      "text": "Test kalkulatoren"
+    }
   },
   "steps": {
     "selectBank": {
@@ -64,8 +89,12 @@
       "title": "Importer ditt budsjett"
     }
   },
-  "backButton": { "text": "Tilbake" },
-  "skipButton": { "text": "Hopp over" },
+  "backButton": {
+    "text": "Tilbake"
+  },
+  "skipButton": {
+    "text": "Hopp over"
+  },
   "noBank": "* Finner du ikke din bank?",
   "dnb": {
     "downloadBudget": {
@@ -76,12 +105,16 @@
       "5": "Velg nedtrekkslisten for å velge år",
       "6": "Og så velger du forrige år fra kalenderen",
       "7": "Velg \"Lagre til fil\" for å hente budsjett",
-      "button": { "text": "Neste" }
+      "button": {
+        "text": "Neste"
+      }
     },
     "uploadBudget": {
       "disclaimer1": "Budsjettet ditt forlater aldri PCen din.",
       "disclaimer2": "og denne appen vil ikke huske innholdet.",
-      "importButton": { "text": "Importer" }
+      "importButton": {
+        "text": "Importer"
+      }
     }
   }
 }

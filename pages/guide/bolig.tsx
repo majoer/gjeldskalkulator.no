@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
@@ -23,15 +22,13 @@ export default function AppBoliglaanPage() {
       title={t("guide:house.title")}
       description={t("guide:house.description")}
     >
-      <Typography>{t("guide:house.description")}</Typography>
+      <Typography>{t("guide:house.p1")}</Typography>
+      <Typography>{t("guide:house.p2")}</Typography>
       <br />
-      {/* <Typography>Hvor mye må jeg betale for en leilighet i et boretslag?</Typography>
-        <Typography>
-          Leilighet i boretslag har som regel fellesgjeld. Dette må du betale på som en del av
-          "husleien" og utgjør som regel et fast beløp hver måned
-        </Typography> */}
+      <Typography>{t("guide:house.p3")}</Typography>
+      <br />
 
-      <div className="grid grid-rows-1 grid-cols-1 md:grid-cols-2 gap-10 md:w-4/6 xl:w-3/6 m-auto">
+      <div className="grid grid-rows-1 grid-cols-1 md:grid-cols-2 gap-10 md:w-4/6 xl:w-3/6 m-auto mb-2">
         <AppClickableCardComponent
           href="/kalkulator"
           onClick={(e) => {
@@ -41,6 +38,11 @@ export default function AppBoliglaanPage() {
                 {
                   id: nanoid(),
                   name: "Jobb 1",
+                  amount: 30000,
+                },
+                {
+                  id: nanoid(),
+                  name: "Jobb 2",
                   amount: 30000,
                 },
               ])
@@ -54,7 +56,7 @@ export default function AppBoliglaanPage() {
                   amount: 2125000,
                   fee: 60,
                   interest: "4",
-                  type: "annuity",
+                  type: "serie",
                   termins: 300,
                 },
               ])
@@ -69,7 +71,7 @@ export default function AppBoliglaanPage() {
               {t("guide:house.examples.common.price", { value: "2 500 000" })}
             </Typography>
             <Typography>{t("guide:house.examples.common.equity", { value: "375 000" })}</Typography>
-            <Typography>{t("guide:house.examples.common.type.annuity")}</Typography>
+            <Typography>{t("guide:house.examples.common.type.serie")}</Typography>
             <Typography>{t("guide:house.examples.common.fee", { value: "60" })}</Typography>
             <Typography>{t("guide:house.examples.common.interest", { value: "4" })}</Typography>
           </CardContent>
@@ -80,13 +82,17 @@ export default function AppBoliglaanPage() {
         <AppClickableCardComponent
           href="/kalkulator"
           onClick={(e) => {
-            console.log("kasjhd");
             e.preventDefault();
             dispatch(
               setAllIncomes([
                 {
                   id: nanoid(),
                   name: "Jobb 1",
+                  amount: 30000,
+                },
+                {
+                  id: nanoid(),
+                  name: "Jobb 2",
                   amount: 30000,
                 },
               ])
@@ -125,8 +131,72 @@ export default function AppBoliglaanPage() {
             </Typography>
           </CardActions>
         </AppClickableCardComponent>
+        <AppClickableCardComponent
+          href="/kalkulator"
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(
+              setAllIncomes([
+                {
+                  id: nanoid(),
+                  name: "Jobb 1",
+                  amount: 30000,
+                },
+                {
+                  id: nanoid(),
+                  name: "Jobb 2",
+                  amount: 30000,
+                },
+              ])
+            );
+            dispatch(setAllExpenses([]));
+            dispatch(
+              setAllDebt([
+                {
+                  id: nanoid(),
+                  name: "Huslån",
+                  amount: 2300000,
+                  fee: 60,
+                  interest: "4",
+                  type: "annuity",
+                  termins: 300,
+                },
+                {
+                  id: nanoid(),
+                  name: "Fellesgjeld",
+                  amount: 1100000,
+                  fee: 60,
+                  interest: "4",
+                  type: "annuity",
+                  termins: 300,
+                },
+              ])
+            );
+            router.push("/kalkulator");
+          }}
+        >
+          <CardHeader title={t("guide:house.examples.housingAssociation.title")} />
+          <CardContent>
+            <Typography>{t("guide:house.examples.common.time", { value: "25" })}</Typography>
+            <Typography>
+              {t("guide:house.examples.common.price", { value: "2 900 000" })}
+            </Typography>
+            <Typography>
+              {t("guide:house.examples.housingAssociation.sharedDebt", { value: "1 100 000" })}
+            </Typography>
+            <Typography>{t("guide:house.examples.common.equity", { value: "600 000" })}</Typography>
+            <Typography>{t("guide:house.examples.common.type.annuity")}</Typography>
+            <Typography>{t("guide:house.examples.common.fee", { value: "60" })}</Typography>
+            <Typography>{t("guide:house.examples.common.interest", { value: "4" })}</Typography>
+          </CardContent>
+          <CardActions className="justify-center">
+            <Typography color="primary">
+              {t("guide:car.examples.common.toCalculatorButton.text")}
+            </Typography>
+          </CardActions>
+        </AppClickableCardComponent>
       </div>
-    </AppPageLayoutComponent>
+    </AppPageLayoutComponent >
   );
 }
 

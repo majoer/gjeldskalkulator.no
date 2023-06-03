@@ -9,19 +9,28 @@
         "equity": "Equity: {{value}},-",
         "interest": "Interest: {{value}}%",
         "fee": "Fee: {{value}},-",
-        "toCalculatorButton": { "text": "Check it out in the calculator" }
+        "toCalculatorButton": {
+          "text": "Check it out in the calculator"
+        }
       },
-      "newCar": { "title": "Loan for a brand new car" },
-      "usedCar": { "title": "Loan for a used car" }
+      "newCar": {
+        "title": "Loan for a brand new car"
+      },
+      "usedCar": {
+        "title": "Loan for a used car"
+      }
     }
   },
   "house": {
     "title": "How much does a mortgage cost?",
-    "description": "Car loans are usually annuity loans. This means you pay a fixed sum every month for a pre-determined time.",
+    "description": "Discover how much a house loan will cost you and calculate when you can become debt-free. Our user-friendly website provides you with a realistic liquidity budget and end date for your debt.",
+    "p1": "There are many factors that influence how much you can borrow and what the loan will cost you.",
+    "p2": "On this page, you will find examples of the most common types of home loans.",
+    "p3": "Choose the situation that best suits you and modify the rest in the calculator.",
     "examples": {
       "common": {
         "time": "Time: {{value}} år",
-        "price": "Price of car: {{value}},-",
+        "price": "Purchase price: {{value}},-",
         "equity": "Equity: {{value}},-",
         "type": {
           "annuity": "Type: Annuity",
@@ -33,26 +42,42 @@
         },
         "fee": "Fee: {{value}},-",
         "interest": "Interest: {{value}}%",
-        "toCalculatorButton": { "text": "Check it out in the calculator" }
+        "toCalculatorButton": {
+          "text": "Check it out in the calculator"
+        }
       },
-      "apartment": { "title": "Loan for an apartment" },
-      "house": { "title": "Loan for a house" }
+      "apartment": {
+        "title": "Loan for an apartment"
+      },
+      "house": {
+        "title": "Loan for a house"
+      },
+      "housingAssociation": {
+        "title": "Loan for a home in a housing association",
+        "sharedDebt": "Joint debt: {{value}},-"
+      }
     }
   },
   "budget": {
     "title": "How do I make a budget?",
     "description": "We're working on the guide for budgeting. In the mean time, you should check out the calculator!",
-    "toCalculatorButton": { "text": "Test the calculator" }
+    "toCalculatorButton": {
+      "text": "Test the calculator"
+    }
   },
   "credit": {
     "title": "How much does my loans cost?",
     "description": "We're working on the guide for credit cards. In the mean time, you should check out the calculator!",
-    "toCalculatorButton": { "text": "Test the calculator" }
+    "toCalculatorButton": {
+      "text": "Test the calculator"
+    }
   },
   "refinance": {
     "title": "How do I refinance debt?",
     "description": "We're working on the guide for refinancing. In the mean time, you should check out the calculator!",
-    "toCalculatorButton": { "text": "Test the calculator" }
+    "toCalculatorButton": {
+      "text": "Test the calculator"
+    }
   },
   "steps": {
     "selectBank": {
@@ -68,8 +93,12 @@
       "title": "Import your budget"
     }
   },
-  "backButton": { "text": "Back" },
-  "skipButton": { "text": "Skip" },
+  "backButton": {
+    "text": "Back"
+  },
+  "skipButton": {
+    "text": "Skip"
+  },
   "noBank": "* Can't find your bank?",
   "dnb": {
     "downloadBudget": {
@@ -80,12 +109,16 @@
       "5": "Click the dropdown for selecting year",
       "6": "Then select the previous year from the calendar",
       "7": "Click \"Lagre til fil\"",
-      "button": { "text": "Next" }
+      "button": {
+        "text": "Next"
+      }
     },
     "uploadBudget": {
       "disclaimer1": "Your budget never leaves your computer",
       "disclaimer2": "and this app will not remember the contents.",
-      "importButton": { "text": "Import" }
+      "importButton": {
+        "text": "Import"
+      }
     }
   }
 }

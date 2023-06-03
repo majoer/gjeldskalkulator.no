@@ -4,27 +4,45 @@
   "userInput": {
     "income": "Incomes every month",
     "expense": "Expenses every month",
-    "resultBeforeDebt": "Use for debt",
+    "resultBeforeDebt": "Max use for debt",
     "of": "of",
     "unspent": "Unspent money first month",
     "debt": "Debt"
   },
   "incomes": {
-    "defaultNewDebt": { "name": "Job {{value}}" },
-    "add": { "title": "Add Job" }
+    "defaultNewDebt": {
+      "name": "Job {{value}}"
+    },
+    "add": {
+      "title": "Add Job"
+    }
   },
   "income": {
-    "name": { "label": "Income" },
-    "amount": { "label": "Amount" },
-    "remove": { "title": "Remove job" }
+    "name": {
+      "label": "Income"
+    },
+    "amount": {
+      "label": "Amount"
+    },
+    "remove": {
+      "title": "Remove job"
+    }
   },
   "expenses": {
-    "add": { "title": "Add expense" }
+    "add": {
+      "title": "Add expense"
+    }
   },
   "expense": {
-    "name": { "label": "Expense" },
-    "amount": { "label": "Amount" },
-    "remove": { "title": "Remove expense" },
+    "name": {
+      "label": "Expense"
+    },
+    "amount": {
+      "label": "Amount"
+    },
+    "remove": {
+      "title": "Remove expense"
+    },
     "options": {
       "rent": "Rent",
       "electricity": "Electricity",
@@ -34,27 +52,24 @@
       "internet": "Internet",
       "phone": "Phone",
       "streaming": "Streaming",
-
       "medicine": "Medicine",
       "alcohol": "Alcohol",
       "childSupport": "Child support",
       "children": "Children",
       "other": "Other",
-
       "household": "Household",
       "living": "Living",
-
       "hobby": "Hobby",
-
       "savings": "Savings",
       "stocks": "Stocks",
-
       "vacation": "Vacation",
       "travel": "Travel"
     }
   },
   "resultSpending": {
-    "useTowardsDebt": { "label": "Use for debt" },
+    "useTowardsDebt": {
+      "label": "Use for debt"
+    },
     "useTowardsDebtType": {
       "label": "Unit",
       "options": {
@@ -64,18 +79,36 @@
     }
   },
   "debts": {
-    "defaultNewDebt": { "name": "Loan {{value}}" },
-    "add": { "title": "Add debt" }
+    "defaultNewDebt": {
+      "name": "Loan {{value}}"
+    },
+    "add": {
+      "title": "Add debt"
+    }
   },
   "debt": {
-    "name": { "label": "Name" },
-    "amount": { "label": "Amount" },
-    "interest": { "label": "Interest" },
-    "fee": { "label": "Fee" },
-    "remove": { "title": "Remove debt" },
+    "name": {
+      "label": "Name"
+    },
+    "amount": {
+      "label": "Amount"
+    },
+    "interest": {
+      "label": "Interest"
+    },
+    "fee": {
+      "label": "Fee"
+    },
+    "remove": {
+      "title": "Remove debt"
+    },
     "advancedSettings": {
-      "more": { "title": "Show advanced settings" },
-      "less": { "title": "Hide advanced settings" }
+      "more": {
+        "title": "Show advanced settings"
+      },
+      "less": {
+        "title": "Hide advanced settings"
+      }
     },
     "type": {
       "label": "Type",
@@ -94,13 +127,21 @@
         }
       }
     },
-    "endDate": { "label": "End date" }
+    "endDate": {
+      "label": "End date"
+    }
   },
   "debtInsight": {
     "tabs": {
-      "chart": { "label": "Chart" },
-      "paymentPlan": { "label": "Payment Plan" },
-      "tips": { "label": "Tips" }
+      "chart": {
+        "label": "Chart"
+      },
+      "paymentPlan": {
+        "label": "Payment Plan"
+      },
+      "tips": {
+        "label": "Tips"
+      }
     }
   },
   "errors": {
@@ -125,7 +166,10 @@
     "legend": {
       "debt": "Debt",
       "rest": "Unspent money",
-      "x": { "Month": "Months", "Year": "Years" },
+      "x": {
+        "Month": "Months",
+        "Year": "Years"
+      },
       "y": "Debt"
     },
     "tooltip": {
@@ -163,7 +207,9 @@
     }
   },
   "tipsPanel": {
-    "tooltip": { "title": "Tips: {{value}}" },
+    "tooltip": {
+      "title": "Tips: {{value}}"
+    },
     "beta": "* We're working on creating more and better tips. Please consult a professional before acting on our tips."
   },
   "tips": {
@@ -192,8 +238,14 @@
       "summary": "Prioritize high interest debt first",
       "content": ""
     },
-    "takeAnExtraJob": { "summary": "Take up a an extra job", "content": "" },
-    "contactNav": { "summary": "Talk with NAV", "content": "" },
+    "takeAnExtraJob": {
+      "summary": "Take up a an extra job",
+      "content": ""
+    },
+    "contactNav": {
+      "summary": "Talk with NAV",
+      "content": ""
+    },
     "classifyExpenses": {
       "summary": "Classify all your expenses",
       "content": {
